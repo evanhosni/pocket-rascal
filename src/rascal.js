@@ -1,3 +1,5 @@
+import Matter from './libraries/matter'
+
 ///devMode for testing only
 var devModeActive;
 function devMode() {
