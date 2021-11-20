@@ -242,6 +242,27 @@ class Scene extends React.Component {
       cancelAnimationFrame(animation);
       generate();
     }
+
+    var devModeActive;
+    function devMode() {
+    var checkBox = document.getElementById("devMode");
+      if (checkBox.checked == true){
+          devModeActive = true
+          cancelAnimationFrame(animation)
+          rascal.render.visible = true
+          for (let i = 0; i < equippedLimbs.length; i++) {
+              equippedLimbs[i].render.sprite = 0
+          }
+      } else {
+          devModeActive = false
+          cancelAnimationFrame(animation)
+          rascal.render.visible = false
+          for (let i = 0; i < equippedLimbs.length; i++) {
+              equippedLimbs[i].render.sprite = {xScale: 1, yScale: 1, xOffset: 0.5, yOffset: 0.5, texture: `./assets/${equippedLimbs[i].name}.png`}
+          }
+          generate()
+      }
+    }
   }
 
   render() {
