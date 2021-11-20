@@ -162,10 +162,10 @@ class Scene extends React.Component {
     };
     generate();
 
-    // var equippedLimbs
+    var equippedLimbs
 
     function addLimbs() {
-      // equippedLimbs = []//equippedLimbs array is only used for devMode
+      equippedLimbs = []//equippedLimbs array is only used for devMode
 
       for (let i = 0; i < limbArray.length; i++) {
         var limb = Bodies.rectangle(
@@ -184,7 +184,7 @@ class Scene extends React.Component {
             // }
           }
         );
-        //   equippedLimbs.push(limb)//equippedLimbs array is only used for devMode
+          equippedLimbs.push(limb)//equippedLimbs array is only used for devMode
 
         var limbConstraint = Constraint.create({
           name: `${limbArray[i].name}_constraint`,
