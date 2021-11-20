@@ -1,17 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './style.css';
-import Scene from './Scene';
-// import reportWebVitals from './reportWebVitals';
+import { render } from 'react-dom';
+import Scene from './Scene'
 
-ReactDOM.render(
-  <React.StrictMode>
+const App = () => (
+  <div>
     <Scene />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </div>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-// reportWebVitals();
+render(<App />, document.getElementById('root'));

@@ -1,4 +1,4 @@
-import Matter from './libraries/matter'
+import Matter from 'matter-js'
 
 ///devMode for testing only
 var devModeActive;
@@ -27,7 +27,7 @@ function devMode() {
 var Engine = Matter.Engine,
     Render = Matter.Render,
     Runner = Matter.Runner,
-    Body = Matter.Body,
+    // Body = Matter.Body,
     Bodies = Matter.Bodies,
     Composite = Matter.Composite,
     Constraint = Matter.Constraint,
@@ -45,7 +45,7 @@ var engine = Engine.create({ // create an engine
     world = engine.world;
 
 var render = Render.create({// create a renderer
-    element: document.body,
+    element: this.refs.scene,
     engine: engine,
     options: {wireframes: false}
 });
