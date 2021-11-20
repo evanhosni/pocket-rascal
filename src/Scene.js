@@ -117,7 +117,7 @@ class Scene extends React.Component {
       const h = 500;
       let frameNumber = 0;
 
-      (function rerender() {
+      (function rerender() {//TODO not working
         const bodyOffset = (~~frameNumber * w) % bodyImage.width;
         const noseOffset = (~~frameNumber * w) % noseImage.width;
         const eyesOffset = (~~frameNumber * w) % eyesImage.width;
@@ -177,11 +177,11 @@ class Scene extends React.Component {
             name: limbArray[i].name,
             frictionAir: 0.06,
             friction: 0,
-            // render: {
-            //   sprite: {
-            //     texture: `${process.env.PUBLIC_URL}/assets/${limbArray[i].name}.png`
-            //   }
-            // }
+            render: {//TODO this breaks the site
+              sprite: {
+                texture: `./assets/${limbArray[i].name}.png`
+              }
+            }
           }
         );
           equippedLimbs.push(limb)//equippedLimbs array is only used for devMode
@@ -223,7 +223,6 @@ class Scene extends React.Component {
       //     limbConstraint
       // ]);
     }
-
     addLimbs();
 
     function checkCoor() {
