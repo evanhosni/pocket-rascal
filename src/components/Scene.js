@@ -71,7 +71,7 @@ class Scene extends React.Component {
 
     //////////////////////////////////////////////////////////////////////////////////////
 
-    var selectedBody = "body_default";
+    var selectedBody = "body";
 
     var selectedEyes = "eyes_tired";
 
