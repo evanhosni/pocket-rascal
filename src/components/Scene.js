@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Matter from "matter-js";
+import "../style.css"
 
 class Scene extends React.Component {
   constructor(props) {
@@ -55,7 +56,7 @@ class Scene extends React.Component {
       frictionAir: 0.2,
       friction: 0,
       render: {
-        // visible: false
+        visible: false
       },
     });
     var rascalConstraint = Constraint.create({
@@ -89,8 +90,8 @@ class Scene extends React.Component {
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext("2d");
     // setInterval(function(){
-    canvas.width = window.innerWidth * 2;
-    canvas.height = window.innerHeight * 2;
+    canvas.width = 1600;
+    canvas.height = 1200;
     // }, 1);
 
     const generate = async () => {
@@ -265,7 +266,7 @@ class Scene extends React.Component {
   }
 
   render() {
-    return <div ref="scene" />;
+    return <div ref="scene" id="canvas_container" />;
   }
 }
 export default Scene;
