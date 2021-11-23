@@ -93,7 +93,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 
-function Navigation({ currentPage, handlePageChange }) {
+export default function DashNav({ currentPage, handlePageChange }) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -261,91 +261,6 @@ function Navigation({ currentPage, handlePageChange }) {
         {renderMenu}
       </Box>
       <br></br>
-
-
-
-
-
-      <ul className="nav nav-tabs">
-        <li className="nav-item">
-          <a
-            href="#login"
-            onClick={() => handlePageChange('Login')}
-            // Check to see if the currentPage is `Blog`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-            className={currentPage === 'Login' ? 'nav-link active' : 'nav-link'}
-          >
-            Login
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            href="#signup"
-            onClick={() => handlePageChange('SignUp')}
-            // This is a conditional (ternary) operator that checks to see if the current page is "Home"
-            // If it is, we set the current page to 'nav-link-active', otherwise we set it to 'nav-link'
-            className={currentPage === 'SignUp' ? 'nav-link active' : 'nav-link'}
-          >
-            Sign Up
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            href="#newrascal"
-            onClick={() => handlePageChange('CreateRascal')}
-            // Check to see if the currentPage is `Contact`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-            className={currentPage === 'CreateRascal' ? 'nav-link active' : 'nav-link'}
-          >
-            Create A Rascal
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            href="#dashboard"
-            onClick={() => handlePageChange('Scene')}
-            // Check to see if the currentPage is `About`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-            className={currentPage === 'Scene' ? 'nav-link active' : 'nav-link'}
-          >
-            Dashboard
-          </a>
-        </li>
-        <li className="nav-item">
-          <a
-            href="#minigame"
-            onClick={() => handlePageChange('Minigame')}
-            // Check to see if the currentPage is `Contact`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
-            className={currentPage === 'Minigame' ? 'nav-link active' : 'nav-link'}
-          >
-            Minigame
-          </a>
-        </li>
-      </ul>
     </div>
   );
 }
-
-// export default function ButtonAppBar() {
-//   return (
-//     <Box sx={{ flexGrow: 1 }}>
-//       <AppBar position="static">
-//         <Toolbar>
-//           <IconButton
-//             size="large"
-//             edge="start"
-//             color="inherit"
-//             aria-label="menu"
-//             sx={{ mr: 2 }}
-//           >
-//             <MenuIcon />
-//           </IconButton>
-//           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-//             PocketRascal
-//           </Typography>
-//           <Button color="inherit">Login</Button>
-//           <Button color="inherit">Sign Up</Button>
-//         </Toolbar>
-//       </AppBar>
-//     </Box>
-//   );
-// }
-
-export default Navigation;
