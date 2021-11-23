@@ -12,13 +12,15 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Api } from '@mui/icons-material';
+import API from "../../utils/API"
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Pocket Rascal
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -28,15 +30,27 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function SignIn(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
+    const user = {
       email: data.get('email'),
-      password: data.get('password'),
-    });
+      password: data.get('password')
+    }
+    API.login(user).then(res=>{
+      console.log(res)
+      props.setUserState({
+        email:res.data.user.email,
+        id:res.data.user.id
+      })
+      props.setToken(res.data.token)
+      localStorage.setItem("token",res.data.token)
+      props.handlePageChange('Scene')
+    }).catch(err=>{
+      alert("Incorrect Credentials")
+      console.log(err);
+    })
   };
 
   return (
