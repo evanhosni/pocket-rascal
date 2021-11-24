@@ -8,7 +8,6 @@ export default function Minigame() {
       <p>
     play ur minigame here
       </p>
-      <MinigameCanvas />
     </div>
   );
 }
