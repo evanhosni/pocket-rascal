@@ -42,15 +42,28 @@ class Scene extends React.Component {
       mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
         constraint: {
-          stiffness: 0.2,
+          stiffness: 1,
           render: {
-            visible: false,
+            visible: true,
           },
         },
       });
     render.mouse = mouse; // keep the mouse in sync with rendering
 
-    var rascal = Bodies.polygon(800, 600, 8, 120, {
+    function setMouseScaleAndOffset() {
+      if (window.innerWidth>=window.innerHeight){
+        Mouse.setScale(mouse, {x: window.innerWidth/window.innerHeight, y: 1})
+        Mouse.setOffset(mouse, {x: 2500-(2500*(window.innerWidth/window.innerHeight)), y: 0})
+      } else {
+        Mouse.setScale(mouse, {x: 1, y: window.innerHeight/window.innerWidth})
+        Mouse.setOffset(mouse, {x: 0, y: 2500-(2500*(window.innerHeight/window.innerWidth))})
+      }
+      console.log("mouse stuff set")
+    }
+    setMouseScaleAndOffset()
+    window.addEventListener('resize', setMouseScaleAndOffset)
+
+    var rascal = Bodies.polygon(2500, 2500, 8, 120, {
       name: "rascal",
       inertia: "Infinity",
       frictionAir: 0.2,
@@ -61,7 +74,7 @@ class Scene extends React.Component {
     });
     var rascalConstraint = Constraint.create({
       name: "rascal_constraint",
-      pointA: { x: 800, y: 600 },
+      pointA: { x: 2500, y: 2500 },
       bodyB: rascal,
       pointB: { x: 0, y: 0 },
       stiffness: 0.02,
@@ -90,8 +103,8 @@ class Scene extends React.Component {
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext("2d");
     // setInterval(function(){
-    canvas.width = 1600;
-    canvas.height = 1200;
+    canvas.width = 5000;
+    canvas.height = 5000;
     // }, 1);
 
     const generate = async () => {
@@ -118,7 +131,7 @@ class Scene extends React.Component {
       const h = 500;
       let frameNumber = 0;
 
-      (function rerender() {//TODO not working
+      (function rerender() {
         const bodyOffset = (~~frameNumber * w) % bodyImage.width;
         const noseOffset = (~~frameNumber * w) % noseImage.width;
         const eyesOffset = (~~frameNumber * w) % eyesImage.width;
@@ -170,8 +183,8 @@ class Scene extends React.Component {
 
       for (let i = 0; i < limbArray.length; i++) {
         var limb = Bodies.rectangle(
-          800,
-          440 - 1 - 50 * (limbArray[i].size - 1),
+          2500,
+          2340 - 1 - 50 * (limbArray[i].size - 1),
           90,
           100 * limbArray[i].size,
           {
