@@ -3,9 +3,8 @@ import Navigation from './Navigation';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Scene from './Scene';
-import Minigame from './pages/Minigame/Minigame';
+import MiniPlayground from './pages/Minigame/index';
 import CreateRascal from './pages/CreateRascal/index'
-import Dashboard from './pages/Dashboard/Dashboard'
 import BottomNav from './BottomNav'
 import StatusBars from './pages/Dashboard/StatusBars'
 import API from '../utils/API'
@@ -77,7 +76,7 @@ export default function ContentContainer() {
       )}
     return (
     <div>
-      <Minigame />
+      <MiniPlayground />
       <StatusBars />
 
     </div>
