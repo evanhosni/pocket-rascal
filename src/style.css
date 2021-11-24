@@ -2,13 +2,23 @@
     overflow: hidden;
 }
 
-#canvas_container {
+/* #canvas_container {
     position: absolute;
     top: 0;
     left: 0;
     margin: auto;
     z-index: -1;
-    height: 100%;/*TODO - make this 100% but fix mouse tracking issues*/
-    width: 100%;/*TODO - make this 100% but fix mouse tracking issues*/
+    /*height: 100%;/*TODO - make this 100% but fix mouse tracking issues
+    /*width: 100%;/*TODO - make this 100% but fix mouse tracking issues
     border: solid black 3px;
+} */
+
+canvas {
+    z-index: 1;/*TODO: -1*/
+    position: fixed;
+    top: -200%;
+    left: -200%;
+    height: 500%;
+    width: 500%;
+    object-fit: contain;
 }
