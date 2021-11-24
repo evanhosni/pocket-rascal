@@ -3,9 +3,11 @@ import Navigation from './Navigation';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Scene from './Scene';
-import Minigame from './pages/Minigame';
+import Minigame from './pages/Minigame/Minigame';
 import CreateRascal from './pages/CreateRascal/index'
 import Dashboard from './pages/Dashboard/Dashboard'
+import BottomNav from './BottomNav'
+import StatusBars from './pages/Dashboard/StatusBars'
 import API from '../utils/API'
 
 export default function ContentContainer() {
@@ -56,17 +58,30 @@ export default function ContentContainer() {
       return <Login token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
     }
     if (currentPage === 'Scene') {
-      return <Scene />;
-    }
+      return (
+        <div>
+          <Scene />
+          <BottomNav />
+
+        </div>
+      
+      )}
     if (currentPage === 'CreateRascal'){
       return (
       <div>
         <CreateRascal />
         <Scene />
+        <BottomNav />
+
       </div>
       )}
-    return <Minigame />;
-  };
+    return (
+    <div>
+      <Minigame />
+      <StatusBars />
+
+    </div>
+    )};
 
   const handlePageChange = (page) => setCurrentPage(page);
 

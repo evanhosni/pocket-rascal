@@ -3,12 +3,12 @@ import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 
 export default function CircularDeterminate() {
-  const [happiness, setHappiness] = React.useState(0);
+  const [happiness, setHappiness] = React.useState(75);
 
   React.useEffect(() => {
     const timer = setInterval(() => {
       setHappiness((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
-    }, 800);
+    }, 1800000);
 
     return () => {
       clearInterval(timer);
