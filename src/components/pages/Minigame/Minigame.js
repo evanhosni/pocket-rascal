@@ -1,4 +1,5 @@
 import React from 'react';
+import MinigameCanvas from './MinigameCanvas'
 
 export default function Minigame() {
   return (

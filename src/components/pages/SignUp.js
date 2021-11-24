@@ -12,7 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import API from "../../utils/API"
+import API from '../../utils/API'
 
 function Copyright(props) {
   return (
@@ -29,27 +29,30 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn(props) {
+export default function SignUp(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const user = {
+    const newUser = {
       email: data.get('email'),
       password: data.get('password')
-    }
-    API.login(user).then(res=>{
-      console.log(res)
-      props.setUserState({
-        email:res.data.user.email,
-        id:res.data.user.id
+    };
+    API.signup(newUser).then(response=>{
+      API.login(newUser).then(res=>{
+        console.log(res)
+        props.setUserState({
+          email:res.data.user.email,
+          id:res.data.user.id
+        })
+        props.setToken(res.data.token)
+        localStorage.setItem("token",res.data.token)
+        props.handlePageChange('Scene')
+      }).catch(err=>{
+        alert("Signup Failed")
+        console.log(err);
       })
-      props.setToken(res.data.token)
-      localStorage.setItem("token",res.data.token)
-      props.handlePageChange('Scene')
-    }).catch(err=>{
-      alert("Incorrect Credentials")
-      console.log(err);
     })
+
   };
 
   return (
@@ -68,56 +71,50 @@ export default function SignIn(props) {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Sign up
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="new-password"
+                />
+              </Grid>
+            </Grid>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Sign Up
             </Button>
-            <Grid container>
-              {/* <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid> */}
+            <Grid container justifyContent="flex-end">
               <Grid item>
-                <Button onClick={()=>props.handlePageChange('SignUp')} variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Button onClick={()=>props.handlePageChange('Login')} variant="body2">
+                  Already have an account? Sign in
                 </Button>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );
