@@ -11,18 +11,23 @@ import Menu from '@mui/material/Menu';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import Button from '@mui/material/Button';
 
+
 // Here we are using object destructuring assignment to pluck off our variables from the props object
 // We assign them to their own variable names
 
 
 
-function Navigation({ currentPage, handlePageChange }) {
+function Navigation({ currentPage, handlePageChange, userId, logOut }) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+
+    
+  
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -60,8 +65,10 @@ function Navigation({ currentPage, handlePageChange }) {
     >
 
       <MenuItem onClick={handleProfileMenuOpen}>
-        <Button onClick={() => handlePageChange('Login')} color="inherit">Login</Button>
-        <Button onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</Button>
+        {!userId && <Button onClick={() => handlePageChange('Login')} color="inherit">Login</Button>}
+        {!userId && <Button onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</Button>}
+        {userId && <Button onClick={()=>logOut()} color="inherit">Logout</Button>}
+        
       </MenuItem>
     </Menu>
   );
@@ -82,8 +89,9 @@ function Navigation({ currentPage, handlePageChange }) {
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <Button onClick={() => handlePageChange('Login')} color="inherit">Login</Button>
-              <Button onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</Button>
+              {!userId && <Button onClick={() => handlePageChange('Login')} color="inherit">Login</Button>}
+              {!userId && <Button onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</Button>}
+              {userId && <Button onClick={()=>logOut()} color="inherit">Logout</Button>}
             </Box>
             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <IconButton

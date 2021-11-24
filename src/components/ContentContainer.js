@@ -39,10 +39,20 @@ export default function ContentContainer() {
       })
     }
   },[])
+
+  const logOut= () => {
+    localStorage.removeItem("token");
+    setToken('');
+    setUserState({
+      email:'',
+      userId:0
+    });
+    setCurrentPage('Login')
+  }
   // This method is checking to see what the value of `currentPage` is. Depending on the value of currentPage, we return the corresponding component to render.
   const renderPage = () => {
     if (currentPage === 'SignUp') {
-      return <SignUp />;
+      return <SignUp token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange}/>;
     }
     if (currentPage === 'Login') {
       return <Login token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
@@ -78,7 +88,7 @@ export default function ContentContainer() {
   return (
     <div>
       {/* We are passing the currentPage from state and the function to update it */}
-      <Navigation currentPage={currentPage} handlePageChange={handlePageChange} />
+      <Navigation currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} />
       {/* Here we are calling the renderPage method which will return a component  */}
       {renderPage()}
     </div>
