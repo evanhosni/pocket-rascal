@@ -22,6 +22,7 @@ import Button from '@mui/material/Button';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
+
 // Here we are using object destructuring assignment to pluck off our variables from the props object
 // We assign them to their own variable names
 
@@ -93,13 +94,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 
-function Navigation({ currentPage, handlePageChange }) {
+function Navigation({ currentPage, handlePageChange, userId, logOut }) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+
+    
+  
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -129,27 +134,6 @@ function Navigation({ currentPage, handlePageChange }) {
     setOpen(false);
   };
 
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={() => handlePageChange('Login')}>Login</MenuItem>
-      <MenuItem onClick={() => handlePageChange('SignUp')}>Sign Up</MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -170,8 +154,10 @@ function Navigation({ currentPage, handlePageChange }) {
     >
 
       <MenuItem onClick={handleProfileMenuOpen}>
-        <Button onClick={() => handlePageChange('Login')} color="inherit">Login</Button>
-        <Button onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</Button>
+        {!userId && <Button onClick={() => handlePageChange('Login')} color="inherit">Login</Button>}
+        {!userId && <Button onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</Button>}
+        {userId && <Button onClick={()=>logOut()} color="inherit">Logout</Button>}
+        
       </MenuItem>
     </Menu>
   );
@@ -210,8 +196,9 @@ function Navigation({ currentPage, handlePageChange }) {
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <Button onClick={() => handlePageChange('Login')} color="inherit">Login</Button>
-              <Button onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</Button>
+              {!userId && <Button onClick={() => handlePageChange('Login')} color="inherit">Login</Button>}
+              {!userId && <Button onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</Button>}
+              {userId && <Button onClick={()=>logOut()} color="inherit">Logout</Button>}
             </Box>
             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <IconButton
@@ -258,7 +245,6 @@ function Navigation({ currentPage, handlePageChange }) {
         </Drawer>
 
         {renderMobileMenu}
-        {renderMenu}
       </Box>
       <br></br>
 

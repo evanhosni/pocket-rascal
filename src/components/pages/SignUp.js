@@ -12,13 +12,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import API from '../../utils/API'
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Pocket Rascal
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -28,15 +29,30 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp(props) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
+    const newUser = {
       email: data.get('email'),
-      password: data.get('password'),
-    });
+      password: data.get('password')
+    };
+    API.signup(newUser).then(response=>{
+      API.login(newUser).then(res=>{
+        console.log(res)
+        props.setUserState({
+          email:res.data.user.email,
+          id:res.data.user.id
+        })
+        props.setToken(res.data.token)
+        localStorage.setItem("token",res.data.token)
+        props.handlePageChange('Scene')
+      }).catch(err=>{
+        alert("Signup Failed")
+        console.log(err);
+      })
+    })
+
   };
 
   return (
@@ -59,27 +75,6 @@ export default function SignUp() {
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -112,9 +107,9 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#login" variant="body2">
+                <Button onClick={()=>props.handlePageChange('Login')} variant="body2">
                   Already have an account? Sign in
-                </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>
