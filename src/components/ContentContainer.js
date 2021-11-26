@@ -5,8 +5,9 @@ import Login from './pages/Login';
 import Scene from './Scene';
 import MiniPlayground from './pages/Minigame/index';
 import CreateRascal from './pages/CreateRascal/index'
-import BottomNav from './BottomNav'
+import BottomNav from './pages/Dashboard/BottomNav'
 import StatusBars from './pages/Dashboard/StatusBars'
+import Dashboard from './pages/Dashboard/Dashboard'
 import API from '../utils/API'
 
 export default function ContentContainer() {
@@ -74,11 +75,16 @@ export default function ContentContainer() {
 
       </div>
       )}
+    if (currentPage === 'Dashboard'){
+      return (
+        <div>
+          <Dashboard />
+        </div>
+      )
+    }
     return (
     <div>
       <MiniPlayground />
-      <StatusBars />
-
     </div>
     )};
 
