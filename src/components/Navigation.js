@@ -25,8 +25,8 @@ function Navigation({ currentPage, handlePageChange, userId, logOut }) {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
 
-    
-  
+
+
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -66,8 +66,8 @@ function Navigation({ currentPage, handlePageChange, userId, logOut }) {
       <MenuItem onClick={handleProfileMenuOpen}>
         {!userId && <Button onClick={() => handlePageChange('Login')} color="inherit">Login</Button>}
         {!userId && <Button onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</Button>}
-        {userId && <Button onClick={()=>logOut()} color="inherit">Logout</Button>}
-        
+        {userId && <Button onClick={() => logOut()} color="inherit">Logout</Button>}
+
       </MenuItem>
     </Menu>
   );
@@ -88,9 +88,13 @@ function Navigation({ currentPage, handlePageChange, userId, logOut }) {
             </Typography>
             <Box sx={{ flexGrow: 1 }} />
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+              <Button onClick={() => handlePageChange('CreateRascal')} color='inherit'>Create Rascal</Button>
+              <Button onClick={() => handlePageChange('Scene')} color='inherit'>Scene</Button>
+              <Button onClick={() => handlePageChange('Minigame')} color='inherit'>Minigame</Button>
+              <Button onClick={() => handlePageChange('Dashboard')} color='inherit'>Dashboard</Button>
               {!userId && <Button onClick={() => handlePageChange('Login')} color="inherit">Login</Button>}
               {!userId && <Button onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</Button>}
-              {userId && <Button onClick={()=>logOut()} color="inherit">Logout</Button>}
+              {userId && <Button onClick={() => logOut()} color="inherit">Logout</Button>}
             </Box>
             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <IconButton
@@ -111,7 +115,7 @@ function Navigation({ currentPage, handlePageChange, userId, logOut }) {
       </Box>
 
 
-      <ul className="nav nav-tabs">
+      {/* <ul className="nav nav-tabs">
         <li className="nav-item">
           <a
             href="#login"
@@ -145,12 +149,12 @@ function Navigation({ currentPage, handlePageChange, userId, logOut }) {
         </li>
         <li className="nav-item">
           <a
-            href="#dashboard"
+            href="#scene"
             onClick={() => handlePageChange('Scene')}
             // Check to see if the currentPage is `About`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
             className={currentPage === 'Scene' ? 'nav-link active' : 'nav-link'}
           >
-            Dashboard
+            Scene
           </a>
         </li>
         <li className="nav-item">
@@ -163,7 +167,17 @@ function Navigation({ currentPage, handlePageChange, userId, logOut }) {
             Minigame
           </a>
         </li>
-      </ul>
+        <li className="nav-item">
+          <a
+            href="#dashboard"
+            onClick={() => handlePageChange('Dashboard')}
+            // Check to see if the currentPage is `Contact`, and if so we use the active link class from bootstrap. Otherwise, we set it to a normal nav-link
+            className={currentPage === 'Dashboard' ? 'nav-link active' : 'nav-link'}
+          >
+            Dashboard
+          </a>
+        </li>
+      </ul> */}
     </div>
   );
 }

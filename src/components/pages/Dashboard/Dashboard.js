@@ -1,13 +1,23 @@
 import React from 'react';
 
 import StatusBar from './StatusBars'
-import DashNav from './DashNav'
+import BottomNav from './BottomNav';
+import Scene from '../../Scene'
 
 export default function Dashboard() {
   return (
     <div>
-      <DashNav />
+      <div>
       <StatusBar />
+
+      </div>
+      <div>
+        <Scene />
+      </div>
+      <div>
+        <BottomNav />
+
+      </div>
       
     </div>
   );
