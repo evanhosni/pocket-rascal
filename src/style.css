@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+
 * {
+    font-family: 'Nanum Pen Script', sans-serif;
+    font-size: large;
     overflow: hidden;
 }
 
@@ -12,6 +16,10 @@
     /*width: 100%;/*TODO - make this 100% but fix mouse tracking issues
     border: solid black 3px;
 } */
+
+body {
+    margin: 0
+}
 
 canvas {
     z-index: -1;/*TODO: -1*/
