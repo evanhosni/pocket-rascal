@@ -13,8 +13,8 @@
     border: solid black 3px;
 } */
 
-canvas {
-    z-index: -1;/*TODO: -1*/
+ #rascalCanvas { 
+    z-index: -1;
     position: fixed;
     top: -200%;
     left: -200%;
