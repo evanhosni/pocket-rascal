@@ -1,4 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+
 * {
+    font-family: 'Nanum Pen Script', sans-serif;
+    font-size: large;
     overflow: hidden;
 }
 

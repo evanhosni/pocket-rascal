@@ -11,7 +11,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import API from '../utils/API'
 
 export default function ContentContainer() {
-  const [currentPage, setCurrentPage] = useState('Login');
+  const [currentPage, setCurrentPage] = useState('Dashboard');
 
   // State variable for current user and token for authentication
   const [userState, setUserState] = useState({
@@ -78,7 +78,7 @@ export default function ContentContainer() {
     if (currentPage === 'Dashboard'){
       return (
         <div>
-          <Dashboard />
+          <Dashboard  currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut}/>
         </div>
       )
     }
@@ -93,7 +93,7 @@ export default function ContentContainer() {
   return (
     <div>
       {/* We are passing the currentPage from state and the function to update it */}
-      <Navigation currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} />
+      {/* <Navigation currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} /> */}
       {/* Here we are calling the renderPage method which will return a component  */}
       {renderPage()}
     </div>
