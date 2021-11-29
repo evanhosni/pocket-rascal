@@ -94,7 +94,7 @@ function Navigation({ currentPage, handlePageChange, userId, logOut }) {
               <Button onClick={() => handlePageChange('Dashboard')} color='inherit'>Dashboard</Button>
               {!userId && <Button onClick={() => handlePageChange('Login')} color="inherit">Login</Button>}
               {!userId && <Button onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</Button>}
-              {userId && <Button onClick={() => logOut()} color="inherit">Logout</Button>}
+              {userId ? <Button onClick={() => logOut()} color="inherit">Logout</Button> : null}
             </Box>
             <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <IconButton

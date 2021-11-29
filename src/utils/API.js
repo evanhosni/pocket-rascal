@@ -14,6 +14,9 @@ const API = {
     signup:(usrData)=>{
         return  axios.post(`${URL_PREFIX}/user/new`,usrData)
     },
+    loadRascal:(id)=>{
+        return axios.get(`${URL_PREFIX}/rascal/load/${id}`)
+    },
     createRascal:(rascalData)=>{
         return  axios.post(`${URL_PREFIX}/rascal/new`,rascalData)
     },

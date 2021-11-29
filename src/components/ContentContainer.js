@@ -19,40 +19,61 @@ export default function ContentContainer() {
     id: 0
   })
   const [token, setToken] = useState("")
+  const [myRascal, setMyRascal] = useState({
+    name: '',
+    color: '',
+    level: 0,
+    hunger: 0,
+    love: 0,
+    care: 0
+  })
+
+  function updateRascal(key, val) {
+    setMyRascal({
+      ...myRascal,
+      [key]: val
+    })
+  }
 
   // useeffect on page load to check token in local storage for authenticity, then updating current user
-  useEffect(()=>{
+  useEffect(() => {
     const myToken = localStorage.getItem("token");
-    if(myToken){
-      API.verify(myToken).then(res=>{
+    if (myToken) {
+      API.verify(myToken).then(res => {
         setToken(myToken)
         setUserState({
-          email:res.data.email,
-          id:res.data.id
+          email: res.data.email,
+          id: res.data.id
         })
+
+        API.loadRascal(res.data.id).then(rascalData=>{
+          setMyRascal(rascalData)
+        }).catch(err=>console.log(err))
         setCurrentPage('Scene')
-      }).catch(err=>{
-        console.log("Weird token dude!")
+
+      }).catch(err => {
+        console.log("BONK!")
         console.log(err)
         localStorage.removeItem('token')
         setCurrentPage('Login')
       })
     }
-  },[])
+    
+  }, [])
 
-  const logOut= () => {
+  const logOut = () => {
     localStorage.removeItem("token");
     setToken('');
     setUserState({
-      email:'',
-      userId:0
+      email: '',
+      userId: 0
     });
     setCurrentPage('Login')
   }
   // This method is checking to see what the value of `currentPage` is. Depending on the value of currentPage, we return the corresponding component to render.
   const renderPage = () => {
     if (currentPage === 'SignUp') {
-      return <SignUp token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange}/>;
+      return <SignUp token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
     }
     if (currentPage === 'Login') {
       return <Login token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
@@ -64,18 +85,20 @@ export default function ContentContainer() {
           <BottomNav />
 
         </div>
-      
-      )}
-    if (currentPage === 'CreateRascal'){
-      return (
-      <div>
-        <CreateRascal />
-        <Scene />
-        <BottomNav />
 
-      </div>
-      )}
-    if (currentPage === 'Dashboard'){
+      )
+    }
+    if (currentPage === 'CreateRascal') {
+      return (
+        <div>
+          <CreateRascal />
+          <Scene />
+          <BottomNav />
+
+        </div>
+      )
+    }
+    if (currentPage === 'Dashboard') {
       return (
         <div>
           <Dashboard />
@@ -83,10 +106,11 @@ export default function ContentContainer() {
       )
     }
     return (
-    <div>
-      <MiniPlayground />
-    </div>
-    )};
+      <div>
+        <MiniPlayground />
+      </div>
+    )
+  };
 
   const handlePageChange = (page) => setCurrentPage(page);
 
