@@ -2,13 +2,13 @@ import React from 'react';
 
 import StatusBar from './StatusBars'
 import BottomNav from './BottomNav';
-import Scene from '../../Scene'
+import Scene from './Scene'
 
-export default function Dashboard() {
+export default function Dashboard({currentPage={currentPage}, handlePageChange={handlePageChange}}) {
   return (
     <div>
       <div>
-      <StatusBar />
+      <StatusBar currentPage={currentPage} handlePageChange={handlePageChange}/>
 
       </div>
       <div>
@@ -16,7 +16,6 @@ export default function Dashboard() {
       </div>
       <div>
         <BottomNav />
-
       </div>
       
     </div>

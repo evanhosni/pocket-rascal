@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Matter from "matter-js";
-import "../style.css"
+import "./style.css"
 
 class Scene extends React.Component {
   constructor(props) {
@@ -29,6 +29,7 @@ class Scene extends React.Component {
       engine: engine,
       options: {
         wireframes: false,
+        background: 'transparent'
       },
     });
 
@@ -44,7 +45,7 @@ class Scene extends React.Component {
         constraint: {
           stiffness: 1,
           render: {
-            visible: true,
+            visible: false,
           },
         },
       });
@@ -58,7 +59,6 @@ class Scene extends React.Component {
         Mouse.setScale(mouse, {x: 1, y: window.innerHeight/window.innerWidth})
         Mouse.setOffset(mouse, {x: 0, y: 2500-(2500*(window.innerHeight/window.innerWidth))})
       }
-      console.log("mouse stuff set")
     }
     setMouseScaleAndOffset()
     window.addEventListener('resize', setMouseScaleAndOffset)
@@ -78,22 +78,31 @@ class Scene extends React.Component {
       bodyB: rascal,
       pointB: { x: 0, y: 0 },
       stiffness: 0.02,
+      render: {
+        visible: false,
+      },
     });
     Composite.clear(world);
     Composite.add(world, [mouseConstraint, rascal, rascalConstraint]);
 
     //////////////////////////////////////////////////////////////////////////////////////
 
-    var selectedBody = "body";
+    var selectedBody = "body_fuzzy";
 
-    var selectedEyes = "eyes_tired";
+    var selectedEyes = "eyes_pretty";
 
-    var selectedNose = "nose_disguise";
+    // var selectedNose = "nose_disguise";
+
+    var selectedMouth = "mouth_simple";
 
     var limbArray = [
-      { name: "party_hat", size: 1.7 },
-      { name: "arm_default", size: 2.8 },
-      { name: "arm_default", size: 2.8 },
+      { name: "top_hat", size: 2.2 },
+      { name: "arm_glove", size: 3.4 },
+      { name: "arm_glove", size: 3.4 },
+      // { name: "party_hat", size: 1.7 },
+      // { name: "cherry", size: 2.5 },
+      // { name: "arm_default", size: 2.8 },
+      // { name: "arm_default", size: 2.8 },
       // {name: 'waffle_cone', size: 1.7}
     ];
 
@@ -101,11 +110,10 @@ class Scene extends React.Component {
 
     var animation;
     const canvas = document.querySelector("canvas");
+    canvas.setAttribute('id','rascalCanvas')
     const ctx = canvas.getContext("2d");
-    // setInterval(function(){
     canvas.width = 5000;
     canvas.height = 5000;
-    // }, 1);
 
     const generate = async () => {
       const bodyImage = await new Promise((resolve, reject) => {
@@ -120,11 +128,17 @@ class Scene extends React.Component {
         eyesImage.onerror = reject;
         eyesImage.src = `./assets/${selectedEyes}.png`;
       });
-      const noseImage = await new Promise((resolve, reject) => {
-        const noseImage = new Image();
-        noseImage.onload = () => resolve(noseImage);
-        noseImage.onerror = reject;
-        noseImage.src = `./assets/${selectedNose}.png`;
+      // const noseImage = await new Promise((resolve, reject) => {
+      //   const noseImage = new Image();
+      //   noseImage.onload = () => resolve(noseImage);
+      //   noseImage.onerror = reject;
+      //   noseImage.src = `./assets/${selectedNose}.png`;
+      // });
+      const mouthImage = await new Promise((resolve, reject) => {
+        const mouthImage = new Image();
+        mouthImage.onload = () => resolve(mouthImage);
+        mouthImage.onerror = reject;
+        mouthImage.src = `./assets/${selectedMouth}.png`;
       });
 
       const w = 500;
@@ -133,8 +147,9 @@ class Scene extends React.Component {
 
       (function rerender() {
         const bodyOffset = (~~frameNumber * w) % bodyImage.width;
-        const noseOffset = (~~frameNumber * w) % noseImage.width;
         const eyesOffset = (~~frameNumber * w) % eyesImage.width;
+        // const noseOffset = (~~frameNumber * w) % noseImage.width;
+        const mouthOffset = (~~frameNumber * w) % mouthImage.width;
         const { x, y } = rascal.position;
         ctx.drawImage(
           bodyImage, // image
@@ -158,9 +173,20 @@ class Scene extends React.Component {
           w, // dWidth
           h // dHeight
         );
+        // ctx.drawImage(
+        //   noseImage, // image
+        //   noseOffset, // sx
+        //   0, // sy
+        //   w, // sWidth
+        //   h, // sHeight
+        //   x - w / 2, // dx
+        //   y - h / 2, // dy
+        //   w, // dWidth
+        //   h // dHeight
+        // );
         ctx.drawImage(
-          noseImage, // image
-          noseOffset, // sx
+          mouthImage, // image
+          mouthOffset, // sx
           0, // sy
           w, // sWidth
           h, // sHeight
@@ -206,6 +232,9 @@ class Scene extends React.Component {
           bodyB: limb,
           pointB: { x: 0, y: limbArray[i].size / 0.02 },
           stiffness: 0.05,
+          render: {
+            visible: false,
+          },
         });
 
         Composite.add(world, [limb, limbConstraint]);

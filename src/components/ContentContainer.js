@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navigation from './Navigation';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
-import Scene from './Scene';
+import Scene from './pages/Dashboard/Scene';
 import MiniPlayground from './pages/Minigame/index';
 import CreateRascal from './pages/CreateRascal/index'
 import BottomNav from './pages/Dashboard/BottomNav'
@@ -11,7 +11,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import API from '../utils/API'
 
 export default function ContentContainer() {
-  const [currentPage, setCurrentPage] = useState('Login');
+  const [currentPage, setCurrentPage] = useState('Dashboard');
 
   // State variable for current user and token for authentication
   const [userState, setUserState] = useState({
@@ -101,7 +101,7 @@ export default function ContentContainer() {
     if (currentPage === 'Dashboard') {
       return (
         <div>
-          <Dashboard />
+          <Dashboard  currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut}/>
         </div>
       )
     }
@@ -117,7 +117,7 @@ export default function ContentContainer() {
   return (
     <div>
       {/* We are passing the currentPage from state and the function to update it */}
-      <Navigation currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} />
+      {/* <Navigation currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} /> */}
       {/* Here we are calling the renderPage method which will return a component  */}
       {renderPage()}
     </div>
