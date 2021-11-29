@@ -2,7 +2,7 @@ import React from 'react';
 
 import StatusBar from './StatusBars'
 import BottomNav from './BottomNav';
-import Scene from '../../Scene'
+import Scene from './Scene'
 
 export default function Dashboard({currentPage={currentPage}, handlePageChange={handlePageChange}}) {
   return (

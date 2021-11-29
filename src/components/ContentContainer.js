@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navigation from './Navigation';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
-import Scene from './Scene';
+import Scene from './pages/Dashboard/Scene';
 import MiniPlayground from './pages/Minigame/index';
 import CreateRascal from './pages/CreateRascal/index'
 import BottomNav from './pages/Dashboard/BottomNav'

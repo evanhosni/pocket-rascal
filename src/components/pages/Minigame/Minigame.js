@@ -51,10 +51,7 @@ class Minigame extends React.Component {
       return mouseConstraint;
     }
 
-    var engine = setupEngine();
-    var render = setupRender();
-    var world = engine.world;
-    var mouseConstraint = createMouse();
+    
 
     function createFloor() {
       var floor = Bodies.rectangle(400, 580, 800, 40, {
@@ -88,7 +85,6 @@ class Minigame extends React.Component {
     }
 
     function create3x1Block(x, y, scale = 0.5) {
-
       const box = Bodies.rectangle(x, y, 220 * scale, 70 * scale, {
         render: {
           sprite: {
@@ -110,7 +106,8 @@ class Minigame extends React.Component {
         label: "bird",
         render: {
           sprite: {
-            texture: `./assets/${birdBody}.png`,
+            // texture: `./assets/${birdBody}.png`,
+            texture: "https://imgur.com/6Nmywmw.png",
             xScale: 1 / 3.5,
             yScale: 1 / 3.5
           }
@@ -233,7 +230,6 @@ class Minigame extends React.Component {
       var wall1 = create1x3Block(x - 38, y);
       var wall2 = create1x3Block(x + 38, y);
       var roof = create3x1Block(x, y - 100);
-      World.add(world, wall1, wall2, roof)
     }
 
     function createEnemyInTheHouse(x, y) {
@@ -241,7 +237,10 @@ class Minigame extends React.Component {
       createEnemyHouse(x, y);
     }
 
-
+    var engine = setupEngine();
+    var render = setupRender();
+    var world = engine.world;
+    var mouseConstraint = createMouse();
 
     setupBirdAndBoxCollision();
 

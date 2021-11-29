@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Matter from "matter-js";
-import "../style.css"
+import "./style.css"
 
 class Scene extends React.Component {
   constructor(props) {
@@ -110,6 +110,7 @@ class Scene extends React.Component {
 
     var animation;
     const canvas = document.querySelector("canvas");
+    canvas.setAttribute('id','rascalCanvas')
     const ctx = canvas.getContext("2d");
     canvas.width = 5000;
     canvas.height = 5000;
