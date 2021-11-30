@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import Matter from "matter-js";
 import './minigame.css'
 
-class Minigame extends React.Component {
+class Slingshot extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -253,8 +253,8 @@ class Minigame extends React.Component {
   }
 
   render() {
-    return <div className='Minigame' ref="scene" />;
+    return <div className='Slingshot' ref="scene" />;
   }
 }
 
-export default Minigame;
+export default Slingshot;
