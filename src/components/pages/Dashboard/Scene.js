@@ -91,9 +91,9 @@ class Scene extends React.Component {
 
     var selectedEyes = "eyes_pretty";
 
-    // var selectedNose = "nose_disguise";
-
     var selectedMouth = "mouth_simple";
+
+    // var selectedNose = "nose_disguise";
 
     var limbArray = [
       { name: "top_hat", size: 2.2 },
@@ -128,18 +128,18 @@ class Scene extends React.Component {
         eyesImage.onerror = reject;
         eyesImage.src = `./assets/${selectedEyes}.png`;
       });
-      // const noseImage = await new Promise((resolve, reject) => {
-      //   const noseImage = new Image();
-      //   noseImage.onload = () => resolve(noseImage);
-      //   noseImage.onerror = reject;
-      //   noseImage.src = `./assets/${selectedNose}.png`;
-      // });
       const mouthImage = await new Promise((resolve, reject) => {
         const mouthImage = new Image();
         mouthImage.onload = () => resolve(mouthImage);
         mouthImage.onerror = reject;
         mouthImage.src = `./assets/${selectedMouth}.png`;
       });
+      // const noseImage = await new Promise((resolve, reject) => {
+      //   const noseImage = new Image();
+      //   noseImage.onload = () => resolve(noseImage);
+      //   noseImage.onerror = reject;
+      //   noseImage.src = `./assets/${selectedNose}.png`;
+      // });
 
       const w = 500;
       const h = 500;
@@ -148,8 +148,8 @@ class Scene extends React.Component {
       (function rerender() {
         const bodyOffset = (~~frameNumber * w) % bodyImage.width;
         const eyesOffset = (~~frameNumber * w) % eyesImage.width;
-        // const noseOffset = (~~frameNumber * w) % noseImage.width;
         const mouthOffset = (~~frameNumber * w) % mouthImage.width;
+        // const noseOffset = (~~frameNumber * w) % noseImage.width;
         const { x, y } = rascal.position;
         ctx.drawImage(
           bodyImage, // image
@@ -173,17 +173,6 @@ class Scene extends React.Component {
           w, // dWidth
           h // dHeight
         );
-        // ctx.drawImage(
-        //   noseImage, // image
-        //   noseOffset, // sx
-        //   0, // sy
-        //   w, // sWidth
-        //   h, // sHeight
-        //   x - w / 2, // dx
-        //   y - h / 2, // dy
-        //   w, // dWidth
-        //   h // dHeight
-        // );
         ctx.drawImage(
           mouthImage, // image
           mouthOffset, // sx
@@ -195,6 +184,17 @@ class Scene extends React.Component {
           w, // dWidth
           h // dHeight
         );
+        // ctx.drawImage(
+        //   noseImage, // image
+        //   noseOffset, // sx
+        //   0, // sy
+        //   w, // sWidth
+        //   h, // sHeight
+        //   x - w / 2, // dx
+        //   y - h / 2, // dy
+        //   w, // dWidth
+        //   h // dHeight
+        // );
         frameNumber += 0.1;
         // Matter.Engine.update(engine);
         animation = requestAnimationFrame(rerender);

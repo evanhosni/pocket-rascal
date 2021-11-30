@@ -4,6 +4,8 @@
     font-family: 'Nanum Pen Script', sans-serif;
     font-size: large;
     overflow: hidden;
+    margin: 0;
+    user-select: none;
 }
 
 /* #canvas_container {
@@ -17,7 +19,7 @@
     border: solid black 3px;
 } */
 
- #rascalCanvas { 
+#rascalCanvas { 
     z-index: -1;
     position: fixed;
     top: -200%;

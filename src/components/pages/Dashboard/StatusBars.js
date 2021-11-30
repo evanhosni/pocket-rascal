@@ -88,7 +88,7 @@ export default function StatusBars({ currentPage, handlePageChange, userId, myRa
 
   var userLvl = myRascal.level;
   const chipLabel = ('LVL ' + userLvl)
-  var happiness = myRascal.happiness
+
 
 
   return (
@@ -104,7 +104,7 @@ export default function StatusBars({ currentPage, handlePageChange, userId, myRa
           </Box>
         </Popper>
         <Box sx={{ flexGrow: 1, border: 5, borderRadius: 5 }}>
-          <BorderLinearProgress variant="determinate" value={happiness} />
+          <BorderLinearProgress variant="determinate" value={myRascal.happiness} />
         </Box>
         <Chip sx={{ color: 'white', background: 'transparent' }} label={chipLabel} />
       </div>
