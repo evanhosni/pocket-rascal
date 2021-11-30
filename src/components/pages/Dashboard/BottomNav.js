@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Animated} from "react-animated-css";
+import Carousel from './Carousel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -18,8 +19,25 @@ import CategoryIcon from '@mui/icons-material/Category';
 
 export default function BottomNav() {
   const [customMenu, setCustomMenu] = React.useState(false);
+  const toggleCustomMenu = () => setCustomMenu(!customMenu);
 
-  const toggleCustomMenu = () => setCustomMenu(!customMenu)
+  const [carousel, setCarousel] = React.useState(false)
+  const toggleCarousel = (event) => {
+    setCarousel(!carousel)
+    console.log(event)
+  }
+
+  const equippedLimbBtn = {
+    padding: 0,
+    cursor:'pointer',
+    background:'white',
+    border: 'solid black 3px',
+    borderRadius: '50%',
+    maxWidth:'40px',
+    maxHeight:'40px',
+    minWidth:'40px',
+    minHeight:'40px'
+  }
 
   const customBtn = {
     padding: 0,
@@ -41,9 +59,59 @@ export default function BottomNav() {
   }
 
   return (
-    <div style={{position: 'absolute', bottom:0, width: '100%'}}>
+    <>
+
+    <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
+      <Box sx={{ width: '98%', maxWidth: 800, mx:'auto', display:'flex', alignItems:'center', justifyContent:'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
+          <div>
+            <Button style={equippedLimbBtn} >
+            </Button>
+          </div>
+          <div>
+            <Button style={equippedLimbBtn} >
+              <img src="./assets/body_fuzzy.png" style={{objectFit: 'cover', height: '33.6px', objectPosition:'-1% center'}}/>
+            </Button>
+          </div>
+          <div>
+            <Button style={equippedLimbBtn} >
+              <img src="./assets/eyes_tired.png" style={{objectFit: 'cover', height: '80px', objectPosition:'0.69% 6.4px'}}/>
+            </Button>
+          </div>
+          <div>
+            <Button style={equippedLimbBtn} >
+              <img src="./assets/nose_disguise.png" style={{objectFit: 'cover', height: '72px', objectPosition:'45% -1.6px'}}/>
+            </Button>
+          </div>
+          <div>
+            <Button style={equippedLimbBtn} >
+              <img src="./assets/null.png" style={{height: '100%'}}/>
+            </Button>
+          </div>
+          <div>
+            <Button style={equippedLimbBtn} >
+              <div style={{display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold'}}>3<span style={{fontSize:'xxx-large'}}>/</span>8</div>
+            </Button>
+          </div>
+          <div>
+            <Button style={equippedLimbBtn} >
+              <div style={{display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold'}}>3<span style={{fontSize:'xxx-large'}}>/</span>8</div>
+            </Button>
+          </div>
+          <div>
+            <Button style={equippedLimbBtn} >
+              <div style={{display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold'}}>3<span style={{fontSize:'xxx-large'}}>/</span>8</div>
+            </Button>
+          </div>
+        </Box>
+    </Animated>
+
+    <div style={{position: 'absolute', bottom:0, left: 0, width: '100%'}}>
+      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
+        <Carousel />
+      </Animated>
+
       <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
-        <Box sx={{ width: '100%', maxWidth: 800, mx:'auto', display:'flex', alignItems:'center', justifyContent:'space-evenly', flexWrap: 'wrap', paddingTop: '20px' }}>
+        <Box sx={{ width: '100%', maxWidth: 800, mx:'auto', display:'flex', alignItems:'center', justifyContent:'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
           <div>
             <Button style={customBtn} >
             </Button>
@@ -51,7 +119,7 @@ export default function BottomNav() {
           </div>
           <div>
             <Button style={customBtn} >
-              <img src="./assets/body.png" style={{objectFit: 'cover', height: '42px', objectPosition:'-1% center'}}/>
+              <img src="./assets/body_fuzzy.png" style={{objectFit: 'cover', height: '42px', objectPosition:'-1% center'}}/>
             </Button>
             <div style={customLabel}>BODY</div>
           </div>
@@ -62,7 +130,7 @@ export default function BottomNav() {
             <div style={customLabel}>EYES</div>
           </div>
           <div>
-            <Button style={customBtn} >
+            <Button style={customBtn} onClick={() => toggleCarousel('nose')} >
               <img src="./assets/nose_disguise.png" style={{objectFit: 'cover', height: '90px', objectPosition:'45% -2px'}}/>
             </Button>
             <div style={customLabel}>NOSE</div>
@@ -102,5 +170,7 @@ export default function BottomNav() {
         </Box>
       </div>
     </div>
+
+    </>
   );
 }
