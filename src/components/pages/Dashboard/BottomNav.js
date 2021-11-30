@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Animated } from "react-animated-css";
+import {Animated} from "react-animated-css";
+import Carousel from './Carousel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -109,8 +110,25 @@ ItemStoreDialogTitle.propTypes = {
 
 export default function BottomNav() {
   const [customMenu, setCustomMenu] = React.useState(false);
+  const toggleCustomMenu = () => setCustomMenu(!customMenu);
 
-  const toggleCustomMenu = () => setCustomMenu(!customMenu)
+  const [carousel, setCarousel] = React.useState(false)
+  const toggleCarousel = (event) => {
+    setCarousel(!carousel)
+    console.log(event)
+  }
+
+  const equippedLimbBtn = {
+    padding: 0,
+    cursor: 'pointer',
+    background: 'white',
+    border: 'solid black 3px',
+    borderRadius: '50%',
+    maxWidth: '40px',
+    maxHeight: '40px',
+    minWidth: '40px',
+    minHeight: '40px'
+  }
 
   const customBtn = {
     padding: 0,
@@ -163,277 +181,328 @@ export default function BottomNav() {
 
 
   return (
-    <div style={{ position: 'absolute', bottom: 0, width: '100%' }}>
-      <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
-        <Box sx={{ width: '100%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '20px' }}>
+    <div>
+
+      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
+        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
           <div>
-            <Button style={customBtn} >
+            <Button style={equippedLimbBtn} >
             </Button>
-            <div style={customLabel}>COLOR</div>
           </div>
           <div>
-            <Button style={customBtn} >
-              <img src="./assets/body_fuzzy.png" style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} />
+            <Button style={equippedLimbBtn} >
+              <img src="./assets/body_fuzzy.png" style={{ objectFit: 'cover', height: '33.6px', objectPosition: '-1% center' }} />
             </Button>
-            <div style={customLabel}>BODY</div>
           </div>
           <div>
-            <Button style={customBtn} >
-              <img src="./assets/eyes_tired.png" style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }} />
+            <Button style={equippedLimbBtn} >
+              <img src="./assets/eyes_tired.png" style={{ objectFit: 'cover', height: '80px', objectPosition: '0.69% 6.4px' }} />
             </Button>
-            <div style={customLabel}>EYES</div>
           </div>
           <div>
-            <Button style={customBtn} >
-              <img src="./assets/nose_disguise.png" style={{ objectFit: 'cover', height: '90px', objectPosition: '45% -2px' }} />
+            <Button style={equippedLimbBtn} >
+              <img src="./assets/nose_disguise.png" style={{ objectFit: 'cover', height: '72px', objectPosition: '45% -1.6px' }} />
             </Button>
-            <div style={customLabel}>NOSE</div>
           </div>
           <div>
-            <Button style={customBtn} >
+            <Button style={equippedLimbBtn} >
               <img src="./assets/null.png" style={{ height: '100%' }} />
             </Button>
-            <div style={customLabel}>MOUTH</div>
           </div>
           <div>
-            <Button style={customBtn} >
+            <Button style={equippedLimbBtn} >
               <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
             </Button>
-            <div style={customLabel}>ADD-ONS</div>
+          </div>
+          <div>
+            <Button style={equippedLimbBtn} >
+              <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
+            </Button>
+          </div>
+          <div>
+            <Button style={equippedLimbBtn} >
+              <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
+            </Button>
           </div>
         </Box>
       </Animated>
 
-      <div style={{ background: 'black', paddingBottom: '15px', paddingTop: '15px', zIndex: 3 }}>
-        <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', background: 'black' }}>
-          <Button aria-label="Food">
-            <FastfoodIcon sx={{ color: 'white' }} />
-          </Button>
-          <Button aria-label="Care" >
-            <ShowerIcon sx={{ color: 'white' }} />
-          </Button>
-          <Button aria-label="Minigame">
-            <VideogameAssetIcon sx={{ color: 'white' }} />
-          </Button>
-          <Button aria-label="Store" onClick={handleClickOpen}>
-            <StoreIcon sx={{ color: 'white' }} />
-          </Button>
-          <Button aria-label="Customize" onClick={toggleCustomMenu}>
-            <EditIcon sx={{ color: 'white' }} />
-          </Button>
-        </Box>
-      </div>
+      <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
+        <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
+          <Carousel />
+        </Animated>
 
-      <div>
-        <ItemStoreDialog
-          onClose={handleClose}
-          aria-labelledby="customized-dialog-title"
-          open={open}
-        >
-          <ItemStoreDialogTitle
-            id="customized-dialog-title"
-            onClose={handleClose}
-          >
-            Unlockable Items
-          </ItemStoreDialogTitle>
-          <DialogContent dividers style={{ display: "flex" }}>
-            <Box sx={{ width: "100%" }}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  variant="scrollable"
-                  scrollButtons
-                  allowScrollButtonsMobile
-                  aria-label="basic tabs example"
-                  sx={{
-                    [`& .${tabsClasses.scrollButtons}`]: {
-                      '&.Mui-disabled': { opacity: 0.3 },
-                    },
-                  }}
-                >
-                  <Tab label="Color" {...a11yProps(0)} />
-                  <Tab label="Body" {...a11yProps(1)} />
-                  <Tab label="Eyes" {...a11yProps(2)} />
-                  <Tab label="Nose" {...a11yProps(3)} />
-                  <Tab label="Mouth" {...a11yProps(4)} />
-                  <Tab label="Items" {...a11yProps(5)} />
-                </Tabs>
-              </Box>
-              <TabPanel value={value} index={0}>
-                Color options go here, nice
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                <ImageList sx={{ width: 400, height: 200 }}>
-                  {bodyData.map((item) => (
-                    <ImageListItem key={item.img}>
-                      <img
-                        src={`${item.img}`}
-                        srcSet={`${item.img}`}
-                        alt={item.title}
-                        style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }}
-                        loading="lazy"
-                      />
-                      <ImageListItemBar
-                        title={item.title}
-                        subtitle={`${item.price}¢`}
-                        actionIcon={
-                          <IconButton
-                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                            aria-label={`info about ${item.title}`}
-                            aria-describedby={id} onClick={openPopover}
-                          >
-                            <AddCircleIcon />
-                          </IconButton>
-                        }
-                      />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                <ImageList sx={{ width: 250, height: 400 }}>
-                  {eyeData.map((item) => (
-                    <ImageListItem key={item.img}>
-                      <img
-                        src={`${item.img}`}
-                        srcSet={`${item.img}`}
-                        alt={item.title}
-                        style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }}
-                        loading="lazy"
-                      />
-                      <ImageListItemBar
-                        title={item.title}
-                        subtitle={`${item.price}¢`}
-                        actionIcon={
-                          <IconButton
-                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                            aria-label={`info about ${item.title}`}
-                            aria-describedby={id} onClick={openPopover}
-                          >
-                            <AddCircleIcon />
-                          </IconButton>
-                        }
-                      />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-              </TabPanel>
-              <TabPanel value={value} index={3}>
-                <ImageList sx={{ width: 300, height: 300 }}>
-                  {noseData.map((item) => (
-                    <ImageListItem key={item.img}>
-                      <img
-                        src={`${item.img}`}
-                        srcSet={`${item.img}`}
-                        alt={item.title}
-                        style={{ objectFit: 'cover', height: '90px', objectPosition: '45% -2px' }}
-                        loading="lazy"
-                      />
-                      <ImageListItemBar
-                        title={item.title}
-                        subtitle={`${item.price}¢`}
-                        actionIcon={
-                          <IconButton
-                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                            aria-label={`info about ${item.title}`}
-                          >
-                            <AddCircleIcon />
-                          </IconButton>
-                        }
-                      />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-              </TabPanel>
-              <TabPanel value={value} index={4}>
-                <ImageList sx={{ width: 300, height: 300 }}>
-                  {mouthData.map((item) => (
-                    <ImageListItem key={item.img}>
-                      <img
-                        src={`${item.img}`}
-                        srcSet={`${item.img}`}
-                        alt={item.title}
-                        style={{ height: '100%' }}
-                        loading="lazy"
-                      />
-                      <ImageListItemBar
-                        title={item.title}
-                        subtitle={`${item.price}¢`}
-                        actionIcon={
-                          <IconButton
-                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                            aria-label={`info about ${item.title}`}
-                          >
-                            <AddCircleIcon />
-                          </IconButton>
-                        }
-                      />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-              </TabPanel>
-              <TabPanel value={value} index={5}>
-                <ImageList sx={{ width: 500, height: 500 }}>
-                  {itemData.map((item) => (
-                    <ImageListItem key={item.img}>
-                      <img
-                        src={`${item.img}`}
-                        srcSet={`${item.img}`}
-                        alt={item.title}
-                        loading="lazy"
-                      />
-                      <ImageListItemBar
-                        title={item.title}
-                        subtitle={`${item.price}¢`}
-                        actionIcon={
-                          <IconButton
-                            sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                            aria-label={`${item.price}`} onClick={openPopover}
-                          >
-                            <AddCircleIcon />
-                          </IconButton>
-                        }
-                      />
-                    </ImageListItem>
-                  ))}
-                </ImageList>
-              </TabPanel>
-            </Box>
-          </DialogContent>
-          <DialogActions>
-            <Button autoFocus onClick={handleClose}>
-              Done
+        <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
+          <Box sx={{ width: '100%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
+            <div>
+              <Button style={customBtn} >
+              </Button>
+              <div style={customLabel}>COLOR</div>
+            </div>
+            <div>
+              <Button style={customBtn} >
+                <img src="./assets/body_fuzzy.png" style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} />
+              </Button>
+              <div style={customLabel}>BODY</div>
+            </div>
+            <div>
+              <Button style={customBtn} >
+                <img src="./assets/eyes_tired.png" style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }} />
+              </Button>
+              <div style={customLabel}>EYES</div>
+            </div>
+            <div>
+              <Button style={customBtn} onClick={() => toggleCarousel('nose')} >
+                <img src="./assets/nose_disguise.png" style={{ objectFit: 'cover', height: '90px', objectPosition: '45% -2px' }} />
+              </Button>
+              <div style={customLabel}>NOSE</div>
+            </div>
+            <div>
+              <Button style={customBtn} >
+                <img src="./assets/null.png" style={{ height: '100%' }} />
+              </Button>
+              <div style={customLabel}>MOUTH</div>
+            </div>
+            <div>
+              <Button style={customBtn} >
+                <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
+              </Button>
+              <div style={customLabel}>ADD-ONS</div>
+            </div>
+          </Box>
+        </Animated>
+
+        <div style={{ background: 'black', paddingBottom: '15px', paddingTop: '15px', zIndex: 3 }}>
+          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', background: 'black' }}>
+            <Button aria-label="Food">
+              <FastfoodIcon sx={{ color: 'white' }} />
             </Button>
-          </DialogActions>
-        </ItemStoreDialog>
+            <Button aria-label="Care" >
+              <ShowerIcon sx={{ color: 'white' }} />
+            </Button>
+            <Button aria-label="Minigame">
+              <VideogameAssetIcon sx={{ color: 'white' }} />
+            </Button>
+            <Button aria-label="Store" onClick={handleClickOpen}>
+              <StoreIcon sx={{ color: 'white' }} />
+            </Button>
+            <Button aria-label="Customize" onClick={toggleCustomMenu}>
+              <EditIcon sx={{ color: 'white' }} />
+            </Button>
+          </Box>
+        </div>
+
+        <div>
+          <ItemStoreDialog
+            onClose={handleClose}
+            aria-labelledby="customized-dialog-title"
+            open={open}
+          >
+            <ItemStoreDialogTitle
+              id="customized-dialog-title"
+              onClose={handleClose}
+            >
+              Unlockable Items
+            </ItemStoreDialogTitle>
+            <DialogContent dividers style={{ display: "flex" }}>
+              <Box sx={{ width: "100%" }}>
+                <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    variant="scrollable"
+                    scrollButtons
+                    allowScrollButtonsMobile
+                    aria-label="basic tabs example"
+                    sx={{
+                      [`& .${tabsClasses.scrollButtons}`]: {
+                        '&.Mui-disabled': { opacity: 0.3 },
+                      },
+                    }}
+                  >
+                    <Tab label="Color" {...a11yProps(0)} />
+                    <Tab label="Body" {...a11yProps(1)} />
+                    <Tab label="Eyes" {...a11yProps(2)} />
+                    <Tab label="Nose" {...a11yProps(3)} />
+                    <Tab label="Mouth" {...a11yProps(4)} />
+                    <Tab label="Items" {...a11yProps(5)} />
+                  </Tabs>
+                </Box>
+                <TabPanel value={value} index={0}>
+                  Color options go here, nice
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                  <ImageList sx={{ width: 400, height: 200 }}>
+                    {bodyData.map((item) => (
+                      <ImageListItem key={item.img}>
+                        <img
+                          src={`${item.img}`}
+                          srcSet={`${item.img}`}
+                          alt={item.title}
+                          style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }}
+                          loading="lazy"
+                        />
+                        <ImageListItemBar
+                          title={item.title}
+                          subtitle={`${item.price}¢`}
+                          actionIcon={
+                            <IconButton
+                              sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                              aria-label={`info about ${item.title}`}
+                              aria-describedby={id} onClick={openPopover}
+                            >
+                              <AddCircleIcon />
+                            </IconButton>
+                          }
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                  <ImageList sx={{ width: 250, height: 400 }}>
+                    {eyeData.map((item) => (
+                      <ImageListItem key={item.img}>
+                        <img
+                          src={`${item.img}`}
+                          srcSet={`${item.img}`}
+                          alt={item.title}
+                          style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }}
+                          loading="lazy"
+                        />
+                        <ImageListItemBar
+                          title={item.title}
+                          subtitle={`${item.price}¢`}
+                          actionIcon={
+                            <IconButton
+                              sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                              aria-label={`info about ${item.title}`}
+                              aria-describedby={id} onClick={openPopover}
+                            >
+                              <AddCircleIcon />
+                            </IconButton>
+                          }
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                  <ImageList sx={{ width: 300, height: 300 }}>
+                    {noseData.map((item) => (
+                      <ImageListItem key={item.img}>
+                        <img
+                          src={`${item.img}`}
+                          srcSet={`${item.img}`}
+                          alt={item.title}
+                          style={{ objectFit: 'cover', height: '90px', objectPosition: '45% -2px' }}
+                          loading="lazy"
+                        />
+                        <ImageListItemBar
+                          title={item.title}
+                          subtitle={`${item.price}¢`}
+                          actionIcon={
+                            <IconButton
+                              sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                              aria-label={`info about ${item.title}`}
+                            >
+                              <AddCircleIcon />
+                            </IconButton>
+                          }
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                </TabPanel>
+                <TabPanel value={value} index={4}>
+                  <ImageList sx={{ width: 300, height: 300 }}>
+                    {mouthData.map((item) => (
+                      <ImageListItem key={item.img}>
+                        <img
+                          src={`${item.img}`}
+                          srcSet={`${item.img}`}
+                          alt={item.title}
+                          style={{ height: '100%' }}
+                          loading="lazy"
+                        />
+                        <ImageListItemBar
+                          title={item.title}
+                          subtitle={`${item.price}¢`}
+                          actionIcon={
+                            <IconButton
+                              sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                              aria-label={`info about ${item.title}`}
+                            >
+                              <AddCircleIcon />
+                            </IconButton>
+                          }
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                </TabPanel>
+                <TabPanel value={value} index={5}>
+                  <ImageList sx={{ width: 500, height: 500 }}>
+                    {itemData.map((item) => (
+                      <ImageListItem key={item.img}>
+                        <img
+                          src={`${item.img}`}
+                          srcSet={`${item.img}`}
+                          alt={item.title}
+                          loading="lazy"
+                        />
+                        <ImageListItemBar
+                          title={item.title}
+                          subtitle={`${item.price}¢`}
+                          actionIcon={
+                            <IconButton
+                              sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                              aria-label={`${item.price}`} onClick={openPopover}
+                            >
+                              <AddCircleIcon />
+                            </IconButton>
+                          }
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                </TabPanel>
+              </Box>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleClose}>
+                Done
+              </Button>
+            </DialogActions>
+          </ItemStoreDialog>
 
 
-        {/* confirm for purchase */}
+          {/* confirm for purchase */}
 
-        <Popover
-          id={id}
-          open={popOpen}
-          anchorEl={anchorEl}
-          onClose={closePopover}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'left',
-          }}
-        >
-          <Typography style={customLabel}>
-            Save this item?
-          </Typography>
-          <ButtonGroup variant="contained" aria-label="outlined button group">
-            <Button onClick={purchaseItem(anchorEl)}>Yes</Button>
-            <Button>No</Button>
-          </ButtonGroup>
-        </Popover>
-      </div>
-    </div >
-  );
+          <Popover
+            id={id}
+            open={popOpen}
+            anchorEl={anchorEl}
+            onClose={closePopover}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+          >
+            <Typography style={customLabel}>
+              Save this item?
+            </Typography>
+            <ButtonGroup variant="contained" aria-label="outlined button group">
+              <Button onClick={purchaseItem(anchorEl)}>Yes</Button>
+              <Button>No</Button>
+            </ButtonGroup>
+          </Popover>
+        </div>
+      </div >
+    </div>
+      );
 }
