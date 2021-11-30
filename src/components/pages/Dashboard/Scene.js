@@ -8,6 +8,7 @@ class Scene extends React.Component {
     super(props);
     this.state = {};
   }
+  
 
   componentDidMount() {
     var Engine = Matter.Engine,
@@ -95,17 +96,17 @@ class Scene extends React.Component {
 
     // var selectedNose = "nose_disguise";
 
-    var limbArray = [
-      { name: "top_hat", size: 2.2 },
-      { name: "arm_glove", size: 3.4 },
-      { name: "arm_glove", size: 3.4 },
+    var limbArray = [...this.props.rascalLimbArray
+      // { name: "top_hat", size: 2.2 },
+      // { name: "arm_glove", size: 3.4 },
+      // { name: "arm_glove", size: 3.4 },
       // { name: "party_hat", size: 1.7 },
       // { name: "cherry", size: 2.5 },
       // { name: "arm_default", size: 2.8 },
       // { name: "arm_default", size: 2.8 },
       // {name: 'waffle_cone', size: 1.7}
     ];
-
+    console.log(limbArray)
     //////////////////////////////////////////////////////////////////////////////////////
 
     var animation;

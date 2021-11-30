@@ -11,7 +11,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import API from '../utils/API'
 
 export default function ContentContainer() {
-  const [currentPage, setCurrentPage] = useState('Dashboard');
+  const [currentPage, setCurrentPage] = useState('Login');
 
   // State variable for current user and token for authentication
   const [userState, setUserState] = useState({
@@ -53,6 +53,7 @@ export default function ContentContainer() {
         const limbDat = await API.loadLimbs(rascalDat.data.id)
         setMyRascal(rascalDat.data)
         setRascalLimbArray(limbDat.data)
+        setCurrentPage("Dashboard")
         // const interval = setInterval(() => {
         //   console.log('This will run every 10 seconds!');
         //   console.log(myRascal)

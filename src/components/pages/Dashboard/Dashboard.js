@@ -49,7 +49,7 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
 
       </div>
       <div>
-        <Scene />
+        <Scene rascalLimbArray={rascalLimbArray}/>
       </div>
       <div>
         <BottomNav />
