@@ -92,7 +92,7 @@ export default function StatusBars({currentPage={currentPage}, handlePageChange=
 
 
   return (
-    <div style={{paddingTop: 10, paddingBottom: 10, display:'flex', alignItems:'center', justifyContent:'space-between', background: 'black'}}>
+    <div style={{ paddingTop: 10, paddingBottom: 10, display:'flex', alignItems:'center', justifyContent:'space-between', background: 'black'}}>
       <div style={{width:'1%', maxWidth:55, textAlign: 'left'}}/>
       <div style={{width: '100%', maxWidth: 500, display:'flex', alignItems:'center', justifyContent:'space-between', marginLeft: '0.5%'}}>
         <IconButton aria-describedby={id} type="button" onClick={handleClick} size="large">
