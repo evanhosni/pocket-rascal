@@ -22,34 +22,45 @@ export default function ContentContainer() {
   const [myRascal, setMyRascal] = useState({
     name: '',
     color: '',
-    level: 0,
-    hunger: 0,
-    love: 0,
-    care: 0
+    level: 50,
+    happiness:50,
+    hunger: 50,
+    love: 50,
+    care: 50
   })
+  const [rascalLimbArray, setRascalLimbArray] = useState([])
 
-  function updateRascal(key, val) {
+  function updateRascalStats(key, val) {
+    console.log("called")
     setMyRascal({
       ...myRascal,
       [key]: val
     })
   }
 
-  // useeffect on page load to check token in local storage for authenticity, then updating current user
+  // useeffect on page load to check token in local storage for authenticity, then updating current user, rascal, limbs
   useEffect(() => {
     const myToken = localStorage.getItem("token");
     if (myToken) {
-      API.verify(myToken).then(res => {
+      API.verify(myToken).then(async res => {
         setToken(myToken)
         setUserState({
           email: res.data.email,
           id: res.data.id
         })
 
-        API.loadRascal(res.data.id).then(rascalData=>{
-          setMyRascal(rascalData)
-        }).catch(err=>console.log(err))
-        setCurrentPage('Scene')
+        const rascalDat = await API.loadRascal(res.data.id)
+        const limbDat = await API.loadLimbs(rascalDat.data.id)
+        setMyRascal(rascalDat.data)
+        setRascalLimbArray(limbDat.data)
+        // const interval = setInterval(() => {
+        //   console.log('This will run every 10 seconds!');
+        //   console.log(myRascal)
+        //   setMyRascal({...myRascal,happiness:myRascal.happiness-2})
+        // }, 10000);
+        // return () => clearInterval(interval);
+        // rascalUpdate()
+
 
       }).catch(err => {
         console.log("BONK!")
@@ -58,9 +69,44 @@ export default function ContentContainer() {
         setCurrentPage('Login')
       })
     }
-    
-  }, [])
 
+  }, [])
+// updates rascal whenever userstate changes
+  useEffect(async () => {
+    if (userState.id) {
+      const rascalDat = await API.loadRascal(userState.id)
+      const limbDat = await API.loadLimbs(rascalDat.data.id)
+      setMyRascal(rascalDat.data)
+      setRascalLimbArray(limbDat.data)
+      
+    }
+  }, [userState])
+
+  // function for happiness decay TODO: add random effects
+  // function decayTimer(){
+  //   console.log("step2")
+  //     console.log(myRascal.happiness)
+  //     console.log(userState)
+      
+
+  //       if(myRascal.happiness > 75){
+  //         updateRascalStats("happiness",myRascal.happiness-3)
+  //         console.log("big sad")
+  //       }else if(myRascal.happiness > 50){
+  //         updateRascalStats("happiness",myRascal.happiness-2)
+  //         console.log("mid sad")
+  //       }else if(myRascal.happiness > 25){
+  //         updateRascalStats("happiness",myRascal.happiness-1)
+  //         console.log("smol sad")
+  //       }
+  // }
+  // function rascalUpdate() {
+
+  //   setInterval(decayTimer,15000)
+  // }
+
+
+// logout function being passed down into navbar
   const logOut = () => {
     localStorage.removeItem("token");
     setToken('');
@@ -68,6 +114,7 @@ export default function ContentContainer() {
       email: '',
       userId: 0
     });
+    setMyRascal({})
     setCurrentPage('Login')
   }
   // This method is checking to see what the value of `currentPage` is. Depending on the value of currentPage, we return the corresponding component to render.
@@ -77,16 +124,6 @@ export default function ContentContainer() {
     }
     if (currentPage === 'Login') {
       return <Login token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
-    }
-    if (currentPage === 'Scene') {
-      return (
-        <div>
-          <Scene />
-          <BottomNav />
-
-        </div>
-
-      )
     }
     if (currentPage === 'CreateRascal') {
       return (
@@ -101,7 +138,7 @@ export default function ContentContainer() {
     if (currentPage === 'Dashboard') {
       return (
         <div>
-          <Dashboard  currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut}/>
+          {myRascal.id&&<Dashboard currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray} />}
         </div>
       )
     }
