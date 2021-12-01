@@ -129,9 +129,9 @@ export default function ContentContainer() {
     if (currentPage === 'CreateRascal') {
       return (
         <div>
-          <CreateRascal />
-          <Scene />
-          <BottomNav />
+          <CreateRascal setMyRascal={setMyRascal} setRascalLimbArray={setRascalLimbArray}/>
+          <Scene currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray}/>
+          <BottomNav myRascal={myRascal}/>
 
         </div>
       )

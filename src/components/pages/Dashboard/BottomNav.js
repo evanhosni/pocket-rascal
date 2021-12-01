@@ -69,7 +69,7 @@ ItemStoreDialogTitle.propTypes = {
 
 
 
-export default function BottomNav({ currentPage, handlePageChange, myRascal }) {
+export default function BottomNav({ currentPage, handlePageChange, myRascal, setRascalLimbArray }) {
   const [customMenu, setCustomMenu] = React.useState(false);
   const toggleCustomMenu = () => setCustomMenu(!customMenu);
 
