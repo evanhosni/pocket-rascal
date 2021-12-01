@@ -13,7 +13,7 @@ const bodyData = [
         img: 'body_curly',
         title: 'Curly Body',
         price: 50,
-        level: 1
+        level: 1, 
     },
     {
         img: 'body_fuzzy',
@@ -82,15 +82,27 @@ export default function StoreBodies(props) {
         </React.Fragment>
     );
 
-    //update the coin value displayed at the bottom of store window
-    const updateCoins = (value) => {
+    const saveNewItem = (item) => {
+        const newItem = {
+            name: item.img,
+            equipped: false,
+            type: 'body'
+        }
+        props.setRascalItemArray([...props.rascalItemArray,newItem])
+        console.log(props.rascalItemArray)
+    }
 
-        if (props.userCoins >= value) {
-            props.setUserCoins(props.userCoins - value);
+    //update the coin value displayed at the bottom of store window
+    const purchaseItem = (item) => {
+
+        if (props.userCoins >= item.price) {
+            props.setUserCoins(props.userCoins - item.price);
             handleClick();
+            saveNewItem(item);
         } else { handleFail() }
 
     }
+
 
     return (
         <div>
@@ -112,7 +124,7 @@ export default function StoreBodies(props) {
                                     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                                     aria-label={`info about ${item.title}`}
                                     onClick={() => {
-                                        updateCoins(item.price)
+                                        purchaseItem(item)
                                     }}
                                 >
                                     <AddCircleIcon />

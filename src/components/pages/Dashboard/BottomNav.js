@@ -69,48 +69,56 @@ ItemStoreDialogTitle.propTypes = {
 
 
 
-export default function BottomNav({ currentPage, handlePageChange, myRascal, setRascalLimbArray }) {
+export default function BottomNav({ currentPage, handlePageChange, myRascal,setMyRascal, rascalItemArray,setRascalItemArray }) {
   const [customMenu, setCustomMenu] = React.useState(false);
-  const toggleCustomMenu = () => setCustomMenu(!customMenu);
+  const toggleCustomMenu = () => {
+    setCustomMenu(!customMenu);
+    if(carousel) {
+      setCarousel(false)
+    }
+    if(equippedItems) {
+      setEquippedItems(false)
+    }
+  }
 
   const [carousel, setCarousel] = React.useState(false)
-  const [equippedLimbs, setEquippedLimbs] = React.useState(false)
+  const [equippedItems, setEquippedItems] = React.useState(false)
   const [prevEvent, setPrevEvent] = React.useState(null)
   const toggleCarousel = (event) => {
     if (carousel && event === prevEvent) {
       setCarousel(false)
-      setEquippedLimbs(false)
+      setEquippedItems(false)
     } else {
       setCarousel(true)
       if (event === 'color') {
 
-        setEquippedLimbs(false)
+        setEquippedItems(false)
       }
       if (event === 'body') {
 
-        setEquippedLimbs(false)
+        setEquippedItems(false)
       }
       if (event === 'eyes') {
 
-        setEquippedLimbs(false)
+        setEquippedItems(false)
       }
       if (event === 'nose') {
 
-        setEquippedLimbs(false)
+        setEquippedItems(false)
       }
       if (event === 'mouth') {
 
-        setEquippedLimbs(false)
+        setEquippedItems(false)
       }
-      if (event === 'limbs') {
+      if (event === 'items') {
 
-        setEquippedLimbs(true)
+        setEquippedItems(true)
       }
     }
     setPrevEvent(event)
   }
 
-  const equippedLimbBtn = {
+  const equippedItemBtn = {
     padding: 0,
     cursor: 'pointer',
     background: 'white',
@@ -160,25 +168,25 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   //conditional rendering for store items
   const [storeContent, setStoreContent] = useState('Bodies')
 
-  const [userCoins, setUserCoins] = useState(50);
+  const [userCoins, setUserCoins] = useState(2500);
   const userLevel = myRascal.level;
   // setUserCoins(25)
 
   const renderStoreContent = () => {
     if (storeContent === 'Bodies') {
-      return <StoreBodies userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
+      return <StoreBodies userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
     }
     if (storeContent === 'Eyes') {
-      return <StoreEyes userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
+      return <StoreEyes userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
     }
     if (storeContent === 'Nose') {
-      return <StoreNose userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
+      return <StoreNose userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
     }
     if (storeContent === 'Mouth') {
-      return <StoreMouth userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
+      return <StoreMouth userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
     }
     if (storeContent === 'Items') {
-      return <StoreItem userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
+      return <StoreItem userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
     }
   }
 
@@ -195,44 +203,46 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   return (
     <div>
 
-      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
+
+    <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItems}>
+      <Box sx={{ width: '98%', maxWidth: 800, mx:'auto', display:'flex', alignItems:'center', justifyContent:'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
+
           <div>
-            <Button style={equippedLimbBtn} >
+            <Button style={equippedItemBtn} >
             </Button>
           </div>
           <div>
-            <Button style={equippedLimbBtn} >
+            <Button style={equippedItemBtn} >
               <img src="./assets/body_fuzzy.png" style={{ objectFit: 'cover', height: '33.6px', objectPosition: '-1% center' }} />
             </Button>
           </div>
           <div>
-            <Button style={equippedLimbBtn} >
+            <Button style={equippedItemBtn} >
               <img src="./assets/eyes_tired.png" style={{ objectFit: 'cover', height: '80px', objectPosition: '0.69% 6.4px' }} />
             </Button>
           </div>
           <div>
-            <Button style={equippedLimbBtn} >
+            <Button style={equippedItemBtn} >
               <img src="./assets/nose_disguise.png" style={{ objectFit: 'cover', height: '72px', objectPosition: '45% -1.6px' }} />
             </Button>
           </div>
           <div>
-            <Button style={equippedLimbBtn} >
+            <Button style={equippedItemBtn} >
               <img src="./assets/null.png" style={{ height: '100%' }} />
             </Button>
           </div>
           <div>
-            <Button style={equippedLimbBtn} >
+            <Button style={equippedItemBtn} >
               <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
             </Button>
           </div>
           <div>
-            <Button style={equippedLimbBtn} >
+            <Button style={equippedItemBtn} >
               <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
             </Button>
           </div>
           <div>
-            <Button style={equippedLimbBtn} >
+            <Button style={equippedItemBtn} >
               <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
             </Button>
           </div>
@@ -241,7 +251,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
         <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-          <Carousel prevEvent={prevEvent} />
+          <Carousel prevEvent={prevEvent} rascalItemArray setRascalItemArray />
         </Animated>
 
         <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
@@ -276,7 +286,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
               <div style={customLabel}>MOUTH</div>
             </div>
             <div>
-              <Button style={customBtn} onClick={() => toggleCarousel('limbs')} >
+              <Button style={customBtn} onClick={() => toggleCarousel('items')} >
                 <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
               </Button>
               <div style={customLabel}>ADD-ONS</div>

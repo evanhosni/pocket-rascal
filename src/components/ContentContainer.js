@@ -28,7 +28,7 @@ export default function ContentContainer() {
     love: 50,
     care: 50
   })
-  const [rascalLimbArray, setRascalLimbArray] = useState([])
+  const [rascalItemArray, setRascalItemArray] = useState([])
 
   function updateRascalStats(key, val) {
     console.log("called")
@@ -38,7 +38,7 @@ export default function ContentContainer() {
     })
   }
 
-  // useeffect on page load to check token in local storage for authenticity, then updating current user, rascal, limbs
+  // useeffect on page load to check token in local storage for authenticity, then updating current user, rascal, items
   useEffect(() => {
     const myToken = localStorage.getItem("token");
     if (myToken) {
@@ -50,9 +50,9 @@ export default function ContentContainer() {
         })
 
         const rascalDat = await API.loadRascal(res.data.id)
-        const limbDat = await API.loadLimbs(rascalDat.data.id)
+        const itemDat = await API.loadItems(rascalDat.data.id)
         setMyRascal(rascalDat.data)
-        setRascalLimbArray(limbDat.data)
+        setRascalItemArray(itemDat.data)
         setCurrentPage("Dashboard")
         // const interval = setInterval(() => {
         //   console.log('This will run every 10 seconds!');
@@ -76,9 +76,9 @@ export default function ContentContainer() {
   useEffect(async () => {
     if (userState.id) {
       const rascalDat = await API.loadRascal(userState.id)
-      const limbDat = await API.loadLimbs(rascalDat.data.id)
+      const itemDat = await API.loadItems(rascalDat.data.id)
       setMyRascal(rascalDat.data)
-      setRascalLimbArray(limbDat.data)
+      setRascalItemArray(itemDat.data)
       
     }
   }, [userState])
@@ -139,7 +139,7 @@ export default function ContentContainer() {
     if (currentPage === 'Dashboard') {
       return (
         <div>
-          {myRascal.id&&<Dashboard currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray} />}
+          {myRascal.id&&<Dashboard currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />}
         </div>
       )
     }

@@ -1,14 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import Slider from 'infinite-react-carousel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import "./carousel.css"
 
-export default function Carousel(prevEvent) {
+export default function Carousel({prevEvent}) {
 
-    const previousEvent = prevEvent;
-
-    const settings = {
+    const settings =  {
         centerPadding: 35,
         centerMode: true,
         duration: 75,
@@ -23,129 +21,111 @@ export default function Carousel(prevEvent) {
 
     const customBtn = {
         padding: 0,
-        cursor: 'pointer',
-        background: 'white',
+        cursor:'pointer',
+        background:'white',
         border: 'solid black 3px',
         borderRadius: '50%',
     }
 
-    console.log(previousEvent)
+    console.log(prevEvent)
 
-    const colorArray = [0, 1, 2, 3]
-    const bodyArray = [0, 1, 2, 3]
-    const eyesArray = [0, 1, 2, 3]
-    const noseArray = [0, 1, 2, 3]
-    const mouthArray = [0, 1, 2, 3]
-    const limbsArray = [0, 1, 2, 3]
+    const colorArray = [0,1,2,3]
+    const bodyArray = [0,1,2,3]
+    const eyesArray = [0,1,2,3]
+    const noseArray = [0,1,2,3]
+    const mouthArray = [0,1,2,3]
+    const itemsArray = [0,1,2,3]
 
+    // let array
 
-    function chooseArray(prevEvent) {
-        switch (prevEvent) {
-            case 'color':
-                return (
-                    <div>
-                        {colorArray.map((object, i) =>
-                            <div style={customDiv} obj={object} key={i}>
-                                <Button style={customBtn} ></Button>
-                            </div>
-                        )}
-                    </div>
-                );
-            case 'body':
-                return (
-                    <div>
-                        {bodyArray.map((object, i) =>
-                            <div style={customDiv} obj={object} key={i}>
-                                <Button style={customBtn} />
-                            </div>
-                        )}
-                    </div>
-                )
-            default:
-                return (
-                    <div></div>
-                )
+    // const [content, setContent] = React.useState('bruh')
+
+    // if(prevEvent === 'color') {
+    //     setContent('color')
+    // }
 
 
-        }
+    //     return (
+    //         <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}}>
+    //             <Slider { ...settings }>
+    //                 {colorArray.map((object, i) =>
+    //                     <div style={customDiv} obj={object} key={i}>
+    //                         <Button style={customBtn} ></Button>
+    //                     </div> 
+    //                 )}
+    //                 {/* <div>bruh</div>
+    //                 <div>bruhf</div>
+    //                 <div>brugfh</div> */}
+    //                 {/* <div>{content}</div> */}
 
+    //             </Slider>
+    //         </div>
+    //     )
+    // }
+    const color = () => {
+        return  colorArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div> )
     }
 
-    const colors = (
-        colorArray.map((object, i) =>
-            <div style={customDiv} obj={object} key={i}>
-                <Button style={customBtn} ></Button>
-            </div>
-        )
+    const body =() => {
+        return  bodyArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div>)
+    }
 
-    )
+    const eyes =() => {
+        return  eyesArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div>)
+    }
 
-    const body = (
-        bodyArray.map((object, i) =>
-                            <div style={customDiv} obj={object} key={i}>
-                                <Button style={customBtn} />
-                            </div>
-                        )
-    )
+    const nose =() => {
+        return  noseArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div>)
+    }
+
+    const mouth =() => {
+        return  mouthArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div>)
+    }
+
+    const items =() => {
+        return  itemsArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div>)
+    }
 
 
-    return (
-        <div style={{ width: '70%', maxWidth: '400px', margin: 'auto' }}>
-            <Slider {...settings}>
-
-                {prevEvent === 'color' ? colors : prevEvent === 'body' ? body : (<div></div>) }
-
-                {colors}
-
-            </Slider>
-        </div>
+    return(
+    <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}}>
+        <Slider { ...settings }>
+            {prevEvent == 'color' ? (color())
+            : prevEvent == 'body' ? (body())
+            : prevEvent == 'eyes' ? (eyes())
+            : prevEvent == 'nose' ? (nose())
+            : prevEvent == 'mouth' ? (mouth())
+            : prevEvent == 'items' ? (items())
+            :(<div/>)}
+        </Slider>
+    </div>
     )
 }
 
 
-// if (prevEvent === 'color') {
-//     console.log('doin this', prevEvent)
-//     return (
-//         <div style={{ width: '70%', maxWidth: '400px', margin: 'auto' }}>
-//             <Slider {...settings}>
-//                 {colorArray.map((object, i) =>
-//                     <div style={customDiv} obj={object} key={i}>
-//                         <Button style={customBtn} />
-//                     </div>
-//                 )}
-//             </Slider>
-//         </div>
-//     )
-// } else if (prevEvent === 'body') {
-//     console.log('doin this', prevEvent)
-//     return (
-//         <div style={{ width: '70%', maxWidth: '400px', margin: 'auto' }}>
-//             <Slider {...settings}>
-//                 {bodyArray.map((object, i) =>
-//                     <div style={customDiv} obj={object} key={i}>
-//                         <Button style={customBtn} />
-//                     </div>
-//                 )}
-//             </Slider>
-//         </div>
-//     );
-// } else {
-//     console.log('doin this', prevEvent)
-//     // for some reason there must be a slider returned otherwise formatting issue
-//     return (
-//         <div style={{ width: '70%', maxWidth: '400px', margin: 'auto' }}>
-//             <Slider {...settings}>
-//                 <div />
-//             </Slider>
-//         </div>
-//     )
-// }
-
 
 // }
 
 
-/* <div style={customDiv}>
+            {/* <div style={customDiv}>
                 <Button style={customBtn} >
                 <img src="./assets/body_fuzzy.png" className="body" style={{objectFit: 'cover', height: '33.6px', objectPosition:'-1% center'}}/>
                 </Button>
@@ -169,4 +149,4 @@ export default function Carousel(prevEvent) {
                 <Button style={customBtn} >
                 <div style={{display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold'}}>3<span style={{fontSize:'xxx-large'}}>/</span>8</div>
                 </Button>
-            </div> */
+            </div> */}

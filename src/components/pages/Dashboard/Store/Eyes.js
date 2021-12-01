@@ -89,12 +89,22 @@ export default function StoreEyes(props) {
         </React.Fragment>
     );
 
-    //update the coin value displayed at the bottom of store window
-    const updateCoins = (value) => {
+    const saveNewItem = (item) => {
+        const newItem = {
+            name: item.img,
+            equipped: false,
+            type: 'eyes'
+        }
+        props.setRascalItemArray([...props.rascalItemArray,newItem])
+        console.log(props.rascalItemArray)
+    }
 
-        if (props.userCoins >= value) {
-            props.setUserCoins(props.userCoins - value);
+    //update the coin value displayed at the bottom of store window
+    const purchaseItem = (item) => {
+        if (props.userCoins >= item.price) {
+            props.setUserCoins(props.userCoins - item.price);
             handleClick();
+            saveNewItem(item);
         } else { handleFail() }
 
     }
@@ -119,7 +129,7 @@ export default function StoreEyes(props) {
                                     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                                     aria-label={`info about ${item.title}`}
                                     onClick={() => {
-                                        updateCoins(item.price)
+                                        purchaseItem(item)
                                     }
                                     }
 
