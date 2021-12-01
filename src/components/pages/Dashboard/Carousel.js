@@ -34,7 +34,7 @@ export default function Carousel({prevEvent}) {
     const eyesArray = [0,1,2,3]
     const noseArray = [0,1,2,3]
     const mouthArray = [0,1,2,3]
-    const limbsArray = [0,1,2,3]
+    const itemsArray = [0,1,2,3]
 
     // let array
 
@@ -97,8 +97,8 @@ export default function Carousel({prevEvent}) {
         </div>)
     }
 
-    const limbs =() => {
-        return  limbsArray.map((object, i) =>
+    const items =() => {
+        return  itemsArray.map((object, i) =>
         <div style={customDiv} obj={object} key={i}>
             <Button style={customBtn} />
         </div>)
@@ -113,7 +113,7 @@ export default function Carousel({prevEvent}) {
             : prevEvent == 'eyes' ? (eyes())
             : prevEvent == 'nose' ? (nose())
             : prevEvent == 'mouth' ? (mouth())
-            : prevEvent == 'limbs' ? (limbs())
+            : prevEvent == 'items' ? (items())
             :(<div/>)}
         </Slider>
     </div>

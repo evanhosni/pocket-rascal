@@ -5,7 +5,7 @@ import BottomNav from './BottomNav';
 import Scene from './Scene'
 import API from '../../../utils/API'
 
-export default function Dashboard({currentPage,handlePageChange,userId,myRascal,setMyRascal, rascalLimbArray,setRascalLimbArray,logOut}) {
+export default function Dashboard({currentPage,handlePageChange,userId,myRascal,setMyRascal, rascalItemArray,setRascalItemArray,logOut}) {
   let newRascal
   useEffect(() => {
     console.log(myRascal)
@@ -23,11 +23,11 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
     }, 15000);
 
     const saveTimer = setInterval(()=> {
-      // UNCOMMNET OUT FOR RASCAL AND LIMB UPLOADING
-      // let newLimbArray = [...rascalLimbArray]
+      // UNCOMMNET OUT FOR RASCAL AND ITEM UPLOADING
+      // let newItemArray = [...rascalItemArray]
       // API.updateRascal(newRascal)
-      // for (const limb of newLimbArray) {
-      //   API.updateLimbs(limb.id,limb)
+      // for (const item of newItemArray) {
+      //   API.updateItems(item.id,item)
       // }
     },60000)
     
@@ -49,10 +49,10 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
 
       </div>
       <div>
-        <Scene rascalLimbArray={rascalLimbArray}/>
+        <Scene rascalItemArray={rascalItemArray}/>
       </div>
       <div>
-        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} myRascal={myRascal} setMyRascal={setMyRascal} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray} />
+        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} myRascal={myRascal} setMyRascal={setMyRascal} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
       </div>
       
     </div>
