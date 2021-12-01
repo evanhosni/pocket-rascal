@@ -13,7 +13,7 @@ const bodyData = [
         img: 'body_curly',
         title: 'Curly Body',
         price: 50,
-        level: 0
+        level: 1
     },
     {
         img: 'body_fuzzy',

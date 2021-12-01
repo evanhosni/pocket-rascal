@@ -169,16 +169,16 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal }) {
       return <StoreBodies userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
     }
     if (storeContent === 'Eyes') {
-      return <StoreEyes />
+      return <StoreEyes userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
     }
     if (storeContent === 'Nose') {
-      return <StoreNose />
+      return <StoreNose userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
     }
     if (storeContent === 'Mouth') {
-      return <StoreMouth />
+      return <StoreMouth userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
     }
     if (storeContent === 'Items') {
-      return <StoreItem />
+      return <StoreItem userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
     }
   }
 

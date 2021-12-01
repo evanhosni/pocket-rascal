@@ -28,15 +28,12 @@ const eyeData = [
     }
 ]
 
-function purchaseItem(image, price) {
-    //function here to reduce total amount of coins after a purchase 
-    console.log(image, price)
-
-}
 
 
-export default function StoreEyes() {
 
+export default function StoreEyes(props) {
+
+    //functions for snackbar for successful purchase from store 
     const [open, setOpen] = React.useState(false);
 
     const handleClick = () => {
@@ -64,6 +61,44 @@ export default function StoreEyes() {
         </React.Fragment>
     );
 
+    //functions for snackbar for failed purchase from store
+    const [openFail, setOpenFail] = React.useState(false);
+
+    const handleFail = () => {
+        setOpenFail(true);
+    }
+
+    const handleCloseFail = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenFail(false);
+    };
+
+    const actionFail = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleCloseFail}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
+
+    //update the coin value displayed at the bottom of store window
+    const updateCoins = (value) => {
+
+        if (props.userCoins >= value) {
+            props.setUserCoins(props.userCoins - value);
+            handleClick();
+        } else { handleFail() }
+
+    }
+
     return (
         <div>
             <ImageList sx={{ width: '95%', height: 400 }} cols={2} rowHeight={164} style={{ overflow: 'scroll', padding: 20 }}>
@@ -84,8 +119,7 @@ export default function StoreEyes() {
                                     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                                     aria-label={`info about ${item.title}`}
                                     onClick={() => {
-                                        purchaseItem(item.img, item.price);
-                                        handleClick()
+                                        updateCoins(item.price)
                                     }
                                     }
 
@@ -103,6 +137,13 @@ export default function StoreEyes() {
                 onClose={handleClose}
                 message="Item Saved"
                 action={action}
+            />
+            <Snackbar
+                open={openFail}
+                autoHideDuration={6000}
+                onClose={handleCloseFail}
+                message="You need more coins for this item!"
+                action={actionFail}
             />
         </div>
 
