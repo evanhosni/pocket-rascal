@@ -69,7 +69,7 @@ ItemStoreDialogTitle.propTypes = {
 
 
 
-export default function BottomNav({ currentPage, handlePageChange, myRascal }) {
+export default function BottomNav({ currentPage, handlePageChange, myRascal,setMyRascal, rascalLimbArray,setRascalLimbArray }) {
   const [customMenu, setCustomMenu] = React.useState(false);
   const toggleCustomMenu = () => setCustomMenu(!customMenu);
 
@@ -160,25 +160,25 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal }) {
   //conditional rendering for store items
   const [storeContent, setStoreContent] = useState('Bodies')
 
-  const [userCoins, setUserCoins] = useState(50);
+  const [userCoins, setUserCoins] = useState(2500);
   const userLevel = myRascal.level;
   // setUserCoins(25)
 
   const renderStoreContent = () => {
     if (storeContent === 'Bodies') {
-      return <StoreBodies userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
+      return <StoreBodies userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray} />
     }
     if (storeContent === 'Eyes') {
-      return <StoreEyes userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
+      return <StoreEyes userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray} />
     }
     if (storeContent === 'Nose') {
-      return <StoreNose userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
+      return <StoreNose userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray} />
     }
     if (storeContent === 'Mouth') {
-      return <StoreMouth userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
+      return <StoreMouth userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray} />
     }
     if (storeContent === 'Items') {
-      return <StoreItem userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
+      return <StoreItem userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray} />
     }
   }
 

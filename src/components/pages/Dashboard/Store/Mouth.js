@@ -76,15 +76,26 @@ export default function StoreMouth(props) {
         </React.Fragment>
     );
 
-    //update the coin value displayed at the bottom of store window
-    const updateCoins = (value) => {
+    const saveNewItem = (item) => {
+        const newItem = {
+            name: item.img,
+            equipped: false,
+            type: 'mouth'
+        }
 
-        if (props.userCoins >= value) {
-            props.setUserCoins(props.userCoins - value);
+        props.setRascalLimbArray([...props.rascalLimbArray,newItem])
+    }
+
+    //update the coin value displayed at the bottom of store window
+    const purchaseItem = (item) => {
+        if (props.userCoins >= item.price) {
+            props.setUserCoins(props.userCoins - item.price);
             handleClick();
+            saveNewItem(item);
         } else { handleFail() }
 
     }
+
 
     return (
 
@@ -108,7 +119,7 @@ export default function StoreMouth(props) {
                                     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                                     aria-label={`info about ${item.title}`}
                                     onClick={() => {
-                                        updateCoins(item.price)
+                                        purchaseItem(item)
                                     }
                                     }
                                 >

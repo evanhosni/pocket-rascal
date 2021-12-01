@@ -13,37 +13,43 @@ const itemData = [
         img: 'cherry',
         title: 'Cherry Hat',
         price: 50,
-        level: 0
+        level: 0,
+        size: 2.5
     },
     {
         img: 'party_hat',
         title: 'Party Hat',
         price: 50,
-        level: 0
+        level: 0,
+        size: 1.7
     },
     {
         img: 'top_hat',
         title: 'Top Hat',
         price: 50,
-        level: 0
+        level: 0,
+        size: 2.2
     },
     {
         img: 'waffle_cone',
         title: 'Waffle Cone',
         price: 50,
-        level: 0
+        level: 0,
+        size: 1.7
     },
     {
         img: 'arm_glove',
         title: 'Gloved Arms',
         price: 50,
-        level: 0
+        level: 0,
+        size: 3.4
     },
     {
         img: 'arm_default',
         title: 'Stick Arms',
         price: 25,
-        level: 0
+        level: 0,
+        size: 2.8
     }
 ]
 
@@ -108,15 +114,27 @@ export default function StoreItem(props) {
         </React.Fragment>
     );
 
-    //update the coin value displayed at the bottom of store window
-    const updateCoins = (value) => {
+    const saveNewItem = (item) => {
+        const newItem = {
+            name: item.img,
+            size: item.size,
+            equipped: false,
+            type: 'item'
+        }
 
-        if (props.userCoins >= value) {
-            props.setUserCoins(props.userCoins - value);
+        props.setRascalLimbArray([...props.rascalLimbArray,newItem])
+    }
+
+    //update the coin value displayed at the bottom of store window
+    const purchaseItem = (item) => {
+        if (props.userCoins >= item.price) {
+            props.setUserCoins(props.userCoins - item.price);
             handleClick();
+            saveNewItem(item);
         } else { handleFail() }
 
     }
+
 
     return (
         <div>
@@ -136,7 +154,7 @@ export default function StoreItem(props) {
                                 <IconButton
                                     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                                     onClick={() => {
-                                        updateCoins(item.price)
+                                        purchaseItem(item)
                                     }
                                     }
 
