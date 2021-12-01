@@ -22,6 +22,8 @@ import StoreEyes from './Store/Eyes';
 import StoreNose from './Store/Nose';
 import StoreMouth from './Store/Mouth';
 import StoreItem from './Store/Items'
+import SavingsIcon from '@mui/icons-material/Savings';
+import Stack from '@mui/material/Stack';
 
 
 
@@ -67,7 +69,7 @@ ItemStoreDialogTitle.propTypes = {
 
 
 
-export default function BottomNav({ currentPage, handlePageChange }) {
+export default function BottomNav({ currentPage, handlePageChange, myRascal }) {
   const [customMenu, setCustomMenu] = React.useState(false);
   const toggleCustomMenu = () => setCustomMenu(!customMenu);
 
@@ -158,9 +160,13 @@ export default function BottomNav({ currentPage, handlePageChange }) {
   //conditional rendering for store items
   const [storeContent, setStoreContent] = useState('Bodies')
 
+  const [userCoins, setUserCoins] = useState(50);
+  const userLevel = myRascal.level;
+  // setUserCoins(25)
+
   const renderStoreContent = () => {
     if (storeContent === 'Bodies') {
-      return <StoreBodies />
+      return <StoreBodies userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
     }
     if (storeContent === 'Eyes') {
       return <StoreEyes />
@@ -319,9 +325,14 @@ export default function BottomNav({ currentPage, handlePageChange }) {
               {renderStoreContent()}
             </DialogContent>
             <DialogActions>
-              <Button autoFocus onClick={handleClose}>
-                Done
-              </Button>
+              <Stack direction="row" spacing={2}>
+                <Button disabled variant="outlined" startIcon={<SavingsIcon />}>
+                  {`${userCoins}¢`}
+                </Button>
+                <Button autoFocus onClick={handleClose}>
+                  Done
+                </Button>
+              </Stack>
             </DialogActions>
           </ItemStoreDialog>
         </div>

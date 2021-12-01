@@ -23,15 +23,10 @@ const bodyData = [
     }
 ]
 
-function purchaseItem(image, price) {
-    const itemSrc = image;
-    const itemPrice = price;
-    console.log(itemPrice,itemSrc)
 
-}
+export default function StoreBodies(props) {
 
-export default function StoreBodies() {
-
+    //functions for snackbar for successful purchase from store 
     const [open, setOpen] = React.useState(false);
 
     const handleClick = () => {
@@ -58,6 +53,44 @@ export default function StoreBodies() {
             </IconButton>
         </React.Fragment>
     );
+    
+    //functions for snackbar for failed purchase from store
+    const [openFail, setOpenFail] = React.useState(false);
+
+    const handleFail = () => {
+        setOpenFail(true);
+    }
+
+    const handleCloseFail = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenFail(false);
+    };
+
+    const actionFail = (
+        <React.Fragment>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleCloseFail}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
+
+    //update the coin value displayed at the bottom of store window
+    const updateCoins = (value) => {
+
+        if (props.userCoins >= value) {
+            props.setUserCoins(props.userCoins - value);
+            handleClick();
+        } else { handleFail() }
+
+    }
 
     return (
         <div>
@@ -79,10 +112,8 @@ export default function StoreBodies() {
                                     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                                     aria-label={`info about ${item.title}`}
                                     onClick={() => {
-                                        purchaseItem(item.img, item.price);
-                                        handleClick()
-                                    }
-                                    }
+                                        updateCoins(item.price)
+                                    }}
                                 >
                                     <AddCircleIcon />
                                 </IconButton>
@@ -95,10 +126,17 @@ export default function StoreBodies() {
                 open={open}
                 autoHideDuration={6000}
                 onClose={handleClose}
-                message="Item Saved"
+                message='Item Saved'
                 action={action}
             />
-        </div>
+            <Snackbar
+                open={openFail}
+                autoHideDuration={6000}
+                onClose={handleCloseFail}
+                message="You need more coins for this item!"
+                action={actionFail}
+            />
+        </div >
     )
 
 }
