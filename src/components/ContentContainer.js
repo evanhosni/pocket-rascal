@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Navigation from './Navigation';
+// import Navigation from './Navigation';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Scene from './pages/Dashboard/Scene';
 import MiniPlayground from './pages/Minigame/index';
 import CreateRascal from './pages/CreateRascal/index'
 import BottomNav from './pages/Dashboard/BottomNav'
-import StatusBars from './pages/Dashboard/StatusBars'
+// import StatusBars from './pages/Dashboard/StatusBars'
 import Dashboard from './pages/Dashboard/Dashboard'
 import API from '../utils/API'
 

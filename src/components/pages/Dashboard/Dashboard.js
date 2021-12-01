@@ -4,7 +4,7 @@ import StatusBar from './StatusBars'
 import BottomNav from './BottomNav';
 import Scene from './Scene'
 
-export default function Dashboard({currentPage={currentPage}, handlePageChange={handlePageChange}}) {
+export default function Dashboard({currentPage,handlePageChange}) {
   return (
     <div>
       <div>
@@ -15,7 +15,7 @@ export default function Dashboard({currentPage={currentPage}, handlePageChange={
         <Scene />
       </div>
       <div>
-        <BottomNav />
+        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} />
       </div>
       
     </div>
