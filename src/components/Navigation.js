@@ -156,7 +156,6 @@ function Navigation({ currentPage, handlePageChange, userId, logOut }) {
             onClose={handleClose}
           >
         <MenuItem onClick={() => handlePageChange('CreateRascal')} color='inherit'>Create</MenuItem>
-        <MenuItem onClick={() => handlePageChange('Scene')} color='inherit'>Scene</MenuItem>
         <MenuItem onClick={() => handlePageChange('Minigame')} color='inherit'>Minigame</MenuItem>
         <MenuItem onClick={() => handlePageChange('Dashboard')} color='inherit'>Dash</MenuItem>
         {!userId && <MenuItem onClick={() => handlePageChange('Login')} color="inherit">Login</MenuItem>}

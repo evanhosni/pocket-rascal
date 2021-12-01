@@ -44,7 +44,7 @@ export default function SignUp(props) {
         })
         props.setToken(res.data.token)
         localStorage.setItem("token",res.data.token)
-        props.handlePageChange('Scene')
+        props.handlePageChange('Dashboard')
       }).catch(err=>{
         alert("Signup Failed")
         console.log(err);
