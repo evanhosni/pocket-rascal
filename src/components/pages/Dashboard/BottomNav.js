@@ -71,7 +71,15 @@ ItemStoreDialogTitle.propTypes = {
 
 export default function BottomNav({ currentPage, handlePageChange, myRascal,setMyRascal, rascalLimbArray,setRascalLimbArray }) {
   const [customMenu, setCustomMenu] = React.useState(false);
-  const toggleCustomMenu = () => setCustomMenu(!customMenu);
+  const toggleCustomMenu = () => {
+    setCustomMenu(!customMenu);
+    if(carousel) {
+      setCarousel(false)
+    }
+    if(equippedLimbs) {
+      setEquippedLimbs(false)
+    }
+  }
 
   const [carousel, setCarousel] = React.useState(false)
   const [equippedLimbs, setEquippedLimbs] = React.useState(false)
@@ -195,8 +203,10 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal,setM
   return (
     <div>
 
-      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
+
+    <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedLimbs}>
+      <Box sx={{ width: '98%', maxWidth: 800, mx:'auto', display:'flex', alignItems:'center', justifyContent:'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
+
           <div>
             <Button style={equippedLimbBtn} >
             </Button>
