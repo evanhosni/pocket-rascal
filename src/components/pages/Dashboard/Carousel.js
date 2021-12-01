@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import Slider from 'infinite-react-carousel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import "./carousel.css"
 
-export default class Carousel extends Component {
-  render() {
+export default function Carousel({prevEvent}) {
 
     const settings =  {
         centerPadding: 35,
@@ -28,14 +27,105 @@ export default class Carousel extends Component {
         borderRadius: '50%',
     }
 
-    return (
-      <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}}>
+    console.log(prevEvent)
+
+    const colorArray = [0,1,2,3]
+    const bodyArray = [0,1,2,3]
+    const eyesArray = [0,1,2,3]
+    const noseArray = [0,1,2,3]
+    const mouthArray = [0,1,2,3]
+    const limbsArray = [0,1,2,3]
+
+    // let array
+
+    // const [content, setContent] = React.useState('bruh')
+
+    // if(prevEvent === 'color') {
+    //     setContent('color')
+    // }
+
+
+    //     return (
+    //         <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}}>
+    //             <Slider { ...settings }>
+    //                 {colorArray.map((object, i) =>
+    //                     <div style={customDiv} obj={object} key={i}>
+    //                         <Button style={customBtn} ></Button>
+    //                     </div> 
+    //                 )}
+    //                 {/* <div>bruh</div>
+    //                 <div>bruhf</div>
+    //                 <div>brugfh</div> */}
+    //                 {/* <div>{content}</div> */}
+
+    //             </Slider>
+    //         </div>
+    //     )
+    // }
+    const color = () => {
+        return  colorArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div> )
+    }
+
+    const body =() => {
+        return  bodyArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div>)
+    }
+
+    const eyes =() => {
+        return  eyesArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div>)
+    }
+
+    const nose =() => {
+        return  noseArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div>)
+    }
+
+    const mouth =() => {
+        return  mouthArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div>)
+    }
+
+    const limbs =() => {
+        return  limbsArray.map((object, i) =>
+        <div style={customDiv} obj={object} key={i}>
+            <Button style={customBtn} />
+        </div>)
+    }
+
+
+    return(
+    <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}}>
         <Slider { ...settings }>
-            <div style={customDiv}>
-                <Button style={customBtn} className="bruh" >
-                </Button>
-            </div>
-            <div style={customDiv}>
+            {prevEvent == 'color' ? (color())
+            : prevEvent == 'body' ? (body())
+            : prevEvent == 'eyes' ? (eyes())
+            : prevEvent == 'nose' ? (nose())
+            : prevEvent == 'mouth' ? (mouth())
+            : prevEvent == 'limbs' ? (limbs())
+            :(<div/>)}
+        </Slider>
+    </div>
+    )
+}
+
+
+
+// }
+
+
+            {/* <div style={customDiv}>
                 <Button style={customBtn} >
                 <img src="./assets/body_fuzzy.png" className="body" style={{objectFit: 'cover', height: '33.6px', objectPosition:'-1% center'}}/>
                 </Button>
@@ -59,9 +149,4 @@ export default class Carousel extends Component {
                 <Button style={customBtn} >
                 <div style={{display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold'}}>3<span style={{fontSize:'xxx-large'}}>/</span>8</div>
                 </Button>
-            </div>
-        </Slider>
-      </div>
-    );
-  }
-}
+            </div> */}

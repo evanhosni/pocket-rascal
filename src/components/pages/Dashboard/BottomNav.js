@@ -19,12 +19,51 @@ import CategoryIcon from '@mui/icons-material/Category';
 
 export default function BottomNav() {
   const [customMenu, setCustomMenu] = React.useState(false);
-  const toggleCustomMenu = () => setCustomMenu(!customMenu);
+  const toggleCustomMenu = () => {
+    setCustomMenu(!customMenu);
+    if(carousel) {
+      setCarousel(false)
+    }
+    if(equippedLimbs) {
+      setEquippedLimbs(false)
+    }
+  }
 
   const [carousel, setCarousel] = React.useState(false)
+  const [equippedLimbs, setEquippedLimbs] = React.useState(false)
+  const [prevEvent, setPrevEvent] = React.useState(null)
   const toggleCarousel = (event) => {
-    setCarousel(!carousel)
-    console.log(event)
+    if (carousel && event === prevEvent) {
+      setCarousel(false)
+      setEquippedLimbs(false)
+    } else {
+      setCarousel(true)
+      if (event === 'color') {
+
+        setEquippedLimbs(false)
+      }
+      if (event === 'body') {
+        
+        setEquippedLimbs(false)
+      }
+      if (event === 'eyes') {
+        
+        setEquippedLimbs(false)
+      }
+      if (event === 'nose') {
+        
+        setEquippedLimbs(false)
+      }
+      if (event === 'mouth') {
+        
+        setEquippedLimbs(false)
+      }
+      if (event === 'limbs') {
+        
+        setEquippedLimbs(true)
+      }
+    }
+    setPrevEvent(event)
   }
 
   const equippedLimbBtn = {
@@ -61,7 +100,7 @@ export default function BottomNav() {
   return (
     <>
 
-    <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
+    <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedLimbs}>
       <Box sx={{ width: '98%', maxWidth: 800, mx:'auto', display:'flex', alignItems:'center', justifyContent:'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
           <div>
             <Button style={equippedLimbBtn} >
@@ -107,24 +146,24 @@ export default function BottomNav() {
 
     <div style={{position: 'absolute', bottom:0, left: 0, width: '100%'}}>
       <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-        <Carousel />
+        <Carousel prevEvent={prevEvent}/>
       </Animated>
 
       <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
         <Box sx={{ width: '100%', maxWidth: 800, mx:'auto', display:'flex', alignItems:'center', justifyContent:'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
           <div>
-            <Button style={customBtn} >
+            <Button style={customBtn} onClick={() => toggleCarousel('color')} >
             </Button>
             <div style={customLabel}>COLOR</div>
           </div>
           <div>
-            <Button style={customBtn} >
+            <Button style={customBtn} onClick={() => toggleCarousel('body')} >
               <img src="./assets/body_fuzzy.png" style={{objectFit: 'cover', height: '42px', objectPosition:'-1% center'}}/>
             </Button>
             <div style={customLabel}>BODY</div>
           </div>
           <div>
-            <Button style={customBtn} >
+            <Button style={customBtn} onClick={() => toggleCarousel('eyes')} >
               <img src="./assets/eyes_tired.png" style={{objectFit: 'cover', height: '100px', objectPosition:'0.69% 8px'}}/>
             </Button>
             <div style={customLabel}>EYES</div>
@@ -136,13 +175,13 @@ export default function BottomNav() {
             <div style={customLabel}>NOSE</div>
           </div>
           <div>
-            <Button style={customBtn} >
+            <Button style={customBtn} onClick={() => toggleCarousel('mouth')} >
               <img src="./assets/null.png" style={{height: '100%'}}/>
             </Button>
             <div style={customLabel}>MOUTH</div>
           </div>
           <div>
-            <Button style={customBtn} >
+            <Button style={customBtn} onClick={() => toggleCarousel('limbs')} >
               <div style={{display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold'}}>3<span style={{fontSize:'xxx-large'}}>/</span>8</div>
             </Button>
             <div style={customLabel}>ADD-ONS</div>
