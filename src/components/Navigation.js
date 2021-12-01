@@ -1,15 +1,15 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
+// import AppBar from '@mui/material/AppBar';
+// import Box from '@mui/material/Box';
+// import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import CssBaseline from '@mui/material/CssBaseline';
+// import Typography from '@mui/material/Typography';
+// import CssBaseline from '@mui/material/CssBaseline';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Button from '@mui/material/Button';
-import StatusBars from './pages/Dashboard/StatusBars';
+// import Button from '@mui/material/Button';
+// import StatusBars from './pages/Dashboard/StatusBars';
 
 
 // Here we are using object destructuring assignment to pluck off our variables from the props object
@@ -156,7 +156,6 @@ function Navigation({ currentPage, handlePageChange, userId, logOut }) {
             onClose={handleClose}
           >
         <MenuItem onClick={() => handlePageChange('CreateRascal')} color='inherit'>Create</MenuItem>
-        <MenuItem onClick={() => handlePageChange('Scene')} color='inherit'>Scene</MenuItem>
         <MenuItem onClick={() => handlePageChange('Minigame')} color='inherit'>Minigame</MenuItem>
         <MenuItem onClick={() => handlePageChange('Dashboard')} color='inherit'>Dash</MenuItem>
         {!userId && <MenuItem onClick={() => handlePageChange('Login')} color="inherit">Login</MenuItem>}

@@ -38,14 +38,13 @@ export default function SignIn(props) {
       password: data.get('password')
     }
     API.login(user).then(res=>{
-      console.log(res)
       props.setUserState({
         email:res.data.user.email,
         id:res.data.user.id
       })
       props.setToken(res.data.token)
       localStorage.setItem("token",res.data.token)
-      props.handlePageChange('Scene')
+      props.handlePageChange('Dashboard')
     }).catch(err=>{
       alert("Incorrect Credentials")
       console.log(err);
