@@ -88,8 +88,8 @@ export default function StoreBodies(props) {
             equipped: false,
             type: 'body'
         }
-        props.setRascalLimbArray([...props.rascalLimbArray,newItem])
-        console.log(props.rascalLimbArray)
+        props.setRascalItemArray([...props.rascalItemArray,newItem])
+        console.log(props.rascalItemArray)
     }
 
     //update the coin value displayed at the bottom of store window
