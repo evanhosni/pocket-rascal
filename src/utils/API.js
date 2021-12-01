@@ -18,14 +18,14 @@ const API = {
     loadRascal:(id)=>{
         return axios.get(`${URL_PREFIX}/rascal/load/${id}`)
     },
-    loadLimbs:(id)=>{
+    loadItems:(id)=>{
         return axios.get(`${URL_PREFIX}/limb/rascal/${id}`)
     },
-    updateLimbs:(id,limbData)=>{
-        return axios.put(`${URL_PREFIX}/limb/put/${id}`,limbData)
+    updateItems:(id,itemData)=>{
+        return axios.put(`${URL_PREFIX}/limb/put/${id}`,itemData)
     },
-    addLimb:(id,limbData)=>{
-        return axios.post(`${URL_PREFIX}/limb/post/${id}`,limbData)
+    addItem:(id,itemData)=>{
+        return axios.post(`${URL_PREFIX}/limb/post/${id}`,itemData)
     },
     createRascal:(rascalData)=>{
         return  axios.post(`${URL_PREFIX}/rascal/new`,rascalData)
