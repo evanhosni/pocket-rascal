@@ -29,7 +29,7 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
+// import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import IconButton from '@mui/material/IconButton';
