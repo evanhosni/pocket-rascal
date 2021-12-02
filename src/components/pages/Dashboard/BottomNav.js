@@ -77,42 +77,42 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal,setM
       setCarousel(false)
     }
     if(equippedItems) {
-      setEquippedItems(false)
+      setEquippedItemsB(false)
     }
   }
 
   const [carousel, setCarousel] = React.useState(false)
-  const [equippedItems, setEquippedItems] = React.useState(false)
+  const [equippedItemsB, setEquippedItemsB] = React.useState(false)
   const [prevEvent, setPrevEvent] = React.useState(null)
   const toggleCarousel = (event) => {
     if (carousel && event === prevEvent) {
       setCarousel(false)
-      setEquippedItems(false)
+      setEquippedItemsB(false)
     } else {
       setCarousel(true)
       if (event === 'color') {
 
-        setEquippedItems(false)
+        setEquippedItemsB(false)
       }
       if (event === 'body') {
 
-        setEquippedItems(false)
+        setEquippedItemsB(false)
       }
       if (event === 'eyes') {
 
-        setEquippedItems(false)
+        setEquippedItemsB(false)
       }
       if (event === 'nose') {
 
-        setEquippedItems(false)
+        setEquippedItemsB(false)
       }
       if (event === 'mouth') {
 
-        setEquippedItems(false)
+        setEquippedItemsB(false)
       }
       if (event === 'items') {
 
-        setEquippedItems(true)
+        setEquippedItemsB(true)
       }
     }
     setPrevEvent(event)

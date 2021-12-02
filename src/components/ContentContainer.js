@@ -51,8 +51,8 @@ export default function ContentContainer() {
         })
 
         const rascalDat = await API.loadRascal(res.data.id)
-        const equipDat = await API.loadItems(rascalDat.data.id)
-        const unlockDat = await API.loadItems(rascalDat.data.id)
+        const equipDat = await API.loadEquippedItems(rascalDat.data.id)
+        const unlockDat = await API.loadUnlockedItems(rascalDat.data.id)
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
@@ -78,9 +78,9 @@ export default function ContentContainer() {
 // updates rascal whenever userstate changes
   useEffect(async () => {
     if (userState.id) {
-      const rascalDat = await API.loadRascal(res.data.id)
-        const equipDat = await API.loadItems(rascalDat.data.id)
-        const unlockDat = await API.loadItems(rascalDat.data.id)
+      const rascalDat = await API.loadRascal(userState.id)
+        const equipDat = await API.loadEquippedItems(rascalDat.data.id)
+        const unlockDat = await API.loadUnlockedItems(rascalDat.data.id)
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
