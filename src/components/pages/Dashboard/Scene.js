@@ -96,7 +96,7 @@ class Scene extends React.Component {
 
     // var selectedNose = "nose_disguise";
 
-    var limbArray = [...this.props.rascalLimbArray
+    var itemArray = [...this.props.equippedItems
       // { name: "top_hat", size: 2.2 },
       // { name: "arm_glove", size: 3.4 },
       // { name: "arm_glove", size: 3.4 },
@@ -106,7 +106,6 @@ class Scene extends React.Component {
       // { name: "arm_default", size: 2.8 },
       // {name: 'waffle_cone', size: 1.7}
     ];
-    console.log(limbArray)
     //////////////////////////////////////////////////////////////////////////////////////
 
     var animation;
@@ -203,45 +202,45 @@ class Scene extends React.Component {
     };
     generate();
 
-    var equippedLimbs
+    var equippedItems
 
-    function addLimbs() {
-      equippedLimbs = []//equippedLimbs array is only used for devMode
+    function addItems() {
+      equippedItems = []//equippedItems array is only used for devMode
 
-      for (let i = 0; i < limbArray.length; i++) {
-        var limb = Bodies.rectangle(
+      for (let i = 0; i < itemArray.length; i++) {
+        var item = Bodies.rectangle(
           2500,
-          2340 - 1 - 50 * (limbArray[i].size - 1),
+          2340 - 1 - 50 * (itemArray[i].size - 1),
           90,
-          100 * limbArray[i].size,
+          100 * itemArray[i].size,
           {
-            name: limbArray[i].name,
+            name: itemArray[i].name,
             frictionAir: 0.06,
             friction: 0,
             render: {//TODO this breaks the site
               sprite: {
-                texture: `./assets/${limbArray[i].name}.png`
+                texture: `./assets/${itemArray[i].name}.png`
               }
             }
           }
         );
-          equippedLimbs.push(limb)//equippedLimbs array is only used for devMode
+          equippedItems.push(item)//equippedItems array is only used for devMode
 
-        var limbConstraint = Constraint.create({
-          name: `${limbArray[i].name}_constraint`,
+        var itemConstraint = Constraint.create({
+          name: `${itemArray[i].name}_constraint`,
           pointA: rascal.position,
-          bodyB: limb,
-          pointB: { x: 0, y: limbArray[i].size / 0.02 },
+          bodyB: item,
+          pointB: { x: 0, y: itemArray[i].size / 0.02 },
           stiffness: 0.05,
           render: {
             visible: false,
           },
         });
 
-        Composite.add(world, [limb, limbConstraint]);
+        Composite.add(world, [item, itemConstraint]);
       }
       // //test one: spawns arm on right side of body
-      //     var limb = Bodies.rectangle(985.8227253725269, 591.5253089907833, 90, (100 * 1.5), {
+      //     var item = Bodies.rectangle(985.8227253725269, 591.5253089907833, 90, (100 * 1.5), {
       //         name: 'test',
       //         frictionAir: 0.06,
       //         friction: 0,
@@ -253,21 +252,21 @@ class Scene extends React.Component {
       //         }
       //     })
 
-      //     // Body.rotate(limb,90)
+      //     // Body.rotate(item,90)
 
-      // var limbConstraint = Constraint.create({
+      // var itemConstraint = Constraint.create({
       //     pointA: rascal.position,
-      //     bodyB: limb,
+      //     bodyB: item,
       //     pointB: {x: -74.99992647502606, y: 0.10501781127428417},
       //     stiffness: 0.05
       // });
 
       // Composite.add(world, [
-      //     limb,
-      //     limbConstraint
+      //     item,
+      //     itemConstraint
       // ]);
     }
-    addLimbs();
+    addItems();
 
     function checkCoor() {
       var bodies = Composite.allBodies(world);
@@ -293,15 +292,15 @@ class Scene extends React.Component {
           devModeActive = true
           cancelAnimationFrame(animation)
           rascal.render.visible = true
-          for (let i = 0; i < equippedLimbs.length; i++) {
-              equippedLimbs[i].render.sprite = 0
+          for (let i = 0; i < equippedItems.length; i++) {
+              equippedItems[i].render.sprite = 0
           }
       } else {
           devModeActive = false
           cancelAnimationFrame(animation)
           rascal.render.visible = false
-          for (let i = 0; i < equippedLimbs.length; i++) {
-              equippedLimbs[i].render.sprite = {xScale: 1, yScale: 1, xOffset: 0.5, yOffset: 0.5, texture: `./assets/${equippedLimbs[i].name}.png`}
+          for (let i = 0; i < equippedItems.length; i++) {
+              equippedItems[i].render.sprite = {xScale: 1, yScale: 1, xOffset: 0.5, yOffset: 0.5, texture: `./assets/${equippedItems[i].name}.png`}
           }
           generate()
       }

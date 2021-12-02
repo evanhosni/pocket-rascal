@@ -5,7 +5,7 @@ import BottomNav from './BottomNav';
 import Scene from './Scene'
 import API from '../../../utils/API'
 
-export default function Dashboard({currentPage,handlePageChange,userId,myRascal,setMyRascal, rascalLimbArray,setRascalLimbArray,logOut, userCoins, setUserCoins, userLevel, setUserLevel}) {
+export default function Dashboard({currentPage,handlePageChange,userId,myRascal,setMyRascal, unlockedItems,equippedItems,setUnlockedItems,setEquippedItems,logOut,userCoins, setUserCoins, userLevel, setUserLevel}) {
   let newRascal
   useEffect(() => {
     console.log(myRascal)
@@ -23,12 +23,10 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
     }, 15000);
 
     const saveTimer = setInterval(()=> {
-      // UNCOMMNET OUT FOR RASCAL AND LIMB UPLOADING
-      // let newLimbArray = [...rascalLimbArray]
+      // UNCOMMNET OUT FOR RASCAL AND ITEM UPLOADING
+      // let newItemArray = [...rascalItemArray]
       // API.updateRascal(newRascal)
-      // for (const limb of newLimbArray) {
-      //   API.updateLimbs(limb.id,limb)
-      // }
+      // API.updateItems(rascalItemArray,myRascal.id)
     },60000)
     
     return () => {
@@ -49,10 +47,10 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
 
       </div>
       <div>
-        <Scene rascalLimbArray={rascalLimbArray}/>
+        <Scene equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems}/>
       </div>
       <div>
-        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} myRascal={myRascal} setMyRascal={setMyRascal} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} />
+        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} />
       </div>
       
     </div>

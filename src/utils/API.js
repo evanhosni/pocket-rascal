@@ -18,20 +18,26 @@ const API = {
     loadRascal:(id)=>{
         return axios.get(`${URL_PREFIX}/rascal/load/${id}`)
     },
-    loadLimbs:(id)=>{
-        return axios.get(`${URL_PREFIX}/limb/rascal/${id}`)
+    loadEquippedItems:(id)=>{
+        return axios.get(`${URL_PREFIX}/item/equipped/${id}`)
     },
-    updateLimbs:(id,limbData)=>{
-        return axios.put(`${URL_PREFIX}/limb/put/${id}`,limbData)
+    loadUnlockedItems:(id)=>{
+        return axios.get(`${URL_PREFIX}/item/equipped/${id}`)
     },
-    addLimb:(id,limbData)=>{
-        return axios.post(`${URL_PREFIX}/limb/post/${id}`,limbData)
+    updateEquippedItems:(id,itemData)=>{
+        return axios.put(`${URL_PREFIX}/item/equipped/${id}`,itemData)
     },
-    createRascal:(rascalData)=>{
-        return  axios.post(`${URL_PREFIX}/rascal/new`,rascalData)
+    addUnlockedItem:(id,itemData)=>{
+        return axios.post(`${URL_PREFIX}/item/unlocked/${id}`,itemData)
     },
-    updateRascal:(rascalData,tkn)=>{
-        return axios.put(`${URL_PREFIX}/rascal/update`,rascalData)
+    // addItem:(id,itemData)=>{
+    //     return axios.post(`${URL_PREFIX}/limb/post/${id}`,itemData)
+    // },
+    createRascal:(id,rascalData)=>{
+        return  axios.post(`${URL_PREFIX}/rascal/new/${id}`,rascalData)
+    },
+    updateRascal:(id,rascalData)=>{
+        return axios.put(`${URL_PREFIX}/rascal/update/${id}`,rascalData)
     }
 }
 

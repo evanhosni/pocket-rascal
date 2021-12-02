@@ -89,7 +89,7 @@ export default function StoreNose(props) {
             type: 'nose'
         }
 
-        props.setRascalLimbArray([...props.rascalLimbArray,newItem])
+        props.setUnlockedItems([...props.unlockedItems,newItem])
     }
 
     //update the coin value displayed at the bottom of store window

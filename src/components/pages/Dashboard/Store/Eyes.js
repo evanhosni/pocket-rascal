@@ -95,8 +95,8 @@ export default function StoreEyes(props) {
             equipped: false,
             type: 'eyes'
         }
-        props.setRascalLimbArray([...props.rascalLimbArray,newItem])
-        console.log(props.rascalLimbArray)
+        props.setUnlockedItems([...props.unlockedItems,newItem])
+        console.log(props.unlockedItems)
     }
 
     //update the coin value displayed at the bottom of store window
