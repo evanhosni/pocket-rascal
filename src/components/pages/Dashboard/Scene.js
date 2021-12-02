@@ -96,7 +96,7 @@ class Scene extends React.Component {
 
     // var selectedNose = "nose_disguise";
 
-    var itemArray = [...this.props.rascalItemArray
+    var itemArray = [...this.props.equippedItems
       // { name: "top_hat", size: 2.2 },
       // { name: "arm_glove", size: 3.4 },
       // { name: "arm_glove", size: 3.4 },
@@ -106,7 +106,6 @@ class Scene extends React.Component {
       // { name: "arm_default", size: 2.8 },
       // {name: 'waffle_cone', size: 1.7}
     ];
-    console.log(itemArray)
     //////////////////////////////////////////////////////////////////////////////////////
 
     var animation;

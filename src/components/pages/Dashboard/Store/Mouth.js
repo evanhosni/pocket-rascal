@@ -83,7 +83,7 @@ export default function StoreMouth(props) {
             type: 'mouth'
         }
 
-        props.setRascalItemArray([...props.rascalItemArray,newItem])
+        props.setUnlockedItems([...props.unlockedItems,newItem])
     }
 
     //update the coin value displayed at the bottom of store window
