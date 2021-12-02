@@ -1,12 +1,15 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 import Matter from "matter-js";
 import './minigame.css'
+import { ThirtyFpsSharp } from "@mui/icons-material";
 
 class Slingshot extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      collisions: 0
+    };
   }
 
   componentDidMount() {
@@ -24,9 +27,9 @@ class Slingshot extends React.Component {
       return engine;
     }
 
-    function setupRender() {
+    const setupRender = () => {
       var render = Render.create({
-        element: document.body,
+        element: this.refs.slingshot,
         engine: engine,
         options: {
           width: 800,
@@ -175,15 +178,28 @@ class Slingshot extends React.Component {
       return condition1 || condition2;
     }
 
+    const collisionCount = () => {
+      this.setState({collisions: this.state.collisions + 1})
+      console.log(this.state.collisions)
+      // coinCount();
+    }
+
+    const coinCount = () => {
+      this.props.setEarnedCoins(this.props.earnedCoins + 1)
+    }
+    
+
     function onBirdAndBoxCollision(pair) {
       if (pair.bodyB.label === "bird") {
         World.remove(world, pair.bodyB);
         Matter.Body.applyForce(pair.bodyB, pair.bodyB.position, pair.bodyA.force);
+        collisionCount();
       }
 
       if (pair.bodyA.label === "bird") {
         World.remove(world, pair.bodyA);
         Matter.Body.applyForce(pair.bodyB, pair.bodyA.position, pair.bodyA.force);
+        collisionCount();
       }
     }
 
@@ -244,16 +260,19 @@ class Slingshot extends React.Component {
 
     setupBirdAndBoxCollision();
 
+
     createFloor();
     createSlingshot();
     createEnemyInTheHouse(650, 500);
     createEnemyInTheHouse(650, 350);
     createEnemyInTheHouse(650, 200);
     createEnemyInTheHouse(535, 500);
+
+    console.log(this.props.earnedCoins)
   }
 
   render() {
-    return <div className='Slingshot' ref="scene" />;
+    return <div ref="slingshot" id='slingshot-container' />;
   }
 }
 

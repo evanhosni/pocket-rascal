@@ -69,7 +69,7 @@ ItemStoreDialogTitle.propTypes = {
 
 
 
-export default function BottomNav({ currentPage, handlePageChange, myRascal,setMyRascal, rascalLimbArray,setRascalLimbArray }) {
+export default function BottomNav({ currentPage, handlePageChange, myRascal,setMyRascal, rascalLimbArray,setRascalLimbArray, userCoins, setUserCoins, userLevel, setUserLevel }) {
   const [customMenu, setCustomMenu] = React.useState(false);
   const toggleCustomMenu = () => {
     setCustomMenu(!customMenu);
@@ -168,9 +168,6 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal,setM
   //conditional rendering for store items
   const [storeContent, setStoreContent] = useState('Bodies')
 
-  const [userCoins, setUserCoins] = useState(2500);
-  const userLevel = myRascal.level;
-  // setUserCoins(25)
 
   const renderStoreContent = () => {
     if (storeContent === 'Bodies') {

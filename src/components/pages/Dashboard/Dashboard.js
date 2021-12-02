@@ -5,7 +5,7 @@ import BottomNav from './BottomNav';
 import Scene from './Scene'
 import API from '../../../utils/API'
 
-export default function Dashboard({currentPage,handlePageChange,userId,myRascal,setMyRascal, rascalLimbArray,setRascalLimbArray,logOut}) {
+export default function Dashboard({currentPage,handlePageChange,userId,myRascal,setMyRascal, rascalLimbArray,setRascalLimbArray,logOut, userCoins, setUserCoins, userLevel, setUserLevel}) {
   let newRascal
   useEffect(() => {
     console.log(myRascal)
@@ -52,7 +52,7 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
         <Scene rascalLimbArray={rascalLimbArray}/>
       </div>
       <div>
-        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} myRascal={myRascal} setMyRascal={setMyRascal} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray} />
+        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} myRascal={myRascal} setMyRascal={setMyRascal} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} />
       </div>
       
     </div>
