@@ -52,17 +52,23 @@ export default function VerticalLinearStepper(props) {
       name:newRascalName,
       color:newRascalColor,
       body:newRascalBody,
-      happiness:60,
+      happiness:50,
       hunger:50,
-      level:1
+      level:1,
+      coins:50
     })
+    props.setUnlockedItems([{name:newRascalBody,type:'body'}])
+    API.createRascal(props.userState.id,props.myRascal).then(promise=>{
+      API.addUnlockedItem(promise.id,{name:newRascalBody,type:"body"})
+    }).catch(err=>{
+      console.log(err)
+    })
+    props.handlePageChange("Dashboard")
+
+
   }
 
-  const [color, setColor] = React.useState('');
 
-  const handleColorChange = (event) => {
-    setColor(event.target.value);
-  };
 
   const classes = useStyles();
 

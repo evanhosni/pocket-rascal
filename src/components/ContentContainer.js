@@ -28,7 +28,8 @@ export default function ContentContainer() {
     love: 50,
     care: 50
   })
-  const [rascalItemArray, setRascalItemArray] = useState([])
+  const [unlockedItems, setUnlockedItems] = useState([])
+  const [equippedItems, setEquippedItems] = useState([])
 
   function updateRascalStats(key, val) {
     console.log("called")
@@ -50,9 +51,11 @@ export default function ContentContainer() {
         })
 
         const rascalDat = await API.loadRascal(res.data.id)
-        const itemDat = await API.loadItems(rascalDat.data.id)
+        const equipDat = await API.loadItems(rascalDat.data.id)
+        const unlockDat = await API.loadItems(rascalDat.data.id)
         setMyRascal(rascalDat.data)
-        setRascalItemArray(itemDat.data)
+        setEquippedItems(equipDat.data)
+        setUnlockedItems(unlockDat.data)
         setCurrentPage("Dashboard")
         // const interval = setInterval(() => {
         //   console.log('This will run every 10 seconds!');
@@ -75,11 +78,13 @@ export default function ContentContainer() {
 // updates rascal whenever userstate changes
   useEffect(async () => {
     if (userState.id) {
-      const rascalDat = await API.loadRascal(userState.id)
-      const itemDat = await API.loadItems(rascalDat.data.id)
-      setMyRascal(rascalDat.data)
-      setRascalItemArray(itemDat.data)
-      
+      const rascalDat = await API.loadRascal(res.data.id)
+        const equipDat = await API.loadItems(rascalDat.data.id)
+        const unlockDat = await API.loadItems(rascalDat.data.id)
+        setMyRascal(rascalDat.data)
+        setEquippedItems(equipDat.data)
+        setUnlockedItems(unlockDat.data)
+        setCurrentPage("Dashboard")
     }
   }, [userState])
 
@@ -129,8 +134,8 @@ export default function ContentContainer() {
     if (currentPage === 'CreateRascal') {
       return (
         <div>
-          <CreateRascal setMyRascal={setMyRascal} setRascalLimbArray={setRascalLimbArray}/>
-          <Scene currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} rascalLimbArray={rascalLimbArray} setRascalLimbArray={setRascalLimbArray}/>
+          <CreateRascal setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userState={userState} handlePageChange={handlePageChange}/>
+          <Scene currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems}/>
           <BottomNav myRascal={myRascal}/>
 
         </div>
@@ -139,7 +144,7 @@ export default function ContentContainer() {
     if (currentPage === 'Dashboard') {
       return (
         <div>
-          {myRascal.id&&<Dashboard currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />}
+          {myRascal.id&&unlockedItems[0]&&<Dashboard currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />}
         </div>
       )
     }

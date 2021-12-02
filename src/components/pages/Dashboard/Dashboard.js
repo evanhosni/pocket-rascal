@@ -5,7 +5,7 @@ import BottomNav from './BottomNav';
 import Scene from './Scene'
 import API from '../../../utils/API'
 
-export default function Dashboard({currentPage,handlePageChange,userId,myRascal,setMyRascal, rascalItemArray,setRascalItemArray,logOut}) {
+export default function Dashboard({currentPage,handlePageChange,userId,myRascal,setMyRascal, unlockedItems,equippedItems,setUnlockedItems,setEquippedItems,logOut}) {
   let newRascal
   useEffect(() => {
     console.log(myRascal)
@@ -26,9 +26,7 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
       // UNCOMMNET OUT FOR RASCAL AND ITEM UPLOADING
       // let newItemArray = [...rascalItemArray]
       // API.updateRascal(newRascal)
-      // for (const item of newItemArray) {
-      //   API.updateItems(item.id,item)
-      // }
+      // API.updateItems(rascalItemArray,myRascal.id)
     },60000)
     
     return () => {
@@ -49,10 +47,10 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
 
       </div>
       <div>
-        <Scene rascalItemArray={rascalItemArray}/>
+        <Scene equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems}/>
       </div>
       <div>
-        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} myRascal={myRascal} setMyRascal={setMyRascal} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
+        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
       </div>
       
     </div>

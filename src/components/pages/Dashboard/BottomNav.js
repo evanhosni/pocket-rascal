@@ -69,7 +69,7 @@ ItemStoreDialogTitle.propTypes = {
 
 
 
-export default function BottomNav({ currentPage, handlePageChange, myRascal,setMyRascal, rascalItemArray,setRascalItemArray }) {
+export default function BottomNav({ currentPage, handlePageChange, myRascal,setMyRascal, unlockedItems, equippedItems,setUnlockedItems,setEquippedItems }) {
   const [customMenu, setCustomMenu] = React.useState(false);
   const toggleCustomMenu = () => {
     setCustomMenu(!customMenu);
@@ -174,19 +174,19 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal,setM
 
   const renderStoreContent = () => {
     if (storeContent === 'Bodies') {
-      return <StoreBodies userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
+      return <StoreBodies userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel}  />
     }
     if (storeContent === 'Eyes') {
-      return <StoreEyes userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
+      return <StoreEyes userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
     }
     if (storeContent === 'Nose') {
-      return <StoreNose userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
+      return <StoreNose userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
     }
     if (storeContent === 'Mouth') {
-      return <StoreMouth userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
+      return <StoreMouth userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
     }
     if (storeContent === 'Items') {
-      return <StoreItem userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
+      return <StoreItem userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
     }
   }
 
@@ -251,7 +251,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal,setM
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
         <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-          <Carousel prevEvent={prevEvent} rascalItemArray setRascalItemArray />
+          <Carousel prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
         </Animated>
 
         <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
