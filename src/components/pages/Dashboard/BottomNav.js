@@ -70,6 +70,7 @@ ItemStoreDialogTitle.propTypes = {
 
 
 export default function BottomNav({ currentPage, handlePageChange, myRascal,setMyRascal, rascalItemArray,setRascalItemArray }) {
+
   const [customMenu, setCustomMenu] = React.useState(false);
   const toggleCustomMenu = () => {
     setCustomMenu(!customMenu);
@@ -251,7 +252,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal,setM
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
         <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-          <Carousel prevEvent={prevEvent} rascalItemArray setRascalItemArray />
+          <Carousel prevEvent={prevEvent} rascalItemArray={rascalItemArray} setRascalItemArray={setRascalItemArray} />
         </Animated>
 
         <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>

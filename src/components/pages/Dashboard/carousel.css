@@ -3,29 +3,39 @@
 }
 
 .carousel-item {
+    display: flex;
+    justify-content: space-around;
+    align-content: flex-end;
+
     text-align: center;
-    margin-top: 7px;
+    /* margin-top: 7px; */
     transition: margin-top 0.2s
 }
 
 .carousel-item button {
-    max-width: 40px!important;
-    max-height: 40px!important;
-    min-width: 40px!important;
-    min-height: 40px!important;
+    padding: 0;
+    cursor: pointer;
+    background-color: white;
+    border: solid black 3px;
+    border-radius: 50%;
+
+    max-width: 40px;
+    max-height: 40px;
+    min-width: 40px;
+    min-height: 40px;
     transition: max-width 0.2s, max-height 0.2s, min-width 0.2s, min-height 0.2s;
 }
 
 .active {
-    margin-top: 2px;
+    /* margin-top: 2px; */
     transition: margin-top 0.2s
 }
 
 .active button {
-    max-width: 50px!important;
-    max-height: 50px!important;
-    min-width: 50px!important;
-    min-height: 50px!important;
+    max-width: 50px;
+    max-height: 50px;
+    min-width: 50px;
+    min-height: 50px;
     transition: max-width 0.2s, max-height 0.2s, min-width 0.2s, min-height 0.2s;
 }
 
@@ -42,20 +52,20 @@
 }
 
 .active .body {
-    height: 42px!important;
+    height: 42px;
     object-position: -1% center;
     transition: height 0.2s, object-position 0.2s;
 }
 
 .active .eyes {
-    height: 100px!important;
-    object-position: 0.69% 8px!important;
+    height: 100px;
+    object-position: 0.69% 8px;
     transition: height 0.2s, object-position 0.2s;
 }
 
 .active .nose {
-    height: 90px!important;
-    object-position: 45% -2px!important;
+    height: 90px;
+    object-position: 45% -2px;
     transition: height 0.2s, object-position 0.2s;
 }
 
