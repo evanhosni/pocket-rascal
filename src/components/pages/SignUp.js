@@ -44,7 +44,7 @@ export default function SignUp(props) {
         })
         props.setToken(res.data.token)
         localStorage.setItem("token",res.data.token)
-        props.handlePageChange('Dashboard')
+        props.handlePageChange('CreateRascal')
       }).catch(err=>{
         alert("Signup Failed")
         console.log(err);

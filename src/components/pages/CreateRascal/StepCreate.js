@@ -17,6 +17,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { makeStyles } from '@mui/styles';
+import API from "../../../utils/API"
 
 const useStyles = makeStyles({
   root: {
@@ -29,8 +30,11 @@ const useStyles = makeStyles({
 
 
 
-export default function VerticalLinearStepper() {
+export default function VerticalLinearStepper(props) {
   const [activeStep, setActiveStep] = React.useState(0);
+  const [newRascalName,setNewRascalName] = React.useState('');
+  const [newRascalColor,setNewRascalColor]=React.useState('');
+  const [newRascalBody,setNewRascalBody]=React.useState('');
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -43,12 +47,28 @@ export default function VerticalLinearStepper() {
   const handleReset = () => {
     setActiveStep(0);
   };
+  const handleFinish = () =>{
+    props.setMyRascal({
+      name:newRascalName,
+      color:newRascalColor,
+      body:newRascalBody,
+      happiness:50,
+      hunger:50,
+      level:1,
+      coins:50
+    })
+    props.setUnlockedItems([{name:newRascalBody,type:'body'}])
+    API.createRascal(props.userState.id,props.myRascal).then(promise=>{
+      API.addUnlockedItem(promise.id,{name:newRascalBody,type:"body"})
+    }).catch(err=>{
+      console.log(err)
+    })
+    props.handlePageChange("Dashboard")
 
-  const [color, setColor] = React.useState('');
 
-  const handleColorChange = (event) => {
-    setColor(event.target.value);
-  };
+  }
+
+
 
   const classes = useStyles();
 
@@ -63,6 +83,8 @@ export default function VerticalLinearStepper() {
           }}
           noValidate
           autoComplete="off"
+          value={newRascalName}
+          onChange={(e)=>setNewRascalName(e.target.value)}
         >
           <TextField className={classes.root} id="standard-basic" label="Enter name here" variant="standard" />
         </Box>
@@ -72,16 +94,16 @@ export default function VerticalLinearStepper() {
       description:
         <FormControl component="fieldset">
           <FormLabel component="legend">Choose your Rascal's body:</FormLabel>
-          <RadioGroup row aria-label="gender" name="row-radio-buttons-group">
-            <FormControlLabel value="female" control={<Radio />} label="Body1" />
-            <FormControlLabel value="male" control={<Radio />} label="Body2" />
-            <FormControlLabel value="other" control={<Radio />} label="Body3" />
+          <RadioGroup onChange={(e)=>{setNewRascalBody(e.target.value)}}row aria-label="gender" name="row-radio-buttons-group">
+            <FormControlLabel value="body_fuzzy" control={<Radio />} label="Body1" />
+            <FormControlLabel value="body_curly" control={<Radio />} label="Body2" />
+            {/* <FormControlLabel value="other" control={<Radio />} label="Body3" />
             <FormControlLabel
               value="disabled"
               disabled
               control={<Radio />}
               label="other"
-            />
+            /> */}
           </RadioGroup>
         </FormControl>
     },
@@ -94,13 +116,13 @@ export default function VerticalLinearStepper() {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={color}
+              value={newRascalColor}
               label="Color"
-              onChange={handleColorChange}
+              onChange={(e)=>{setNewRascalColor(e.target.value)}}
             >
-              <MenuItem value={10}>Blue</MenuItem>
-              <MenuItem value={20}>Green</MenuItem>
-              <MenuItem value={30}>Red</MenuItem>
+              <MenuItem value={'blue'}>Blue</MenuItem>
+              <MenuItem value={'green'}>Green</MenuItem>
+              <MenuItem value={'red'}>Red</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -151,6 +173,9 @@ export default function VerticalLinearStepper() {
           <Typography>All steps completed - you&apos;re finished</Typography>
           <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
             Reset
+          </Button>
+          <Button onClick={handleFinish} sx={{ mt: 1, mr: 1 }}>
+            Continue
           </Button>
         </Paper>
       )}
