@@ -27,7 +27,7 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
     function equipItem(e){
         let source = e.target.getAttribute("src")
         var isolate = source.split('/')[2].split('.')[0]
-        let findItem = itemsArray.filter(item=>item.name==isolate)
+        let findItem = itemsArray.filter(item=>item.name===isolate)
         console.log(findItem)
         newEquippedArray.push(findItem[0])
         console.log(newEquippedArray)
@@ -157,12 +157,12 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
 
     var tempArray = () => {
         return(
-            prevEvent == 'color' ? (colorArray)
-            : prevEvent == 'body' ? (bodyArray)
-            : prevEvent == 'eyes' ? (eyesArray)
-            : prevEvent == 'nose' ? (noseArray)
-            : prevEvent == 'mouth' ? (mouthArray)
-            : prevEvent == 'items' ? (itemsArray)
+            prevEvent === 'color' ? (colorArray)
+            : prevEvent === 'body' ? (bodyArray)
+            : prevEvent === 'eyes' ? (eyesArray)
+            : prevEvent === 'nose' ? (noseArray)
+            : prevEvent === 'mouth' ? (mouthArray)
+            : prevEvent === 'items' ? (itemsArray)
             :[]
         )
     }
@@ -186,12 +186,12 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         return(
             <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}} id="custom-slider">
                 <Slider { ...settings } prevEvent={prevEvent}>
-                    {prevEvent == 'color' ? (color())
-                    : prevEvent == 'body' ? (body())
-                    : prevEvent == 'eyes' ? (eyes())
-                    : prevEvent == 'nose' ? (nose())
-                    : prevEvent == 'mouth' ? (mouth())
-                    : prevEvent == 'items' ? (items())
+                    {prevEvent === 'color' ? (color())
+                    : prevEvent === 'body' ? (body())
+                    : prevEvent === 'eyes' ? (eyes())
+                    : prevEvent === 'nose' ? (nose())
+                    : prevEvent === 'mouth' ? (mouth())
+                    : prevEvent === 'items' ? (items())
                     :(<div/>)}
                 </Slider>
         </div>

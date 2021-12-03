@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Matter, { World } from "matter-js";
 import "./style.css"
+import Snackbar from '@mui/material/Snackbar';
 
 
 class Scene extends React.Component {
@@ -535,7 +536,7 @@ class Scene extends React.Component {
     const equippedItemsPanel = document.querySelector('#equipped-items')
     const customPanel = document.querySelector('#custom-slider')
     const creationPanel = document.querySelector('#creation-panel')
-    if(equippedItemsPanel){equippedItemsPanel.addEventListener("click", (e) => {
+    if (equippedItemsPanel){equippedItemsPanel.addEventListener("click", (e) => {
 
       var source = e.target.getAttribute('src')
       // console.log(e.target)
@@ -665,7 +666,7 @@ class Scene extends React.Component {
 
     }
 
-    var image = 'milkshakes'
+    
     //setting up feeding the rascal and the food object disappearing on collision with rascal body
     const createFood = () => {
       var food = Matter.Bodies.rectangle(2055, 2750, 70, 150, {
@@ -704,10 +705,22 @@ class Scene extends React.Component {
       });
     }
 
+    const feedRascal = () => {
+      if (this.props.userCoins >= 20) {
+        this.props.myRascal.coins = (this.props.myRascal.coins - 20);
+        this.props.myRascal.happiness = (this.props.myRascal.happiness + 5);
+        this.props.myRascal.xp = (this.props.myRascal.xp + 5)
+        this.props.setUserXP(this.props.myRascal.xp)
+        this.props.setUserCoins(this.props.myRascal.coins);
+        createFood();
+        setUpFeedRascal();
+      } else {
+        this.props.setOpenFail(true)}
+    }
+
     const feedBtn = document.getElementById('FeedRascal')
     if(feedBtn){feedBtn.addEventListener('click', () => {
-      createFood();
-      setUpFeedRascal();
+      feedRascal();
     })}
 
     //setting up washing rascal and the soap getting smaller on collision 
@@ -740,10 +753,21 @@ class Scene extends React.Component {
       })
     }
 
+    const washRascal = () => {
+      if (this.props.userCoins >= 10) {
+        this.props.myRascal.coins = (this.props.myRascal.coins - 10);
+        this.props.myRascal.happiness = (this.props.myRascal.happiness + 5);
+        this.props.myRascal.xp = (this.props.myRascal.xp + 5)
+        this.props.setUserXP(this.props.myRascal.xp)
+        this.props.setUserCoins(this.props.myRascal.coins);
+        createSoap();
+        setUpWashRascal();
+      } else {this.props.setOpenFail(true)}
+    }
+
     const soapBtn = document.getElementById('WashRascal')
     if(soapBtn){soapBtn.addEventListener('click', () => {
-      createSoap();
-      setUpWashRascal();
+      washRascal();
     })}
 
   }
@@ -751,7 +775,6 @@ class Scene extends React.Component {
   render() {
     return (
       <>
-
         <div ref="scene" id="canvas_container" />
       </>
     )

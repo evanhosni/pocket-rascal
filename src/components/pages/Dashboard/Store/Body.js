@@ -101,7 +101,8 @@ export default function StoreBodies(props) {
   //update the coin value displayed at the bottom of store window
   const purchaseItem = (item) => {
     if (props.userCoins >= item.price) {
-      props.setUserCoins(props.userCoins - item.price);
+      props.myRascal.coins = (props.myRascal.coins - item.price)
+      props.setUserCoins(props.myRascal.coins);
       handleClick();
       saveNewItem(item);
     } else {
@@ -146,27 +147,27 @@ export default function StoreBodies(props) {
               justifyContent: "space-between",
             }}
           >
-                          <div className="titleandprice">
-            <Button className="itemforsale">
-              <img
-                src={`./assets/${item.img}.png`}
-                alt={item.title}
-                style={{
-                  objectFit: "cover",
-                  height: "84px",
-                  objectPosition: "-0.5% center",
-                }}
-                loading="lazy"
-              />
+            <div className="titleandprice">
+              <Button className="itemforsale">
+                <img
+                  src={`./assets/${item.img}.png`}
+                  alt={item.title}
+                  style={{
+                    objectFit: "cover",
+                    height: "84px",
+                    objectPosition: "-0.5% center",
+                  }}
+                  loading="lazy"
+                />
 
-            </Button>
-            <div className="title">{item.title}</div>
+              </Button>
+              <div className="title">{item.title}</div>
             </div>
             {/* <div className="dots">..............................................................................................................................................................</div> */}
             {/* <div className="titleandprice"> */}
-                {/* <div className="title">{item.title}</div> */}
-                <div className="coins">{item.price}<span>¢</span></div>
-                <Button id="purchase">BUY</Button>
+            {/* <div className="title">{item.title}</div> */}
+            <div className="coins">{item.price}<span>¢</span></div>
+            <Button id="purchase">BUY</Button>
 
             {/* <IconButton
               sx={{ color: "rgba(255, 255, 255, 0.54)" }}
@@ -200,7 +201,7 @@ export default function StoreBodies(props) {
 
 
 
-              {/* <ImageListItemBar
+{/* <ImageListItemBar
                             title={item.title}
                             subtitle={`${item.price}¢`}
                             actionIcon={
