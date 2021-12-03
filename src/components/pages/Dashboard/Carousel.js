@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from "react";
 import Slider from 'infinite-react-carousel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,7 +11,7 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
 
     // console.log('carousel',unlockedItems)
 
-    const settings =  {
+    const settings = {
         centerPadding: 35,
         centerMode: true,
         duration: 75,
@@ -204,7 +204,7 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
 // }
 
 
-            {/* <div style={customDiv}>
+{/* <div style={customDiv}>
                 <Button style={customBtn} >
                 <img src="./assets/body_fuzzy.png" className="body" style={{objectFit: 'cover', height: '33.6px', objectPosition:'-1% center'}}/>
                 </Button>

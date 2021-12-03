@@ -1,35 +1,7 @@
-// import * as React from 'react';
-// import Stack from '@mui/material/Stack';
-// import CircularProgress from '@mui/material/CircularProgress';
-
-// export default function CircularDeterminate() {
-//   const [happiness, setHappiness] = React.useState(75);
-
-//   React.useEffect(() => {
-//     const timer = setInterval(() => {
-//       setHappiness((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
-//     }, 1800000);
-
-//     return () => {
-//       clearInterval(timer);
-//     };
-//   }, []);
-
-//   return (
-//     <Stack spacing={2} direction="row">
-//       <CircularProgress variant="determinate" value={25} />
-//       <CircularProgress variant="determinate" value={50} />
-//       <CircularProgress variant="determinate" value={75} />
-//       <CircularProgress variant="determinate" value={100} />
-//       <CircularProgress variant="determinate" value={happiness} />
-//     </Stack>
-//   );
-// }
 
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-// import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import IconButton from '@mui/material/IconButton';
@@ -54,25 +26,6 @@ export default function StatusBars({ currentPage, handlePageChange, userId, myRa
     },
   }));
 
-
-  //setting interval timer for the bar to reduce over time depending on the happiness value 
-  // const [happiness, setHappiness] = React.useState(75);
-
-  // React.useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setHappiness((oldHappiness) => {
-  //       if (oldHappiness === 100) {
-  //         return 0;
-  //       }
-  //       const diff = Math.random() * 10;
-  //       return Math.min(oldHappiness + diff, 100);
-  //     });
-  //   }, 1800000);
-
-  //   return () => {
-  //     clearInterval(timer);
-  //   };
-  // }, []);
 
   //functions for the pop up window when the smiley button is clicked
   const [anchorEl, setAnchorEl] = React.useState(null);
