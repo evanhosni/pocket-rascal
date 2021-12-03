@@ -23,5 +23,6 @@
 }
 
 .carousel-arrow {
-    filter: grayscale(1)
+    filter: grayscale(1);
+    margin-top: 0
 }

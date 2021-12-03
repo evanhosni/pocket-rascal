@@ -80,12 +80,12 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
       setCarousel(false)
     }
     if (equippedItems) {
-      setEquippedItemsB(false)
+      setEquippedItemsWindow(false)
     }
   }
   // function renderCarouselContent() {
   //   if (prevEvent === 'items') {
-  //     setEquippedItemsB(false);
+  //     setEquippedItemsWindow(false);
   //     setCarousel(true)
 
   //     return (
@@ -100,7 +100,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   //   }
 
   //   if (prevEvent === 'color') {
-  //     setEquippedItemsB(false);
+  //     setEquippedItemsWindow(false);
   //     setCarousel(true)
 
   //     return (
@@ -116,36 +116,36 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
   const [carousel, setCarousel] = React.useState(false)
   // const [carouselContent, setCarouselContent] = React.useState(false)
-  const [equippedItemsB, setEquippedItemsB] = React.useState(false)
+  const [equippedItemsWindow, setEquippedItemsWindow] = React.useState(false)
   const [prevEvent, setPrevEvent] = React.useState('body')
   const toggleCarousel = (event) => {
     setPrevEvent(event);
     if (carousel && event === prevEvent) {
       setCarousel(false)
-      setEquippedItemsB(false)
+      setEquippedItemsWindow(false)
     } else {
       setCarousel(true);
       if (event === 'color') {
-        setEquippedItemsB(false)
+        setEquippedItemsWindow(false)
       }
       if (event === 'body') {
 
-        setEquippedItemsB(false)
+        setEquippedItemsWindow(false)
       }
       if (event === 'eyes') {
 
-        setEquippedItemsB(false)
+        setEquippedItemsWindow(false)
       }
       if (event === 'nose') {
 
-        setEquippedItemsB(false)
+        setEquippedItemsWindow(false)
       }
       if (event === 'mouth') {
 
-        setEquippedItemsB(false)
+        setEquippedItemsWindow(false)
       }
       if (event === 'items') {
-        setEquippedItemsB(true)
+        setEquippedItemsWindow(true)
       }
     }
   }
@@ -251,7 +251,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
     <div>
 
 
-      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItems}>
+      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItemsWindow}>
         <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" data-update={equippedItems.length}>
           {equippedItemsCopy.map((item, index) => {
             let imgSrc = item.name || "empty"
@@ -353,9 +353,9 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
               {renderStoreContent()}
             </div>
               <div id="bottom-tab">
-                <Button disabled variant="outlined" startIcon={<SavingsIcon />}>
-                  {`${userCoins}¢`}
-                </Button>
+                <div startIcon={<SavingsIcon />} className="coins">
+                  {`${userCoins}`}<span>¢</span>
+                </div>
                 <Button autoFocus onClick={handleClose} id="done">
                   Done
                 </Button>
