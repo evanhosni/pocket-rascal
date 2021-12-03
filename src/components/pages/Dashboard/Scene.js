@@ -720,8 +720,7 @@ class Scene extends React.Component {
 
     const feedBtn = document.getElementById('FeedRascal')
     if(feedBtn){feedBtn.addEventListener('click', () => {
-      createFood();
-      setUpFeedRascal();
+      feedRascal();
     })}
 
     //setting up washing rascal and the soap getting smaller on collision 
@@ -768,8 +767,7 @@ class Scene extends React.Component {
 
     const soapBtn = document.getElementById('WashRascal')
     if(soapBtn){soapBtn.addEventListener('click', () => {
-      createSoap();
-      setUpWashRascal();
+      washRascal();
     })}
 
   }
