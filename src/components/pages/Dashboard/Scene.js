@@ -551,8 +551,11 @@ class Scene extends React.Component {
       }
     }
     console.log(item1)
-    document.addEventListener("click",(e)=>{
+    const equippedItemsPanel = document.querySelector('#equipped-items')
+    equippedItemsPanel.addEventListener("click",(e)=>{
+      
       var source = e.target.getAttribute('src')
+      // console.log(e.target)
       if(source){
         
         var isolate = source.split('/')[2].split('.')[0]
@@ -562,14 +565,16 @@ class Scene extends React.Component {
             Matter.World.remove(world,world.bodies[index])
             return
           }
-          if(isolate=="nose_disguise" || "nose_cute"){
-            console.log(world)
-            selectedNose=isolate
-            // selectedBody="body_curly"
-            cancelAnimationFrame(animation);
-            generate()
-          }
+          
         });
+        // if(isolate=="nose_disguise" || "nose_cute"){
+        //   console.log(world)
+        //   selectedNose=isolate
+        //   // selectedBody="body_curly"
+        //   cancelAnimationFrame(animation);
+        //   generate()
+        // }
+
       }
     })
     // document.addEventListener('click',function(e){
