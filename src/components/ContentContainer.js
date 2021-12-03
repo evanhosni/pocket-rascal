@@ -21,11 +21,14 @@ export default function ContentContainer() {
   const [myRascal, setMyRascal] = useState({
     name: '',
     color: '',
-    level: 50,
+    level: 1,
+    xp: 0,
+    xpToLevelUp: 100,
     happiness: 50,
     hunger: 50,
     love: 50,
-    care: 50
+    care: 50,
+    coins:500
   })
   const [unlockedItems, setUnlockedItems] = useState([])
   const [equippedItems, setEquippedItems] = useState([])
@@ -56,7 +59,7 @@ export default function ContentContainer() {
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
-        if(currentPage!="Dashboard"){setCurrentPage("Dashboard")}
+        if(currentPage!=="Dashboard"){setCurrentPage("Dashboard")}
         // const interval = setInterval(() => {
         //   console.log('This will run every 10 seconds!');
         //   console.log(myRascal)
@@ -87,11 +90,43 @@ export default function ContentContainer() {
     setUnlockedItems([])
     setCurrentPage('Login')
   }
+  
+  const [userLevel, setUserLevel] = useState(myRascal.level);
+  const [userXP, setUserXP] = useState(myRascal.xp)
+  const levelSystem = () => {
+    // const userLevel = myRascal.level;
+    let level = myRascal.level;
+    let xp = myRascal.xp;
+    var xpToLevelUp = myRascal.xpToLevelUp;
+  
+    if (xp > xpToLevelUp) {
+      level++;
+      xpToLevelUp = xpToLevelUp + (50*level)
+    }
+  
+  }
+
+  useEffect(() => {
+    let level = myRascal.level;
+    let xp = myRascal.xp;
+    let xpToLevelUp = myRascal.xpToLevelUp;
+    console.log('hi working')
+  
+    if (xp > xpToLevelUp) {
+      level++;
+      console.log(level)
+      xpToLevelUp = xpToLevelUp + (50*level)
+      myRascal.level = level;
+      myRascal.xpToLevelUp = xpToLevelUp;
+      setUserLevel(myRascal.level);
+    } else {return}
+  },[userXP])
+
+
 
   //starting location for the users coins
-  const [userCoins, setUserCoins] = useState(2500);
+  const [userCoins, setUserCoins] = useState(myRascal.coins);
   //starting location for users level
-  const [userLevel, setUserLevel] = useState(myRascal.level);
 
 
   // This method is checking to see what the value of `currentPage` is. Depending on the value of currentPage, we return the corresponding component to render.
@@ -115,13 +150,15 @@ export default function ContentContainer() {
     if (currentPage === 'Dashboard') {
       return (
         <div>
-          {myRascal.color && unlockedItems[0] && <Dashboard currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />}
+          {myRascal.color && unlockedItems[0] && <Dashboard 
+          currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} userXP={userXP} setUserXP={setUserXP}
+          />}
         </div>
       )
     }
     return (
       <div>
-        <MiniPlayground currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} currentPage={currentPage} handlePageChange={handlePageChange} />
+        <MiniPlayground currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} userCoins={userCoins} setUserCoins={setUserCoins} userXP={userXP} setUserXP={setUserXP} currentPage={currentPage} handlePageChange={handlePageChange} userLevel={userLevel} setUserLevel={setUserLevel} />
       </div>
     )
   };

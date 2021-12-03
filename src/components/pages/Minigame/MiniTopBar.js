@@ -5,7 +5,7 @@ import Chip from '@mui/material/Chip';
 
 
 
-export default function MiniTopBar({ currentPage, handlePageChange, userId, myRascal, logOut, earnedCoins, setEarnedCoins }) {
+export default function MiniTopBar({ currentPage, handlePageChange, userId, myRascal, logOut, earnedCoins }) {
 
 
     return (

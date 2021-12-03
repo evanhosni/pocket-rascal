@@ -12,20 +12,17 @@ import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import ButtonGroup from '@mui/material/ButtonGroup';
 import StoreBodies from './Store/Body';
 import StoreEyes from './Store/Eyes';
 import StoreNose from './Store/Nose';
 import StoreMouth from './Store/Mouth';
 import StoreItem from './Store/Items'
 import SavingsIcon from '@mui/icons-material/Savings';
-import Stack from '@mui/material/Stack';
 import './Store/store.css'
 import { render } from "@testing-library/react";
+import Snackbar from '@mui/material/Snackbar';
 
 
 
@@ -71,9 +68,9 @@ ItemStoreDialogTitle.propTypes = {
 
 
 
-export default function BottomNav({ currentPage, handlePageChange, myRascal, setMyRascal, unlockedItems, equippedItems, setUnlockedItems, setEquippedItems, userCoins, setUserCoins, userLevel, setUserLevel, rascalHunger, setRascalHunger }) {
+export default function BottomNav({ currentPage, handlePageChange, myRascal, setMyRascal, unlockedItems, equippedItems, setUnlockedItems, setEquippedItems, userCoins, setUserCoins, userLevel, openFail, setOpenFail }) {
   const [customMenu, setCustomMenu] = React.useState(false);
-  const [updateEquipmentPanel,setUpdateEquipmentPanel]= React.useState(0)
+  const [updateEquipmentPanel, setUpdateEquipmentPanel] = React.useState(0)
   const toggleCustomMenu = () => {
     setCustomMenu(!customMenu);
     if (carousel) {
@@ -83,36 +80,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
       setEquippedItemsB(false)
     }
   }
-  // function renderCarouselContent() {
-  //   if (prevEvent === 'items') {
-  //     setEquippedItemsB(false);
-  //     setCarousel(true)
 
-  //     return (
-  //       <div>
-  //         {itemsArray.map((object, i) =>
-  //           <div obj={object} key={i}>
-  //             <Button style={customBtn} />
-  //           </div>)}
-  //       </div>
-  //     )
-
-  //   }
-
-  //   if (prevEvent === 'color') {
-  //     setEquippedItemsB(false);
-  //     setCarousel(true)
-
-  //     return (
-  //       <div>
-  //         {colorArray.map((object, i) =>
-  //       <div style={customDiv} obj={object} key={i}>
-  //           <Button style={customBtn} />
-  //       </div> )}
-  //       </div>
-  //     )
-  //   }
-  // }
 
   const [carousel, setCarousel] = React.useState(false)
   // const [carouselContent, setCarouselContent] = React.useState(false)
@@ -239,18 +207,39 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   ];
   let equippedItemsCopy
   function elongate() {
-    equippedItemsCopy= [...equippedItems]
+    equippedItemsCopy = [...equippedItems]
     let lengthDiff = 8 - equippedItemsCopy.length
-    for(let i=0;i<lengthDiff;i++){
-      equippedItemsCopy.push({name:"empty"})
+    for (let i = 0; i < lengthDiff; i++) {
+      equippedItemsCopy.push({ name: "empty" })
     }
   }
   elongate()
 
+  //feed/wash fail message functions (test)
+
+  const handleCloseFail = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenFail(false);
+  };
+
+  const actionFail = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseFail}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
   return (
     <div>
-
-
       <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItems}>
         <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" data-update={equippedItems.length}>
           {equippedItemsCopy.map((item, index) => {
@@ -263,13 +252,13 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
               </div>
             )
           })}
-            
+
         </Box>
       </Animated>
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
         <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-          <Carousel setUpdateEquipmentPanel={setUpdateEquipmentPanel} updateEquipmentPanel={updateEquipmentPanel}prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+          <Carousel setUpdateEquipmentPanel={setUpdateEquipmentPanel} updateEquipmentPanel={updateEquipmentPanel} prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
         </Animated>
 
         <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
@@ -342,26 +331,35 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
           >
             <ItemStoreDialogTitle
               id="customized-dialog-title"
-              // onClose={handleClose}
+            // onClose={handleClose}
             >
-            <div id="tab">
-              {buttons}
-            </div>
+              <div id="tab">
+                {buttons}
+              </div>
 
             </ItemStoreDialogTitle>
             <div id="store-content">
               {renderStoreContent()}
             </div>
-              <div id="bottom-tab">
-                <Button disabled variant="outlined" startIcon={<SavingsIcon />}>
-                  {`${userCoins}¢`}
-                </Button>
-                <Button autoFocus onClick={handleClose} id="done">
-                  Done
-                </Button>
-              </div>
+            <div id="bottom-tab">
+              <Button disabled variant="outlined" startIcon={<SavingsIcon />}>
+                {`${userCoins}¢`}
+              </Button>
+              <Button autoFocus onClick={handleClose} id="done">
+                Done
+              </Button>
+            </div>
           </ItemStoreDialog>
         </div>
+
+        <Snackbar
+                open={openFail}
+                autoHideDuration={6000}
+                onClose={handleCloseFail}
+                message="You need more coins for this!"
+                action={actionFail}
+            />
+
       </div >
     </div>
   );

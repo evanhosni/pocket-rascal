@@ -19,7 +19,10 @@ const SnakeMini = (props) => {
     ]);
 
     const reset = () => {
-        props.setUserCoins(props.userCoins + points)
+        props.myRascal.coins = (props.myRascal.coins + points)
+        props.setUserCoins(props.myRascal.coins)
+        props.myRascal.xp = (props.myRascal.xp + points)
+        props.setUserXP(props.myRascal.xp)
         speedRef.current = 100;
         setPoints(0)
         setDirection('right')
@@ -259,20 +262,27 @@ const SnakeMini = (props) => {
                     >
                         <div>Game Over!</div>
                         <button
-                        onClick={() => reset()}>
+                            onClick={() => reset()}>
                             Play Again
                         </button>
-                        <button 
-                        onClick={() => {
-                        props.handlePageChange('Minigame'); 
-                        props.setUserCoins(props.userCoins+points);
-                        props.setEarnedCoins(props.earnedCoins+points)
-                        }}>
+                        <button
+                            onClick={() => {
+                                props.handlePageChange('Minigame');
+                                props.myRascal.coins = (props.myRascal.coins + points)
+                                props.setUserCoins(props.myRascal.coins)
+                                props.setEarnedCoins(props.earnedCoins + points)
+                                props.myRascal.xp = (props.myRascal.xp + points)
+                                props.setUserXP(props.myRascal.xp)
+                            }}>
                             Play Another Game</button>
-                        <button 
-                        onClick={() => {
-                        props.handlePageChange('Dashboard');
-                        props.setUserCoins(props.userCoins+points)}}>
+                        <button
+                            onClick={() => {
+                                props.handlePageChange('Dashboard');
+                                props.myRascal.coins = (props.myRascal.coins + points)
+                                props.setUserCoins(props.myRascal.coins)
+                                props.myRascal.xp = (props.myRascal.xp + points)
+                                props.setUserXP(props.myRascal.xp)
+                            }}>
                             Exit
                         </button>
                     </div>

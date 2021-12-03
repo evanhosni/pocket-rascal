@@ -89,7 +89,8 @@ export default function StoreMouth(props) {
     //update the coin value displayed at the bottom of store window
     const purchaseItem = (item) => {
         if (props.userCoins >= item.price) {
-            props.setUserCoins(props.userCoins - item.price);
+            props.myRascal.coins = (props.myRascal.coins - item.price)
+            props.setUserCoins(props.myRascal.coins);
             handleClick();
             saveNewItem(item);
         } else { handleFail() }

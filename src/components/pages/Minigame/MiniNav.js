@@ -14,7 +14,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 
 
-export default function MiniNav({ userCoins, setUserCoins, userLevel, setUserLevel, currentPage, handlePageChange, earnedCoins }) {
+export default function MiniNav({ userCoins, userLevel, handlePageChange }) {
 
     const [open, setOpen] = React.useState(false);
 

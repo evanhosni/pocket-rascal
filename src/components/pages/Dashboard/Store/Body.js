@@ -105,7 +105,8 @@ export default function StoreBodies(props) {
     const purchaseItem = (item) => {
 
         if (props.userCoins >= item.price) {
-            props.setUserCoins(props.userCoins - item.price);
+            props.myRascal.coins = (props.myRascal.coins - item.price)
+            props.setUserCoins(props.myRascal.coins);
             handleClick();
             saveNewItem(item);
         } else { handleFail() }

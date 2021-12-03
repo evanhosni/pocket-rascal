@@ -3,7 +3,7 @@ import MiniSelection from './Games/MiniSelection'
 import MiniNav from './MiniNav';
 import MiniTopBar from './MiniTopBar';
 
-export default function MiniPlayground({userId, logOut, myRascal,userCoins, setUserCoins, userLevel, setUserLevel, currentPage, handlePageChange}) {
+export default function MiniPlayground({userId, logOut, myRascal, userCoins, setUserCoins, userXP, setUserXP, userLevel, currentPage, handlePageChange}) {
 
   const [earnedCoins, setEarnedCoins] = useState(2)
 
@@ -13,10 +13,10 @@ export default function MiniPlayground({userId, logOut, myRascal,userCoins, setU
         currentPage={currentPage} handlePageChange={handlePageChange} userId={userId} logOut={logOut} myRascal={myRascal} earnedCoins={earnedCoins} setEarnedCoins={setEarnedCoins} 
         />
         <MiniSelection 
-        earnedCoins={earnedCoins} setEarnedCoins={setEarnedCoins} userCoins={userCoins} setUserCoins={setUserCoins} handlePageChange={handlePageChange}
+        earnedCoins={earnedCoins} setEarnedCoins={setEarnedCoins} userCoins={userCoins} setUserCoins={setUserCoins} handlePageChange={handlePageChange} myRascal={myRascal} userXP={userXP} setUserXP={setUserXP}
         />
         <MiniNav 
-        userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} currentPage={currentPage} handlePageChange={handlePageChange} earnedCoins={earnedCoins} 
+        userCoins={userCoins} userLevel={userLevel} handlePageChange={handlePageChange}
         />
     </div>
   );
