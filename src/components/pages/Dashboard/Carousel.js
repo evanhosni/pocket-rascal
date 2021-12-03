@@ -34,6 +34,12 @@ export default function Carousel({prevEvent}) {
     const noseArray = [0,1,2,3]
     const mouthArray = [0,1,2,3]
     const itemsArray = [0,1,2,3]
+    // const colorArray = unlockedItems.filter(item=> item.type=="color")
+    // const bodyArray = unlockedItems.filter(item=> item.type=="body")
+    // const eyesArray = unlockedItems.filter(item=> item.type=="eyes")
+    // const noseArray = unlockedItems.filter(item=> item.type=="nose")
+    // const mouthArray = unlockedItems.filter(item=> item.type=="mouth")
+    // const itemsArray = unlockedItems.filter(item=> item.type=="item")
 
     // let array
 
@@ -105,8 +111,8 @@ export default function Carousel({prevEvent}) {
 
 
     return(
-    <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}}>
-        <Slider { ...settings } prevEvent={prevEvent}>
+    <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}} id="custom-slider">
+        <Slider { ...settings }  prevEvent={prevEvent}>
             {prevEvent == 'color' ? (color())
             : prevEvent == 'body' ? (body())
             : prevEvent == 'eyes' ? (eyes())
