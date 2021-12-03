@@ -4,10 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import "./carousel.css"
 
-export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEquippedItems, equippedItems,setUpdateEquipmentPanel, updateEquipmentPanel}) {
-    // React.useEffect(()=>{
-    //     setUpdateEquipmentPanel(updateEquipmentPanel+1)
-    // },[equippedItems])
+export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEquippedItems, equippedItems}) {
 
     // console.log('carousel',unlockedItems)
 
@@ -17,7 +14,6 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         duration: 75,
         slidesToShow: 3
     };
-
     const colorArray = [...unlockedItems].filter(thingy => thingy.type === 'color')
     const bodyArray = [...unlockedItems].filter(thingy => thingy.type === 'body')
     const eyesArray = [...unlockedItems].filter(thingy => thingy.type === 'eyes')
@@ -185,7 +181,7 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
     // )
     // } else {
         return(
-            <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}} id="custom-slider" data-update={updateEquipmentPanel}>
+            <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}} id="custom-slider">
                 <Slider { ...settings } prevEvent={prevEvent}>
                     {prevEvent == 'color' ? (color())
                     : prevEvent == 'body' ? (body())
