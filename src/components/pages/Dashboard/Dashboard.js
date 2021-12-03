@@ -15,7 +15,7 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
       // setMyRascal(myRascal=>({...myRascal, happiness:(myRascal.happiness*.99)}));
       setMyRascal(myRascal=>{
         newRascal = {...myRascal, happiness:(myRascal.happiness*.99)}
-        console.log(newRascal)
+        // console.log(newRascal)
         return newRascal
       });
     
@@ -23,6 +23,7 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
     }, 15000);
 
     const saveTimer = setInterval(()=> {
+      console.log(newRascal)
       // UNCOMMNET OUT FOR RASCAL AND ITEM UPLOADING
       // let newItemArray = [...rascalItemArray]
       // API.updateRascal(newRascal)

@@ -238,239 +238,239 @@ class Scene extends React.Component {
               }
             }
           });
-            equippedItems.push(item1)//equippedItems array is only used for devMode
-  
-          var itemConstraint1 = Constraint.create({
-            name: `${itemArray[0].name}_constraint`,
-            pointA: rascal.position,
-            bodyB: item1,
-            pointB: { x: 0, y: itemArray[0].size / 0.02 },
-            stiffness: 0.05,
-            render: {
-              visible: false,
-            },
-          });  
-          Composite.add(world, [item1, itemConstraint1]);
-        }
-        if(itemArray[1]){
-          item2 = Bodies.rectangle(
-            2500,
-            2340 - 1 - 50 * (itemArray[1].size - 1),
-            90,
-            100 * itemArray[1].size,
-            {
-              name: itemArray[1].name,
-              frictionAir: 0.06,
-              friction: 0,
-              render: {//TODO this breaks the site
-                sprite: {
-                  texture: `./assets/${itemArray[1].name}.png`
-                }
-              }
-            }
-          );
-            equippedItems.push(item2)//equippedItems array is only used for devMode
-  
-          var itemConstraint2 = Constraint.create({
-            name: `${itemArray[1].name}_constraint`,
-            pointA: rascal.position,
-            bodyB: item2,
-            pointB: { x: 0, y: itemArray[1].size / 0.02 },
-            stiffness: 0.05,
-            render: {
-              visible: false,
-            },
-          });  
-          Composite.add(world, [item2, itemConstraint2]);
-        }
-        if(itemArray[2]){
-          item3 = Bodies.rectangle(
-            2500,
-            2340 - 1 - 50 * (itemArray[2].size - 1),
-            90,
-            100 * itemArray[2].size,
-            {
-              name: itemArray[2].name,
-              frictionAir: 0.06,
-              friction: 0,
-              render: {//TODO this breaks the site
-                sprite: {
-                  texture: `./assets/${itemArray[2].name}.png`
-                }
-              }
-            }
-          );
-            equippedItems.push(item3)//equippedItems array is only used for devMode
-  
-          var itemConstraint3 = Constraint.create({
-            name: `${itemArray[2].name}_constraint`,
-            pointA: rascal.position,
-            bodyB: item3,
-            pointB: { x: 0, y: itemArray[2].size / 0.02 },
-            stiffness: 0.05,
-            render: {
-              visible: false,
-            },
-          });  
-          Composite.add(world, [item3, itemConstraint3]);
-        }
-        if(itemArray[3]){
-          item4 = Bodies.rectangle(
-            2500,
-            2340 - 1 - 50 * (itemArray[3].size - 1),
-            90,
-            100 * itemArray[3].size,
-            {
-              name: itemArray[3].name,
-              frictionAir: 0.06,
-              friction: 0,
-              render: {//TODO this breaks the site
-                sprite: {
-                  texture: `./assets/${itemArray[3].name}.png`
-                }
-              }
-            }
-          );
-            equippedItems.push(item4)//equippedItems array is only used for devMode
-  
-          var itemConstraint4 = Constraint.create({
-            name: `${itemArray[3].name}_constraint`,
-            pointA: rascal.position,
-            bodyB: item4,
-            pointB: { x: 0, y: itemArray[3].size / 0.02 },
-            stiffness: 0.05,
-            render: {
-              visible: false,
-            },
-          });  
-          Composite.add(world, [item4, itemConstraint4]);
-        }
-        if(itemArray[4]){
-          item5 = Bodies.rectangle(
-            2500,
-            2340 - 1 - 50 * (itemArray[4].size - 1),
-            90,
-            100 * itemArray[4].size,
-            {
-              name: itemArray[4].name,
-              frictionAir: 0.06,
-              friction: 0,
-              render: {//TODO this breaks the site
-                sprite: {
-                  texture: `./assets/${itemArray[4].name}.png`
-                }
-              }
-            }
-          );
-            equippedItems.push(item5)//equippedItems array is only used for devMode
-  
-          var itemConstraint5 = Constraint.create({
-            name: `${itemArray[4].name}_constraint`,
-            pointA: rascal.position,
-            bodyB: item5,
-            pointB: { x: 0, y: itemArray[4].size / 0.02 },
-            stiffness: 0.05,
-            render: {
-              visible: false,
-            },
-          });  
-          Composite.add(world, [item5, itemConstraint5]);
-        }
-        if(itemArray[5]){
-          item6 = Bodies.rectangle(
-            2500,
-            2340 - 1 - 50 * (itemArray[5].size - 1),
-            90,
-            100 * itemArray[5].size,
-            {
-              name: itemArray[5].name,
-              frictionAir: 0.06,
-              friction: 0,
-              render: {//TODO this breaks the site
-                sprite: {
-                  texture: `./assets/${itemArray[5].name}.png`
-                }
-              }
-            }
-          );
-            equippedItems.push(item6)//equippedItems array is only used for devMode
-  
-          var itemConstraint6 = Constraint.create({
-            name: `${itemArray[5].name}_constraint`,
-            pointA: rascal.position,
-            bodyB: item6,
-            pointB: { x: 0, y: itemArray[5].size / 0.02 },
-            stiffness: 0.05,
-            render: {
-              visible: false,
-            },
-          });  
-          Composite.add(world, [item6, itemConstraint6]);
-        }
-        if(itemArray[6]){
-          item7 = Bodies.rectangle(
-            2500,
-            2340 - 1 - 50 * (itemArray[6].size - 1),
-            90,
-            100 * itemArray[6].size,
-            {
-              name: itemArray[6].name,
-              frictionAir: 0.06,
-              friction: 0,
-              render: {//TODO this breaks the site
-                sprite: {
-                  texture: `./assets/${itemArray[6].name}.png`
-                }
-              }
-            }
-          );
-            equippedItems.push(item7)//equippedItems array is only used for devMode
-  
-          var itemConstraint7 = Constraint.create({
-            name: `${itemArray[6].name}_constraint`,
-            pointA: rascal.position,
-            bodyB: item7,
-            pointB: { x: 0, y: itemArray[6].size / 0.02 },
-            stiffness: 0.05,
-            render: {
-              visible: false,
-            },
-          });  
-          Composite.add(world, [item7, itemConstraint7]);
-        }
-        if(itemArray[7]){
-          item8 = Bodies.rectangle(
-            2500,
-            2340 - 1 - 50 * (itemArray[7].size - 1),
-            90,
-            100 * itemArray[7].size,
-            {
-              name: itemArray[7].name,
-              frictionAir: 0.06,
-              friction: 0,
-              render: {//TODO this breaks the site
-                sprite: {
-                  texture: `./assets/${itemArray[7].name}.png`
-                }
-              }
-            }
-          );
-            equippedItems.push(item8)//equippedItems array is only used for devMode
-  
-          var itemConstraint8 = Constraint.create({
-            name: `${itemArray[7].name}_constraint`,
-            pointA: rascal.position,
-            bodyB: item8,
-            pointB: { x: 0, y: itemArray[7].size / 0.02 },
-            stiffness: 0.05,
-            render: {
-              visible: false,
-            },
-          });  
-          Composite.add(world, [item8, itemConstraint8]);
-        }
+        equippedItems.push(item1)//equippedItems array is only used for devMode
+
+        var itemConstraint1 = Constraint.create({
+          name: `${itemArray[0].name}_constraint`,
+          pointA: rascal.position,
+          bodyB: item1,
+          pointB: { x: 0, y: itemArray[0].size / 0.02 },
+          stiffness: 0.05,
+          render: {
+            visible: false,
+          },
+        });
+        Composite.add(world, [item1, itemConstraint1]);
       }
-    
+      if (itemArray[1]) {
+        item2 = Bodies.rectangle(
+          2500,
+          2340 - 1 - 50 * (itemArray[1].size - 1),
+          90,
+          100 * itemArray[1].size,
+          {
+            name: itemArray[1].name,
+            frictionAir: 0.06,
+            friction: 0,
+            render: {//TODO this breaks the site
+              sprite: {
+                texture: `./assets/${itemArray[1].name}.png`
+              }
+            }
+          }
+        );
+        equippedItems.push(item2)//equippedItems array is only used for devMode
+
+        var itemConstraint2 = Constraint.create({
+          name: `${itemArray[1].name}_constraint`,
+          pointA: rascal.position,
+          bodyB: item2,
+          pointB: { x: 0, y: itemArray[1].size / 0.02 },
+          stiffness: 0.05,
+          render: {
+            visible: false,
+          },
+        });
+        Composite.add(world, [item2, itemConstraint2]);
+      }
+      if (itemArray[2]) {
+        item3 = Bodies.rectangle(
+          2500,
+          2340 - 1 - 50 * (itemArray[2].size - 1),
+          90,
+          100 * itemArray[2].size,
+          {
+            name: itemArray[2].name,
+            frictionAir: 0.06,
+            friction: 0,
+            render: {//TODO this breaks the site
+              sprite: {
+                texture: `./assets/${itemArray[2].name}.png`
+              }
+            }
+          }
+        );
+        equippedItems.push(item3)//equippedItems array is only used for devMode
+
+        var itemConstraint3 = Constraint.create({
+          name: `${itemArray[2].name}_constraint`,
+          pointA: rascal.position,
+          bodyB: item3,
+          pointB: { x: 0, y: itemArray[2].size / 0.02 },
+          stiffness: 0.05,
+          render: {
+            visible: false,
+          },
+        });
+        Composite.add(world, [item3, itemConstraint3]);
+      }
+      if (itemArray[3]) {
+        item4 = Bodies.rectangle(
+          2500,
+          2340 - 1 - 50 * (itemArray[3].size - 1),
+          90,
+          100 * itemArray[3].size,
+          {
+            name: itemArray[3].name,
+            frictionAir: 0.06,
+            friction: 0,
+            render: {//TODO this breaks the site
+              sprite: {
+                texture: `./assets/${itemArray[3].name}.png`
+              }
+            }
+          }
+        );
+        equippedItems.push(item4)//equippedItems array is only used for devMode
+
+        var itemConstraint4 = Constraint.create({
+          name: `${itemArray[3].name}_constraint`,
+          pointA: rascal.position,
+          bodyB: item4,
+          pointB: { x: 0, y: itemArray[3].size / 0.02 },
+          stiffness: 0.05,
+          render: {
+            visible: false,
+          },
+        });
+        Composite.add(world, [item4, itemConstraint4]);
+      }
+      if (itemArray[4]) {
+        item5 = Bodies.rectangle(
+          2500,
+          2340 - 1 - 50 * (itemArray[4].size - 1),
+          90,
+          100 * itemArray[4].size,
+          {
+            name: itemArray[4].name,
+            frictionAir: 0.06,
+            friction: 0,
+            render: {//TODO this breaks the site
+              sprite: {
+                texture: `./assets/${itemArray[4].name}.png`
+              }
+            }
+          }
+        );
+        equippedItems.push(item5)//equippedItems array is only used for devMode
+
+        var itemConstraint5 = Constraint.create({
+          name: `${itemArray[4].name}_constraint`,
+          pointA: rascal.position,
+          bodyB: item5,
+          pointB: { x: 0, y: itemArray[4].size / 0.02 },
+          stiffness: 0.05,
+          render: {
+            visible: false,
+          },
+        });
+        Composite.add(world, [item5, itemConstraint5]);
+      }
+      if (itemArray[5]) {
+        item6 = Bodies.rectangle(
+          2500,
+          2340 - 1 - 50 * (itemArray[5].size - 1),
+          90,
+          100 * itemArray[5].size,
+          {
+            name: itemArray[5].name,
+            frictionAir: 0.06,
+            friction: 0,
+            render: {//TODO this breaks the site
+              sprite: {
+                texture: `./assets/${itemArray[5].name}.png`
+              }
+            }
+          }
+        );
+        equippedItems.push(item6)//equippedItems array is only used for devMode
+
+        var itemConstraint6 = Constraint.create({
+          name: `${itemArray[5].name}_constraint`,
+          pointA: rascal.position,
+          bodyB: item6,
+          pointB: { x: 0, y: itemArray[5].size / 0.02 },
+          stiffness: 0.05,
+          render: {
+            visible: false,
+          },
+        });
+        Composite.add(world, [item6, itemConstraint6]);
+      }
+      if (itemArray[6]) {
+        item7 = Bodies.rectangle(
+          2500,
+          2340 - 1 - 50 * (itemArray[6].size - 1),
+          90,
+          100 * itemArray[6].size,
+          {
+            name: itemArray[6].name,
+            frictionAir: 0.06,
+            friction: 0,
+            render: {//TODO this breaks the site
+              sprite: {
+                texture: `./assets/${itemArray[6].name}.png`
+              }
+            }
+          }
+        );
+        equippedItems.push(item7)//equippedItems array is only used for devMode
+
+        var itemConstraint7 = Constraint.create({
+          name: `${itemArray[6].name}_constraint`,
+          pointA: rascal.position,
+          bodyB: item7,
+          pointB: { x: 0, y: itemArray[6].size / 0.02 },
+          stiffness: 0.05,
+          render: {
+            visible: false,
+          },
+        });
+        Composite.add(world, [item7, itemConstraint7]);
+      }
+      if (itemArray[7]) {
+        item8 = Bodies.rectangle(
+          2500,
+          2340 - 1 - 50 * (itemArray[7].size - 1),
+          90,
+          100 * itemArray[7].size,
+          {
+            name: itemArray[7].name,
+            frictionAir: 0.06,
+            friction: 0,
+            render: {//TODO this breaks the site
+              sprite: {
+                texture: `./assets/${itemArray[7].name}.png`
+              }
+            }
+          }
+        );
+        equippedItems.push(item8)//equippedItems array is only used for devMode
+
+        var itemConstraint8 = Constraint.create({
+          name: `${itemArray[7].name}_constraint`,
+          pointA: rascal.position,
+          bodyB: item8,
+          pointB: { x: 0, y: itemArray[7].size / 0.02 },
+          stiffness: 0.05,
+          render: {
+            visible: false,
+          },
+        });
+        Composite.add(world, [item8, itemConstraint8]);
+      }
+    }
+
 
 
     addItems();
@@ -531,30 +531,30 @@ class Scene extends React.Component {
         generate()
       }
     }
-    
+
     const equippedItemsPanel = document.querySelector('#equipped-items')
     const customPanel = document.querySelector('#custom-slider')
-    equippedItemsPanel.addEventListener("click",(e)=>{
-      
+    equippedItemsPanel.addEventListener("click", (e) => {
+
       var source = e.target.getAttribute('src')
       // console.log(e.target)
-      if(source){
-        
+      if (source) {
+
         var isolate = source.split('/')[2].split('.')[0]
-        
-        world.bodies.every((item,index) => {
-          if(item.name==isolate){
-            Matter.World.remove(world,world.bodies[index])
+
+        world.bodies.every((item, index) => {
+          if (item.name == isolate) {
+            Matter.World.remove(world, world.bodies[index])
             return false
-          }else{
+          } else {
             return true
           }
-          
+
         });
-        itemArray.forEach((item,index)=>{
-          if(item.name==isolate){
+        itemArray.forEach((item, index) => {
+          if (item.name == isolate) {
             console.log("match")
-            itemArray.splice(index,1)
+            itemArray.splice(index, 1)
             return
           }
         })
@@ -568,63 +568,81 @@ class Scene extends React.Component {
 
       }
     })
-    customPanel.addEventListener("click",(e)=>{
-      let regNose= /nose/;
-      let regBody= /body/;
-      let regEyes= /eyes/;
-      let regMouth= /mouth/;
+    customPanel.addEventListener("click", (e) => {
+      let regNose = /nose/;
+      let regBody = /body/;
+      let regEyes = /eyes/;
+      let regMouth = /mouth/;
       var source = e.target.getAttribute('src')
       var itemSource = e.target.getAttribute('item-size')
-      if(source){
+      if (source) {
         var isolate = source.split('/')[2].split('.')[0]
+        
         let resultNose = regNose.exec(isolate)
-        let resultBody = regNose.exec(isolate)
-        let resultEyes = regNose.exec(isolate)
-        let resultMouth = regNose.exec(isolate)
-        if(resultNose){
-          if(isolate==selectedNose){
-            selectedNose="empty"
-          }else{
-            isolate=selectedNose
+        let resultBody = regBody.exec(isolate)
+        let resultEyes = regEyes.exec(isolate)
+        let resultMouth = regMouth.exec(isolate)
+        if (resultNose) {
+          if (isolate == selectedNose) {
+            selectedNose = "empty"
+            cancelAnimationFrame(animation);
+            generate()
+          } else {
+            selectedNose = isolate
+            cancelAnimationFrame(animation);
+            generate()
           }
         }
-        if(resultBody){
-          if(isolate==selectedBody){
-            selectedBody="empty"
-          }else{
-            isolate=selectedBody
+        if (resultBody) {
+          if (isolate == selectedBody) {
+            selectedBody = "empty"
+            cancelAnimationFrame(animation);
+            generate()
+          } else {
+            selectedBody = isolate
+            cancelAnimationFrame(animation);
+            generate()
           }
         }
-        if(resultEyes){
-          if(isolate==selectedEyes){
-            selectedEyes="empty"
-          }else{
-            isolate=selectedEyes
+        if (resultEyes) {
+          if (isolate == selectedEyes) {
+            selectedEyes = "empty"
+            cancelAnimationFrame(animation);
+            generate()
+          } else {
+            selectedEyes = isolate
+            console.log(isolate)
+            cancelAnimationFrame(animation);
+            generate()
           }
         }
-        if(resultMouth){
-          if(isolate==selectedMouth){
-            selectedMouth="empty"
-          }else{
-            isolate=selectedMouth
+        if (resultMouth) {
+          if (isolate == selectedMouth) {
+            selectedMouth = "empty"
+            cancelAnimationFrame(animation);
+            generate()
+          } else {
+            selectedMouth=isolate
+            cancelAnimationFrame(animation);
+            generate()
           }
         }
-        
-        
+
+
       }
-      if(itemSource){
-        
-       if(item1){ Matter.World.remove(world,item1)}
-       if(item2){ Matter.World.remove(world,item2)}
-       if(item3){ Matter.World.remove(world,item3)}
-       if(item4){ Matter.World.remove(world,item4)}
-       if(item5){ Matter.World.remove(world,item5)}
-       if(item6){ Matter.World.remove(world,item6)}
-       if(item7){ Matter.World.remove(world,item7)}
-       if(item8){ Matter.World.remove(world,item8)}
+      if (itemSource) {
+
+        if (item1) { Matter.World.remove(world, item1) }
+        if (item2) { Matter.World.remove(world, item2) }
+        if (item3) { Matter.World.remove(world, item3) }
+        if (item4) { Matter.World.remove(world, item4) }
+        if (item5) { Matter.World.remove(world, item5) }
+        if (item6) { Matter.World.remove(world, item6) }
+        if (item7) { Matter.World.remove(world, item7) }
+        if (item8) { Matter.World.remove(world, item8) }
         itemArray.push({
-          name:isolate,
-          size:parseFloat(itemSource)
+          name: isolate,
+          size: parseFloat(itemSource)
         })
         addItems()
         // itemArray=[]
@@ -642,8 +660,8 @@ class Scene extends React.Component {
     //       Matter.World.remove(world,item)
     //     }
     //   });
-      
-        
+
+
     //   // }
     //   // Matter.World.remove(world,world.bodies[0])
     //   cancelAnimationFrame(animation);
@@ -707,7 +725,7 @@ class Scene extends React.Component {
       var soap = Matter.Bodies.rectangle(2200, 2750, 150, 90, {
         label: 'soap',
         friction: 1,
-        isSensor:true,
+        isSensor: true,
       })
       Matter.World.add(engine.world, soap)
     }
@@ -722,12 +740,12 @@ class Scene extends React.Component {
     function setUpWashRascal() {
       Matter.Events.on(engine, 'collisionActive', function (event) {
         event.pairs
-        .filter((pair) => {
-          return detectSoapCollision(pair);
-        })
-        .forEach((pair) => {
-          console.log(pair)
-        })
+          .filter((pair) => {
+            return detectSoapCollision(pair);
+          })
+          .forEach((pair) => {
+            console.log(pair)
+          })
 
       })
     }
@@ -737,7 +755,7 @@ class Scene extends React.Component {
       createSoap();
       setUpWashRascal();
     })
-  
+
   }
 
   render() {
