@@ -535,12 +535,8 @@ class Scene extends React.Component {
 
     const equippedItemsPanel = document.querySelector('#equipped-items')
     const customPanel = document.querySelector('#custom-slider')
-<<<<<<< HEAD
-    equippedItemsPanel.addEventListener("click", (e) => {
-=======
     const creationPanel = document.querySelector('#creation-panel')
-    if(equippedItemsPanel){equippedItemsPanel.addEventListener("click", (e) => {
->>>>>>> dev
+    if (equippedItemsPanel){equippedItemsPanel.addEventListener("click", (e) => {
 
       var source = e.target.getAttribute('src')
       // console.log(e.target)
@@ -573,13 +569,8 @@ class Scene extends React.Component {
         // }
 
       }
-<<<<<<< HEAD
-    })
-    customPanel.addEventListener("click", (e) => {
-=======
     })}
     if(customPanel){customPanel.addEventListener("click", (e) => {
->>>>>>> dev
       let regNose = /nose/;
       let regBody = /body/;
       let regEyes = /eyes/;
@@ -590,16 +581,6 @@ class Scene extends React.Component {
         var isolate = source.split('/')[2].split('.')[0]
         
         let resultNose = regNose.exec(isolate)
-<<<<<<< HEAD
-        let resultBody = regNose.exec(isolate)
-        let resultEyes = regNose.exec(isolate)
-        let resultMouth = regNose.exec(isolate)
-        if (resultNose) {
-          if (isolate == selectedNose) {
-            selectedNose = "empty"
-          } else {
-            isolate = selectedNose
-=======
         let resultBody = regBody.exec(isolate)
         let resultEyes = regEyes.exec(isolate)
         let resultMouth = regMouth.exec(isolate)
@@ -612,32 +593,22 @@ class Scene extends React.Component {
             selectedNose = isolate
             cancelAnimationFrame(animation);
             generate()
->>>>>>> dev
           }
         }
         if (resultBody) {
           if (isolate == selectedBody) {
             selectedBody = "empty"
-<<<<<<< HEAD
-          } else {
-            isolate = selectedBody
-=======
             cancelAnimationFrame(animation);
             generate()
           } else {
             selectedBody = isolate
             cancelAnimationFrame(animation);
             generate()
->>>>>>> dev
           }
         }
         if (resultEyes) {
           if (isolate == selectedEyes) {
             selectedEyes = "empty"
-<<<<<<< HEAD
-          } else {
-            isolate = selectedEyes
-=======
             cancelAnimationFrame(animation);
             generate()
           } else {
@@ -645,23 +616,17 @@ class Scene extends React.Component {
             console.log(isolate)
             cancelAnimationFrame(animation);
             generate()
->>>>>>> dev
           }
         }
         if (resultMouth) {
           if (isolate == selectedMouth) {
             selectedMouth = "empty"
-<<<<<<< HEAD
-          } else {
-            isolate = selectedMouth
-=======
             cancelAnimationFrame(animation);
             generate()
           } else {
             selectedMouth=isolate
             cancelAnimationFrame(animation);
             generate()
->>>>>>> dev
           }
         }
 
@@ -684,12 +649,6 @@ class Scene extends React.Component {
         addItems()
         // itemArray=[]
       }
-<<<<<<< HEAD
-    })
-
-
-
-=======
     })}
     if(creationPanel){
       creationPanel.addEventListener("click",(e)=>{
@@ -707,8 +666,7 @@ class Scene extends React.Component {
 
     }
 
-    var image = 'milkshakes'
->>>>>>> dev
+    
     //setting up feeding the rascal and the food object disappearing on collision with rascal body
     const createFood = () => {
       var food = Matter.Bodies.rectangle(2055, 2750, 70, 150, {
@@ -761,22 +719,10 @@ class Scene extends React.Component {
     }
 
     const feedBtn = document.getElementById('FeedRascal')
-<<<<<<< HEAD
-    feedBtn.addEventListener('click', () => {
-      for (let i = 0; i < world.bodies.length; i++) {
-        if (world.bodies[i].label === 'food') {
-          return
-        }
-      }
-
-      feedRascal();
-    })
-=======
     if(feedBtn){feedBtn.addEventListener('click', () => {
       createFood();
       setUpFeedRascal();
     })}
->>>>>>> dev
 
     //setting up washing rascal and the soap getting smaller on collision 
     const createSoap = () => {
@@ -821,21 +767,10 @@ class Scene extends React.Component {
     }
 
     const soapBtn = document.getElementById('WashRascal')
-<<<<<<< HEAD
-    soapBtn.addEventListener('click', () => {
-      for (let i = 0; i < world.bodies.length; i++) {
-        if (world.bodies[i].label === 'soap') {
-          return
-        }
-      }
-      washRascal();
-    })
-=======
     if(soapBtn){soapBtn.addEventListener('click', () => {
       createSoap();
       setUpWashRascal();
     })}
->>>>>>> dev
 
   }
 
