@@ -23,6 +23,7 @@ class Scene extends React.Component {
 
     var engine = Engine.create({
       gravity: { scale: 0 },
+      enableSleeping: true
     });
     var world = engine.world;
 
@@ -76,6 +77,7 @@ class Scene extends React.Component {
         isSleeping: true
       },
     });
+
     var rascalConstraint = Constraint.create({
       name: "rascal_constraint",
       pointA: { x: 2500, y: 2500 },
@@ -239,7 +241,7 @@ class Scene extends React.Component {
         );
         equippedItems.push(item1)//equippedItems array is only used for devMode
 
-        var itemConstraint = Constraint.create({
+        var itemConstraint1 = Constraint.create({
           name: `${itemArray[0].name}_constraint`,
           pointA: rascal.position,
           bodyB: item1,
@@ -249,7 +251,7 @@ class Scene extends React.Component {
             visible: false,
           },
         });
-        Composite.add(world, [item1, itemConstraint]);
+        Composite.add(world, [item1, itemConstraint1]);
       }
       if (itemArray[1]) {
         item2 = Bodies.rectangle(
@@ -271,7 +273,7 @@ class Scene extends React.Component {
         );
         equippedItems.push(item2)//equippedItems array is only used for devMode
 
-        var itemConstraint = Constraint.create({
+        var itemConstraint2 = Constraint.create({
           name: `${itemArray[1].name}_constraint`,
           pointA: rascal.position,
           bodyB: item2,
@@ -281,7 +283,7 @@ class Scene extends React.Component {
             visible: false,
           },
         });
-        Composite.add(world, [item2, itemConstraint]);
+        Composite.add(world, [item2, itemConstraint2]);
       }
       if (itemArray[2]) {
         item3 = Bodies.rectangle(
@@ -303,7 +305,7 @@ class Scene extends React.Component {
         );
         equippedItems.push(item3)//equippedItems array is only used for devMode
 
-        var itemConstraint = Constraint.create({
+        var itemConstraint3 = Constraint.create({
           name: `${itemArray[2].name}_constraint`,
           pointA: rascal.position,
           bodyB: item3,
@@ -313,7 +315,7 @@ class Scene extends React.Component {
             visible: false,
           },
         });
-        Composite.add(world, [item3, itemConstraint]);
+        Composite.add(world, [item3, itemConstraint3]);
       }
       if (itemArray[3]) {
         item4 = Bodies.rectangle(
@@ -335,7 +337,7 @@ class Scene extends React.Component {
         );
         equippedItems.push(item4)//equippedItems array is only used for devMode
 
-        var itemConstraint = Constraint.create({
+        var itemConstraint4 = Constraint.create({
           name: `${itemArray[3].name}_constraint`,
           pointA: rascal.position,
           bodyB: item4,
@@ -345,7 +347,7 @@ class Scene extends React.Component {
             visible: false,
           },
         });
-        Composite.add(world, [item4, itemConstraint]);
+        Composite.add(world, [item4, itemConstraint4]);
       }
       if (itemArray[4]) {
         item5 = Bodies.rectangle(
@@ -367,7 +369,7 @@ class Scene extends React.Component {
         );
         equippedItems.push(item5)//equippedItems array is only used for devMode
 
-        var itemConstraint = Constraint.create({
+        var itemConstraint5 = Constraint.create({
           name: `${itemArray[4].name}_constraint`,
           pointA: rascal.position,
           bodyB: item5,
@@ -377,7 +379,7 @@ class Scene extends React.Component {
             visible: false,
           },
         });
-        Composite.add(world, [item5, itemConstraint]);
+        Composite.add(world, [item5, itemConstraint5]);
       }
       if (itemArray[5]) {
         item6 = Bodies.rectangle(
@@ -399,7 +401,7 @@ class Scene extends React.Component {
         );
         equippedItems.push(item6)//equippedItems array is only used for devMode
 
-        var itemConstraint = Constraint.create({
+        var itemConstraint6 = Constraint.create({
           name: `${itemArray[5].name}_constraint`,
           pointA: rascal.position,
           bodyB: item6,
@@ -409,7 +411,7 @@ class Scene extends React.Component {
             visible: false,
           },
         });
-        Composite.add(world, [item6, itemConstraint]);
+        Composite.add(world, [item6, itemConstraint6]);
       }
       if (itemArray[6]) {
         item7 = Bodies.rectangle(
@@ -431,7 +433,7 @@ class Scene extends React.Component {
         );
         equippedItems.push(item7)//equippedItems array is only used for devMode
 
-        var itemConstraint = Constraint.create({
+        var itemConstraint7 = Constraint.create({
           name: `${itemArray[6].name}_constraint`,
           pointA: rascal.position,
           bodyB: item7,
@@ -441,7 +443,7 @@ class Scene extends React.Component {
             visible: false,
           },
         });
-        Composite.add(world, [item7, itemConstraint]);
+        Composite.add(world, [item7, itemConstraint7]);
       }
       if (itemArray[7]) {
         item8 = Bodies.rectangle(
@@ -463,7 +465,7 @@ class Scene extends React.Component {
         );
         equippedItems.push(item8)//equippedItems array is only used for devMode
 
-        var itemConstraint = Constraint.create({
+        var itemConstraint8 = Constraint.create({
           name: `${itemArray[7].name}_constraint`,
           pointA: rascal.position,
           bodyB: item8,
@@ -473,7 +475,7 @@ class Scene extends React.Component {
             visible: false,
           },
         });
-        Composite.add(world, [item8, itemConstraint]);
+        Composite.add(world, [item8, itemConstraint8]);
       }
     }
 
@@ -535,7 +537,7 @@ class Scene extends React.Component {
         generate()
       }
     }
-    console.log(item1)
+   
     const equippedItemsPanel = document.querySelector('#equipped-items')
     equippedItemsPanel.addEventListener("click",(e)=>{
       
@@ -563,13 +565,16 @@ class Scene extends React.Component {
       }
     })
 
-    function wakeUpRascal() {
-      Matter.Events.on(rascal, 'sleepEnd', function () {
-        Matter.World.remove(world, rascal);
-        Composite.add(world,rascal)
-      })
-    }
+    const testBtn = document.getElementById('edit-btn')
+    testBtn.addEventListener('click', () => {
+      Matter.World.remove(world,rascal)
+      Composite.add(world,rascal)
+      console.log(world.bodies)
+      generate();
+      // Matter.Sleeping.set(rascal,true)
+    })
 
+    var image = 'milkshakes'
     //setting up feeding the rascal and the food object disappearing on collision with rascal body
     const createFood = () => {
       var food = Matter.Bodies.rectangle(2055, 2750, 70, 150, {
