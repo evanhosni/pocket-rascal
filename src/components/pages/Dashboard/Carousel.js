@@ -116,22 +116,6 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
     }
 
 
-<<<<<<< HEAD
-    return (
-        <div style={{ width: '70%', maxWidth: '400px', margin: 'auto' }}>
-            <Slider {...settings}>
-                <div>
-                    {prevEvent == 'color' ? (color())
-                        : prevEvent == 'body' ? (body())
-                            : prevEvent == 'eyes' ? (eyes())
-                                : prevEvent == 'nose' ? (nose())
-                                    : prevEvent == 'mouth' ? (mouth())
-                                        : prevEvent == 'items' ? (items())
-                                            : (<div />)}
-                </div>
-            </Slider>
-        </div>
-=======
     return(
     <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}}>
         <Slider { ...settings } prevEvent={prevEvent}>
@@ -144,7 +128,6 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
             :(<div/>)}
         </Slider>
     </div>
->>>>>>> dev
     )
 }
 
