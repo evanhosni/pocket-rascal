@@ -234,45 +234,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
               </div>
             )
           })}
-          {/* <div>
-            <Button style={equippedItemBtn} >
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/arm_glove.png" style={{ objectFit: 'cover', height: '33.6px', objectPosition: '-1% center' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/eyes_tired.png" style={{ objectFit: 'cover', height: '80px', objectPosition: '0.69% 6.4px' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/nose_disguise.png" style={{ objectFit: 'cover', height: '72px', objectPosition: '45% -1.6px' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/nose_cute.png" style={{ height: '100%' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
-            </Button>
-          </div> */}
+            
         </Box>
       </Animated>
 
