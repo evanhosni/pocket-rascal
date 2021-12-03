@@ -4,7 +4,10 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import "./carousel.css"
 
-export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEquippedItems, equippedItems}) {
+export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEquippedItems, equippedItems,setUpdateEquipmentPanel, updateEquipmentPanel}) {
+    useEffect(()=>{
+        
+    },[equippedItems])
 
     // console.log('carousel',unlockedItems)
 
@@ -68,7 +71,7 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         <div obj={object} key={i}>
             <div>
                 <Button >
-                    <img src={`./assets/${object.name}.png`} style={{height: '100%'}}/>
+                    <img src={`./assets/${object.name}.png`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }}/>
                 </Button>
             </div>
         </div>)
