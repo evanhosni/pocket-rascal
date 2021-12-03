@@ -231,12 +231,7 @@ const SnakeMini = (props) => {
     // }, [points])
 
 
-    //at game end - if play a different minigame, refresh page for random selection
-    function refreshPage() {
-        //update user coins before page reload
-        props.setUserCoins(props.userCoins + points)
-        window.location.reload(false);
-    }
+
 
     return (
         <div className="snake-container" id="snake-container">

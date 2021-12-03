@@ -565,14 +565,14 @@ class Scene extends React.Component {
       }
     })
 
-    const testBtn = document.getElementById('edit-btn')
-    testBtn.addEventListener('click', () => {
-      Matter.World.remove(world,rascal)
-      Composite.add(world,rascal)
-      console.log(world.bodies)
-      generate();
-      // Matter.Sleeping.set(rascal,true)
-    })
+    // const testBtn = document.getElementById('edit-btn')
+    // testBtn.addEventListener('click', () => {
+    //   Matter.World.remove(world,rascal)
+    //   Composite.add(world,rascal)
+    //   console.log(world.bodies)
+    //   generate();
+    //   // Matter.Sleeping.set(rascal,true)
+    // })
 
     var image = 'milkshakes'
     //setting up feeding the rascal and the food object disappearing on collision with rascal body

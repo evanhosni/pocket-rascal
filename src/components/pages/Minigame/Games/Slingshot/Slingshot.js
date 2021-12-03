@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Matter from "matter-js";
 import './minigame.css'
@@ -53,7 +53,7 @@ class Slingshot extends React.Component {
       return mouseConstraint;
     }
 
-    
+
 
     function createFloor() {
       var floor = Bodies.rectangle(400, 580, 800, 40, {
@@ -118,10 +118,10 @@ class Slingshot extends React.Component {
       return bird;
     }
 
-    function createSlingshot() {
+    function createSlingshot(x, y) {
       var slingshotPosition = {
-        x: 120,
-        y: 500
+        x: x,
+        y: y
       };
 
       var point = { x: slingshotPosition.x, y: slingshotPosition.y };
@@ -178,7 +178,7 @@ class Slingshot extends React.Component {
     }
 
     const collisionCount = () => {
-      this.setState({collisions: this.state.collisions + 1})
+      this.setState({ collisions: this.state.collisions + 1 })
       console.log(this.state.collisions)
       // coinCount();
     }
@@ -186,7 +186,7 @@ class Slingshot extends React.Component {
     const coinCount = () => {
       this.props.setEarnedCoins(this.props.earnedCoins + 1)
     }
-    
+
 
     function onBirdAndBoxCollision(pair) {
       if (pair.bodyB.label === "bird") {
@@ -241,6 +241,8 @@ class Slingshot extends React.Component {
       World.add(world, enemy);
     }
 
+
+
     function createEnemyHouse(x, y) {
       var wall1 = create1x3Block(x - 38, y);
       var wall2 = create1x3Block(x + 38, y);
@@ -252,20 +254,66 @@ class Slingshot extends React.Component {
       createEnemyHouse(x, y);
     }
 
+
+
+    //functions for mobile rendering 
+    function createPlatform() {
+      var platform = Bodies.rectangle(550, 200, 200, 20, {
+        isStatic: true,
+        render: {
+          sprite: {
+            texture: "https://i.imgur.com/lG587fv.png",
+            yScale: 20 / 70,
+            xScale: 200 / 70
+          }
+        }
+      });
+      World.add(world, platform);
+    }
+
+    function secondPlatform() {
+      var platform = Bodies.rectangle(570, 400, 200, 20, {
+        isStatic: true,
+        render: {
+          sprite: {
+            texture: "https://i.imgur.com/lG587fv.png",
+            yScale: 20 / 70,
+            xScale: 200 / 70
+          }
+        }
+      });
+      World.add(world, platform);
+    }
+
     var engine = setupEngine();
     var render = setupRender();
     var world = engine.world;
     var mouseConstraint = createMouse();
 
     setupBirdAndBoxCollision();
-
-
     createFloor();
-    createSlingshot();
-    createEnemyInTheHouse(650, 500);
-    createEnemyInTheHouse(650, 350);
-    createEnemyInTheHouse(650, 200);
-    createEnemyInTheHouse(535, 500);
+
+
+
+
+    if (window.innerWidth < 400) {
+      createSlingshot(300,300)
+      createPlatform();
+      secondPlatform();
+      createEnemyInTheHouse(545, 500);
+      createEnemyInTheHouse(445, 500);
+      createEnemyInTheHouse(510, 150);
+      createEnemyInTheHouse(545, 350);
+
+    } else {
+
+      createSlingshot(120, 500);
+
+      createEnemyInTheHouse(650, 500);
+      createEnemyInTheHouse(650, 350);
+      createEnemyInTheHouse(650, 200);
+      createEnemyInTheHouse(535, 500);
+    }
 
     console.log(this.props.earnedCoins)
   }

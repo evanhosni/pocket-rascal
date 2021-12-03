@@ -75,9 +75,6 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   const [customMenu, setCustomMenu] = React.useState(false);
   
   
-  const [carousel, setCarousel] = React.useState(false)
-  const [equippedItemsB, setEquippedItemsB] = React.useState(false)
-  const [prevEvent, setPrevEvent] = React.useState(null)
   
   //triggered when you click the customize icon -- if carousel is open, closes it
   const toggleCustomMenu = () => {
@@ -331,8 +328,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
             <Button aria-label="Store" onClick={handleClickOpen('paper')}>
               <StoreIcon sx={{ color: 'white' }} />
             </Button>
-            <Button aria-label="Customize" id='edit-btn' >
-            {/* onClick={toggleCustomMenu} */}
+            <Button aria-label="Customize" onClick={toggleCustomMenu} >
               <EditIcon sx={{ color: 'white' }} />
             </Button>
           </Box>
