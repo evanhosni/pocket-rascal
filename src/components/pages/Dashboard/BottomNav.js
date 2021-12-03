@@ -70,50 +70,48 @@ ItemStoreDialogTitle.propTypes = {
 
 export default function BottomNav({ currentPage, handlePageChange, myRascal, setMyRascal, unlockedItems, equippedItems, setUnlockedItems, setEquippedItems, userCoins, setUserCoins, userLevel, openFail, setOpenFail }) {
   const [customMenu, setCustomMenu] = React.useState(false);
-  const [updateEquipmentPanel, setUpdateEquipmentPanel] = React.useState(0)
   const toggleCustomMenu = () => {
     setCustomMenu(!customMenu);
     if (carousel) {
       setCarousel(false)
     }
     if (equippedItems) {
-      setEquippedItemsB(false)
+      setEquippedItemsWindow(false)
     }
   }
 
-
   const [carousel, setCarousel] = React.useState(false)
   // const [carouselContent, setCarouselContent] = React.useState(false)
-  const [equippedItemsB, setEquippedItemsB] = React.useState(false)
+  const [equippedItemsWindow, setEquippedItemsWindow] = React.useState(false)
   const [prevEvent, setPrevEvent] = React.useState('body')
   const toggleCarousel = (event) => {
     setPrevEvent(event);
     if (carousel && event === prevEvent) {
       setCarousel(false)
-      setEquippedItemsB(false)
+      setEquippedItemsWindow(false)
     } else {
       setCarousel(true);
       if (event === 'color') {
-        setEquippedItemsB(false)
+        setEquippedItemsWindow(false)
       }
       if (event === 'body') {
 
-        setEquippedItemsB(false)
+        setEquippedItemsWindow(false)
       }
       if (event === 'eyes') {
 
-        setEquippedItemsB(false)
+        setEquippedItemsWindow(false)
       }
       if (event === 'nose') {
 
-        setEquippedItemsB(false)
+        setEquippedItemsWindow(false)
       }
       if (event === 'mouth') {
 
-        setEquippedItemsB(false)
+        setEquippedItemsWindow(false)
       }
       if (event === 'items') {
-        setEquippedItemsB(true)
+        setEquippedItemsWindow(true)
       }
     }
   }
@@ -258,7 +256,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
         <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-          <Carousel setUpdateEquipmentPanel={setUpdateEquipmentPanel} updateEquipmentPanel={updateEquipmentPanel} prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+          <Carousel prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
         </Animated>
 
         <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
@@ -341,14 +339,14 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
             <div id="store-content">
               {renderStoreContent()}
             </div>
-            <div id="bottom-tab">
-              <Button disabled variant="outlined" startIcon={<SavingsIcon />}>
-                {`${userCoins}¢`}
-              </Button>
-              <Button autoFocus onClick={handleClose} id="done">
-                Done
-              </Button>
-            </div>
+              <div id="bottom-tab">
+                <div startIcon={<SavingsIcon />} className="coins">
+                  {`${userCoins}`}<span>¢</span>
+                </div>
+                <Button autoFocus onClick={handleClose} id="done">
+                  Done
+                </Button>
+              </div>
           </ItemStoreDialog>
         </div>
 

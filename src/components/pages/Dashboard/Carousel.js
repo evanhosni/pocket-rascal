@@ -5,9 +5,9 @@ import Button from '@mui/material/Button';
 import "./carousel.css"
 
 export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEquippedItems, equippedItems,setUpdateEquipmentPanel, updateEquipmentPanel}) {
-    // React.useEffect(()=>{
-    //     setUpdateEquipmentPanel(updateEquipmentPanel+1)
-    // },[equippedItems])
+    useEffect(()=>{
+        
+    },[equippedItems])
 
     // console.log('carousel',unlockedItems)
 
@@ -17,7 +17,6 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         duration: 75,
         slidesToShow: 3
     };
-
     const colorArray = [...unlockedItems].filter(thingy => thingy.type === 'color')
     const bodyArray = [...unlockedItems].filter(thingy => thingy.type === 'body')
     const eyesArray = [...unlockedItems].filter(thingy => thingy.type === 'eyes')
@@ -72,7 +71,7 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         <div obj={object} key={i}>
             <div>
                 <Button >
-                    <img src={`./assets/${object.name}.png`} style={{height: '100%'}}/>
+                    <img src={`./assets/${object.name}.png`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }}/>
                 </Button>
             </div>
         </div>)
@@ -185,7 +184,7 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
     // )
     // } else {
         return(
-            <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}} id="custom-slider" data-update={updateEquipmentPanel}>
+            <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}} id="custom-slider">
                 <Slider { ...settings } prevEvent={prevEvent}>
                     {prevEvent === 'color' ? (color())
                     : prevEvent === 'body' ? (body())
