@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard/Dashboard'
 import API from '../utils/API'
 
 export default function ContentContainer() {
+
   const [currentPage, setCurrentPage] = useState('Login');
 
   // State variable for current user and token for authentication
@@ -21,7 +22,7 @@ export default function ContentContainer() {
     name: '',
     color: '',
     level: 50,
-    happiness:50,
+    happiness: 50,
     hunger: 50,
     love: 50,
     care: 50
@@ -40,6 +41,7 @@ export default function ContentContainer() {
   // useeffect on page load to check token in local storage for authenticity, then updating current user, rascal, items
   useEffect(() => {
     const myToken = localStorage.getItem("token");
+    API.testRoute({ test: "hello" }, myToken).then(res => console.log(res))
     if (myToken) {
       API.verify(myToken).then(async res => {
         setToken(myToken)
@@ -58,31 +60,54 @@ export default function ContentContainer() {
 
 
       }).catch(err => {
-        console.log("BONK!")
-        console.log(err)
-        localStorage.removeItem('token')
-        setCurrentPage('Login')
+        logOut()
       })
     }
 
   }, [])
-// updates rascal whenever userstate changes
+  // updates rascal whenever userstate changes
   useEffect(async () => {
     if (userState.id) {
-      const rascalDat = await API.loadRascal(userState.id)
+      if(!userState.firstLogin){
+
+        const rascalDat = await API.loadRascal(userState.id)
+        console.log(rascalDat)
         const equipDat = await API.loadEquippedItems(rascalDat.data.id)
         const unlockDat = await API.loadUnlockedItems(rascalDat.data.id)
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
         setCurrentPage("Dashboard")
+      }
+
     }
   }, [userState])
 
+  // function for happiness decay TODO: add random effects
+  // function decayTimer(){
+  //   console.log("step2")
+  //     console.log(myRascal.happiness)
+  //     console.log(userState)
 
 
+  //       if(myRascal.happiness > 75){
+  //         updateRascalStats("happiness",myRascal.happiness-3)
+  //         console.log("big sad")
+  //       }else if(myRascal.happiness > 50){
+  //         updateRascalStats("happiness",myRascal.happiness-2)
+  //         console.log("mid sad")
+  //       }else if(myRascal.happiness > 25){
+  //         updateRascalStats("happiness",myRascal.happiness-1)
+  //         console.log("smol sad")
+  //       }
+  // }
+  // function rascalUpdate() {
 
-// logout function being passed down into navbar
+  //   setInterval(decayTimer,15000)
+  // }
+
+
+  // logout function being passed down into navbar
   const logOut = () => {
     localStorage.removeItem("token");
     setToken('');
@@ -91,6 +116,8 @@ export default function ContentContainer() {
       userId: 0
     });
     setMyRascal({})
+    setEquippedItems([])
+    setUnlockedItems([])
     setCurrentPage('Login')
   }
 
@@ -111,9 +138,9 @@ export default function ContentContainer() {
     if (currentPage === 'CreateRascal') {
       return (
         <div>
-          <CreateRascal setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userState={userState} handlePageChange={handlePageChange}/>
-          <Scene currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems}/>
-          <BottomNav myRascal={myRascal}/>
+          <CreateRascal setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userState={userState} handlePageChange={handlePageChange} />
+          <Scene currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+          <BottomNav myRascal={myRascal} />
 
         </div>
       )
@@ -121,7 +148,7 @@ export default function ContentContainer() {
     if (currentPage === 'Dashboard') {
       return (
         <div>
-          {myRascal.id&&unlockedItems[0]&&<Dashboard currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} />}
+          {myRascal.color && unlockedItems[0] && <Dashboard currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />}
         </div>
       )
     }

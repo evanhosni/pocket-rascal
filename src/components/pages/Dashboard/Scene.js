@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import Matter from "matter-js";
 import "./style.css"
 
+
 class Scene extends React.Component {
   constructor(props) {
     super(props);
@@ -525,16 +526,8 @@ class Scene extends React.Component {
       }
     }
     console.log(item1)
-
-    const Food = () => {
-      var milkshake = Matter.Bodies.rectangle(2055, 2750, 52, 120)
-
-      Matter.World.add(engine.world, milkshake)
-    }
-
     document.addEventListener("click",(e)=>{
       var source = e.target.getAttribute('src')
-      console.log(e.target)
       if(source){
         
         var isolate = source.split('/')[2].split('.')[0]
@@ -553,10 +546,31 @@ class Scene extends React.Component {
           }
         });
       }
-      // if (e.dataset.testid === 'FastfoodIcon') {
-      //   Food();
-      // }
     })
+    // document.addEventListener('click',function(e){
+    //   console.log(world)
+    //   world.bodies.forEach((item,index) => {
+    //     if(index>0){
+    //       Matter.World.remove(world,item)
+    //     }
+    //   });
+    //   world.bodies.forEach((item,index) => {
+    //     if(index>0){
+    //       Matter.World.remove(world,item)
+    //     }
+    //   });
+    //   // for (let index = 0; index < world.bodies.length; index++) {
+    //   //   const element = world.bodies[index];
+    //   //   if(index>0){
+    //   //     Matter.World.remove(world,element)
+    //   //   }
+        
+    //   // }
+    //   // Matter.World.remove(world,world.bodies[0])
+    //   cancelAnimationFrame(animation);
+
+    //   generate();
+    // })
   }
   
   render() {

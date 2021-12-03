@@ -40,7 +40,8 @@ export default function SignUp(props) {
         console.log(res)
         props.setUserState({
           email:res.data.user.email,
-          id:res.data.user.id
+          id:res.data.user.id,
+          firstLogin:true
         })
         props.setToken(res.data.token)
         localStorage.setItem("token",res.data.token)

@@ -6,6 +6,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import IconButton from "@mui/material/IconButton";
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
+import API from '../../../../utils/API'
 
 
 const bodyData = [
@@ -88,7 +89,14 @@ export default function StoreBodies(props) {
             equipped: false,
             type: 'body'
         }
-        props.setUnlockedItems([...props.unlockedItems,newItem])
+        console.log(props.unlockedItems)
+        if(props.unlockedItems.length>0){
+
+            props.setUnlockedItems([...props.unlockedItems,newItem])
+        }else{
+            props.setUnlockedItems([newItem])
+        }
+        API.addUnlockedItem(props.myRascal.id,newItem)
         console.log(props.unlockedItems)
     }
 

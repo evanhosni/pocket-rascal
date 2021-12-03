@@ -35,7 +35,7 @@ export default function VerticalLinearStepper(props) {
   const [newRascalName,setNewRascalName] = React.useState('');
   const [newRascalColor,setNewRascalColor]=React.useState('');
   const [newRascalBody,setNewRascalBody]=React.useState('');
-
+  
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -58,12 +58,36 @@ export default function VerticalLinearStepper(props) {
       coins:50
     })
     props.setUnlockedItems([{name:newRascalBody,type:'body'}])
-    API.createRascal(props.userState.id,props.myRascal).then(promise=>{
-      API.addUnlockedItem(promise.id,{name:newRascalBody,type:"body"})
+    API.createRascal(props.userState.id,{
+      name:newRascalName,
+      color:newRascalColor,
+      body:newRascalBody,
+      happiness:50,
+      hunger:50,
+      level:1,
+      coins:50
+    }).then(promise=>{
+      console.log(promise)
+      props.setMyRascal({
+        name:newRascalName,
+        color:newRascalColor,
+        body:newRascalBody,
+        happiness:50,
+        hunger:50,
+        level:1,
+        coins:50,
+        UserId:promise.data.UserId,
+        id:promise.data.id
+      })
+      API.addUnlockedItem(promise.data.id,{name:newRascalBody,type:"body"}).then(promises=>{
+
+        props.handlePageChange("Dashboard")
+      }).catch(err=>{
+        console.log(err)
+      })
     }).catch(err=>{
       console.log(err)
     })
-    props.handlePageChange("Dashboard")
 
 
   }
@@ -84,7 +108,7 @@ export default function VerticalLinearStepper(props) {
           noValidate
           autoComplete="off"
           value={newRascalName}
-          onChange={(e)=>setNewRascalName(e.target.value)}
+          onChange={(e)=>{setNewRascalName(e.target.value); props.setMyRascal({body:newRascalBody,color:newRascalColor,name:e.target.value})}}
         >
           <TextField className={classes.root} id="standard-basic" label="Enter name here" variant="standard" />
         </Box>
@@ -94,9 +118,9 @@ export default function VerticalLinearStepper(props) {
       description:
         <FormControl component="fieldset">
           <FormLabel component="legend">Choose your Rascal's body:</FormLabel>
-          <RadioGroup onChange={(e)=>{setNewRascalBody(e.target.value)}}row aria-label="gender" name="row-radio-buttons-group">
-            <FormControlLabel value="body_fuzzy" control={<Radio />} label="Body1" />
-            <FormControlLabel value="body_curly" control={<Radio />} label="Body2" />
+          <RadioGroup onChange={(e)=>{setNewRascalBody(e.target.value); props.setMyRascal({name:newRascalName,color:newRascalColor,body:e.target.value})}}row aria-label="gender" name="row-radio-buttons-group">
+            <FormControlLabel value="body_fuzzy" control={<Radio />} label="Fuzzy" />
+            <FormControlLabel value="body_curly" control={<Radio />} label="Curly" />
             {/* <FormControlLabel value="other" control={<Radio />} label="Body3" />
             <FormControlLabel
               value="disabled"
@@ -118,7 +142,7 @@ export default function VerticalLinearStepper(props) {
               id="demo-simple-select"
               value={newRascalColor}
               label="Color"
-              onChange={(e)=>{setNewRascalColor(e.target.value)}}
+              onChange={(e)=>{setNewRascalColor(e.target.value); props.setMyRascal({body:newRascalBody,name:newRascalName,color:e.target.value})}}
             >
               <MenuItem value={'blue'}>Blue</MenuItem>
               <MenuItem value={'green'}>Green</MenuItem>

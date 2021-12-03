@@ -27,7 +27,6 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
         borderRadius: '50%',
     }
 
-    console.log(prevEvent)
 
     const colorArray = [...unlockedItems].filter(thingy => thingy.type === 'color')
     const bodyArray = [...unlockedItems].filter(thingy => thingy.type === 'body')
@@ -117,6 +116,7 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
     }
 
 
+<<<<<<< HEAD
     return (
         <div style={{ width: '70%', maxWidth: '400px', margin: 'auto' }}>
             <Slider {...settings}>
@@ -131,6 +131,20 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
                 </div>
             </Slider>
         </div>
+=======
+    return(
+    <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}}>
+        <Slider { ...settings } prevEvent={prevEvent}>
+            {prevEvent == 'color' ? (color())
+            : prevEvent == 'body' ? (body())
+            : prevEvent == 'eyes' ? (eyes())
+            : prevEvent == 'nose' ? (nose())
+            : prevEvent == 'mouth' ? (mouth())
+            : prevEvent == 'items' ? (items())
+            :(<div/>)}
+        </Slider>
+    </div>
+>>>>>>> dev
     )
 }
 

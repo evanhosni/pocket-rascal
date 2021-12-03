@@ -30,6 +30,11 @@ const API = {
     addUnlockedItem:(id,itemData)=>{
         return axios.post(`${URL_PREFIX}/item/unlocked/${id}`,itemData)
     },
+    testRoute:(data,tkn)=>{
+        return axios.post(`${URL_PREFIX}/rascal/postwithheaders/`,data,{headers:{
+            "Authorization": `Bearer ${tkn}`
+          }})
+    },
     // addItem:(id,itemData)=>{
     //     return axios.post(`${URL_PREFIX}/limb/post/${id}`,itemData)
     // },

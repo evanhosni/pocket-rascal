@@ -205,19 +205,19 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
   const renderStoreContent = () => {
     if (storeContent === 'Bodies') {
-      return <StoreBodies userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
+      return <StoreBodies myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
     }
     if (storeContent === 'Eyes') {
-      return <StoreEyes userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreEyes myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
     }
     if (storeContent === 'Nose') {
-      return <StoreNose userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreNose myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
     }
     if (storeContent === 'Mouth') {
-      return <StoreMouth userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreMouth myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
     }
     if (storeContent === 'Items') {
-      return <StoreItem userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreItem myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
     }
   }
 
@@ -244,7 +244,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
           </div>
           <div>
             <Button style={equippedItemBtn} >
-              <img src="./assets/body_fuzzy.png" style={{ objectFit: 'cover', height: '33.6px', objectPosition: '-1% center' }} />
+              <img src="./assets/arm_glove.png" style={{ objectFit: 'cover', height: '33.6px', objectPosition: '-1% center' }} />
             </Button>
           </div>
           <div>
@@ -259,7 +259,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
           </div>
           <div>
             <Button style={equippedItemBtn} >
-              <img src="./assets/null.png" style={{ height: '100%' }} />
+              <img src="./assets/nose_cute.png" style={{ height: '100%' }} />
             </Button>
           </div>
           <div>
