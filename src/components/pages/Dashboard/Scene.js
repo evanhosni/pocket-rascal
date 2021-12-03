@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Matter from "matter-js";
+import Matter, { World } from "matter-js";
 import "./style.css"
 
 
@@ -236,7 +236,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item1)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint1 = Constraint.create({
             name: `${itemArray[0].name}_constraint`,
             pointA: rascal.position,
             bodyB: item1,
@@ -246,7 +246,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item1, itemConstraint]);
+          Composite.add(world, [item1, itemConstraint1]);
         }
         if(itemArray[1]){
           item2 = Bodies.rectangle(
@@ -267,7 +267,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item2)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint2 = Constraint.create({
             name: `${itemArray[1].name}_constraint`,
             pointA: rascal.position,
             bodyB: item2,
@@ -277,7 +277,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item2, itemConstraint]);
+          Composite.add(world, [item2, itemConstraint2]);
         }
         if(itemArray[2]){
           item3 = Bodies.rectangle(
@@ -298,7 +298,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item3)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint3 = Constraint.create({
             name: `${itemArray[2].name}_constraint`,
             pointA: rascal.position,
             bodyB: item3,
@@ -308,7 +308,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item3, itemConstraint]);
+          Composite.add(world, [item3, itemConstraint3]);
         }
         if(itemArray[3]){
           item4 = Bodies.rectangle(
@@ -329,7 +329,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item4)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint4 = Constraint.create({
             name: `${itemArray[3].name}_constraint`,
             pointA: rascal.position,
             bodyB: item4,
@@ -339,7 +339,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item4, itemConstraint]);
+          Composite.add(world, [item4, itemConstraint4]);
         }
         if(itemArray[4]){
           item5 = Bodies.rectangle(
@@ -360,7 +360,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item5)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint5 = Constraint.create({
             name: `${itemArray[4].name}_constraint`,
             pointA: rascal.position,
             bodyB: item5,
@@ -370,7 +370,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item5, itemConstraint]);
+          Composite.add(world, [item5, itemConstraint5]);
         }
         if(itemArray[5]){
           item6 = Bodies.rectangle(
@@ -391,7 +391,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item6)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint6 = Constraint.create({
             name: `${itemArray[5].name}_constraint`,
             pointA: rascal.position,
             bodyB: item6,
@@ -401,7 +401,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item6, itemConstraint]);
+          Composite.add(world, [item6, itemConstraint6]);
         }
         if(itemArray[6]){
           item7 = Bodies.rectangle(
@@ -422,7 +422,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item7)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint7 = Constraint.create({
             name: `${itemArray[6].name}_constraint`,
             pointA: rascal.position,
             bodyB: item7,
@@ -432,7 +432,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item7, itemConstraint]);
+          Composite.add(world, [item7, itemConstraint7]);
         }
         if(itemArray[7]){
           item8 = Bodies.rectangle(
@@ -453,7 +453,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item8)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint8 = Constraint.create({
             name: `${itemArray[7].name}_constraint`,
             pointA: rascal.position,
             bodyB: item8,
@@ -463,7 +463,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item8, itemConstraint]);
+          Composite.add(world, [item8, itemConstraint8]);
         }
       }
       // //test one: spawns arm on right side of body
@@ -494,6 +494,7 @@ class Scene extends React.Component {
       // ]);
     
     addItems();
+    // itemArray=[]
 
     function checkCoor() {
       var bodies = Composite.allBodies(world);
@@ -550,8 +551,9 @@ class Scene extends React.Component {
           generate()
       }
     }
-    console.log(item1)
+    
     const equippedItemsPanel = document.querySelector('#equipped-items')
+    const customPanel = document.querySelector('#custom-slider')
     equippedItemsPanel.addEventListener("click",(e)=>{
       
       var source = e.target.getAttribute('src')
@@ -559,14 +561,23 @@ class Scene extends React.Component {
       if(source){
         
         var isolate = source.split('/')[2].split('.')[0]
-        console.log(isolate)
-        world.bodies.forEach((item,index) => {
+        
+        world.bodies.every((item,index) => {
           if(item.name==isolate){
             Matter.World.remove(world,world.bodies[index])
-            return
+            return false
+          }else{
+            return true
           }
           
         });
+        itemArray.forEach((item,index)=>{
+          if(item.name==isolate){
+            console.log("match")
+            itemArray.splice(index,1)
+            return
+          }
+        })
         // if(isolate=="nose_disguise" || "nose_cute"){
         //   console.log(world)
         //   selectedNose=isolate
@@ -575,6 +586,68 @@ class Scene extends React.Component {
         //   generate()
         // }
 
+      }
+    })
+    customPanel.addEventListener("click",(e)=>{
+      let regNose= /nose/;
+      let regBody= /body/;
+      let regEyes= /eyes/;
+      let regMouth= /mouth/;
+      var source = e.target.getAttribute('src')
+      var itemSource = e.target.getAttribute('item-size')
+      if(source){
+        var isolate = source.split('/')[2].split('.')[0]
+        let resultNose = regNose.exec(isolate)
+        let resultBody = regNose.exec(isolate)
+        let resultEyes = regNose.exec(isolate)
+        let resultMouth = regNose.exec(isolate)
+        if(resultNose){
+          if(isolate==selectedNose){
+            selectedNose="empty"
+          }else{
+            isolate=selectedNose
+          }
+        }
+        if(resultBody){
+          if(isolate==selectedBody){
+            selectedBody="empty"
+          }else{
+            isolate=selectedBody
+          }
+        }
+        if(resultEyes){
+          if(isolate==selectedEyes){
+            selectedEyes="empty"
+          }else{
+            isolate=selectedEyes
+          }
+        }
+        if(resultMouth){
+          if(isolate==selectedMouth){
+            selectedMouth="empty"
+          }else{
+            isolate=selectedMouth
+          }
+        }
+        
+        
+      }
+      if(itemSource){
+        
+       if(item1){ Matter.World.remove(world,item1)}
+       if(item2){ Matter.World.remove(world,item2)}
+       if(item3){ Matter.World.remove(world,item3)}
+       if(item4){ Matter.World.remove(world,item4)}
+       if(item5){ Matter.World.remove(world,item5)}
+       if(item6){ Matter.World.remove(world,item6)}
+       if(item7){ Matter.World.remove(world,item7)}
+       if(item8){ Matter.World.remove(world,item8)}
+        itemArray.push({
+          name:isolate,
+          size:parseFloat(itemSource)
+        })
+        addItems()
+        // itemArray=[]
       }
     })
     // document.addEventListener('click',function(e){
@@ -589,11 +662,7 @@ class Scene extends React.Component {
     //       Matter.World.remove(world,item)
     //     }
     //   });
-    //   // for (let index = 0; index < world.bodies.length; index++) {
-    //   //   const element = world.bodies[index];
-    //   //   if(index>0){
-    //   //     Matter.World.remove(world,element)
-    //   //   }
+      
         
     //   // }
     //   // Matter.World.remove(world,world.bodies[0])

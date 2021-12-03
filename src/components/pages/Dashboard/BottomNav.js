@@ -73,6 +73,7 @@ ItemStoreDialogTitle.propTypes = {
 
 export default function BottomNav({ currentPage, handlePageChange, myRascal, setMyRascal, unlockedItems, equippedItems, setUnlockedItems, setEquippedItems }) {
   const [customMenu, setCustomMenu] = React.useState(false);
+  const [updateEquipmentPanel,setUpdateEquipmentPanel]= React.useState(0)
   const toggleCustomMenu = () => {
     setCustomMenu(!customMenu);
     if (carousel) {
@@ -226,7 +227,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
 
       <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItems}>
-        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items">
+        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" data-update={equippedItems.length}>
           {equippedItemsCopy.map((item, index) => {
             let imgSrc = item.name || "empty"
             return (
@@ -237,51 +238,13 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
               </div>
             )
           })}
-          {/* <div>
-            <Button style={equippedItemBtn} >
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/arm_glove.png" style={{ objectFit: 'cover', height: '33.6px', objectPosition: '-1% center' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/eyes_tired.png" style={{ objectFit: 'cover', height: '80px', objectPosition: '0.69% 6.4px' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/nose_disguise.png" style={{ objectFit: 'cover', height: '72px', objectPosition: '45% -1.6px' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/nose_cute.png" style={{ height: '100%' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
-            </Button>
-          </div> */}
+            
         </Box>
       </Animated>
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
         <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-          <Carousel prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+          <Carousel setUpdateEquipmentPanel={setUpdateEquipmentPanel} updateEquipmentPanel={updateEquipmentPanel}prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
         </Animated>
 
         <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
