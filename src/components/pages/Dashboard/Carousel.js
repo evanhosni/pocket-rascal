@@ -27,7 +27,6 @@ export default function Carousel({prevEvent}) {
         borderRadius: '50%',
     }
 
-    console.log(prevEvent)
 
     const colorArray = [0,1,2,3]
     const bodyArray = [0,1,2,3]
@@ -107,7 +106,7 @@ export default function Carousel({prevEvent}) {
 
     return(
     <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}}>
-        <Slider { ...settings }>
+        <Slider { ...settings } prevEvent={prevEvent}>
             {prevEvent == 'color' ? (color())
             : prevEvent == 'body' ? (body())
             : prevEvent == 'eyes' ? (eyes())
