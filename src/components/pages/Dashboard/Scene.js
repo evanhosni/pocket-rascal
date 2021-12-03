@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Matter from "matter-js";
+import Matter, { World } from "matter-js";
 import "./style.css"
 
 
@@ -494,6 +494,7 @@ class Scene extends React.Component {
       // ]);
     
     addItems();
+    // itemArray=[]
 
     function checkCoor() {
       var bodies = Composite.allBodies(world);
@@ -561,13 +562,22 @@ class Scene extends React.Component {
         
         var isolate = source.split('/')[2].split('.')[0]
         
-        world.bodies.forEach((item,index) => {
+        world.bodies.every((item,index) => {
           if(item.name==isolate){
             Matter.World.remove(world,world.bodies[index])
-            return
+            return false
+          }else{
+            return true
           }
           
         });
+        itemArray.forEach((item,index)=>{
+          if(item.name==isolate){
+            console.log("match")
+            itemArray.splice(index,1)
+            return
+          }
+        })
         // if(isolate=="nose_disguise" || "nose_cute"){
         //   console.log(world)
         //   selectedNose=isolate
@@ -584,6 +594,7 @@ class Scene extends React.Component {
       let regEyes= /eyes/;
       let regMouth= /mouth/;
       var source = e.target.getAttribute('src')
+      var itemSource = e.target.getAttribute('item-size')
       if(source){
         var isolate = source.split('/')[2].split('.')[0]
         let resultNose = regNose.exec(isolate)
@@ -618,8 +629,25 @@ class Scene extends React.Component {
             isolate=selectedMouth
           }
         }
-
-
+        
+        
+      }
+      if(itemSource){
+        
+       if(item1){ Matter.World.remove(world,item1)}
+       if(item2){ Matter.World.remove(world,item2)}
+       if(item3){ Matter.World.remove(world,item3)}
+       if(item4){ Matter.World.remove(world,item4)}
+       if(item5){ Matter.World.remove(world,item5)}
+       if(item6){ Matter.World.remove(world,item6)}
+       if(item7){ Matter.World.remove(world,item7)}
+       if(item8){ Matter.World.remove(world,item8)}
+        itemArray.push({
+          name:isolate,
+          size:parseFloat(itemSource)
+        })
+        addItems()
+        // itemArray=[]
       }
     })
     // document.addEventListener('click',function(e){
@@ -634,11 +662,7 @@ class Scene extends React.Component {
     //       Matter.World.remove(world,item)
     //     }
     //   });
-    //   // for (let index = 0; index < world.bodies.length; index++) {
-    //   //   const element = world.bodies[index];
-    //   //   if(index>0){
-    //   //     Matter.World.remove(world,element)
-    //   //   }
+      
         
     //   // }
     //   // Matter.World.remove(world,world.bodies[0])

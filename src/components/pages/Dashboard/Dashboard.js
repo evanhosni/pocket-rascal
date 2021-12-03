@@ -8,7 +8,7 @@ import API from '../../../utils/API'
 export default function Dashboard({currentPage,handlePageChange,userId,myRascal,setMyRascal, unlockedItems,equippedItems,setUnlockedItems,setEquippedItems,logOut}) {
   let newRascal
   useEffect(() => {
-    console.log(myRascal)
+    // console.log(myRascal)
     // Store the interval id in a const, so you can cleanup later
     const decayTimer = setInterval(() => {
 

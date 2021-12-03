@@ -58,7 +58,7 @@ export default function ContentContainer() {
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
-        setCurrentPage("Dashboard")
+        if(currentPage!="Dashboard"){setCurrentPage("Dashboard")}
         // const interval = setInterval(() => {
         //   console.log('This will run every 10 seconds!');
         //   console.log(myRascal)
@@ -75,22 +75,22 @@ export default function ContentContainer() {
 
   }, [])
   // updates rascal whenever userstate changes
-  useEffect(async () => {
-    if (userState.id) {
-      if(!userState.firstLogin){
+  // useEffect(async () => {
+  //   if (userState.id) {
+  //     if(!userState.firstLogin){
 
-        const rascalDat = await API.loadRascal(userState.id)
-        console.log(rascalDat)
-        const equipDat = await API.loadEquippedItems(rascalDat.data.id)
-        const unlockDat = await API.loadUnlockedItems(rascalDat.data.id)
-        setMyRascal(rascalDat.data)
-        setEquippedItems(equipDat.data)
-        setUnlockedItems(unlockDat.data)
-        setCurrentPage("Dashboard")
-      }
+  //       const rascalDat = await API.loadRascal(userState.id)
+  //       console.log(rascalDat)
+  //       const equipDat = await API.loadEquippedItems(rascalDat.data.id)
+  //       const unlockDat = await API.loadUnlockedItems(rascalDat.data.id)
+  //       setMyRascal(rascalDat.data)
+  //       setEquippedItems(equipDat.data)
+  //       setUnlockedItems(unlockDat.data)
+  //       if(currentPage!="Dashboard"){setCurrentPage("Dashboard")}
+  //     }
 
-    }
-  }, [userState])
+  //   }
+  // }, [userState])
 
   // function for happiness decay TODO: add random effects
   // function decayTimer(){
@@ -135,7 +135,7 @@ export default function ContentContainer() {
       return <SignUp token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
     }
     if (currentPage === 'Login') {
-      return <Login token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
+      return <Login token={token} setToken={setToken} setMyRascal={setMyRascal} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />;
     }
     if (currentPage === 'CreateRascal') {
       return (
