@@ -1,0 +1,87 @@
+.carousel-track {
+    min-height: 54px;
+}
+
+.carousel-item {
+    display: flex;
+    justify-content: space-around;
+    align-content: flex-end;
+
+    text-align: center;
+}
+
+.carousel-item button {
+    padding: 0;
+    cursor: pointer;
+    background-color: white;
+    border: solid black 3px;
+    border-radius: 50%;
+
+    max-width: 40px;
+    max-height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    transition: max-width 0.2s, max-height 0.2s, min-width 0.2s, min-height 0.2s;
+
+    /* margin-top: 5px;
+    transition: margin-top 0.2s */
+}
+
+.active button {
+    max-width: 50px;
+    max-height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    transition: max-width 0.2s, max-height 0.2s, min-width 0.2s, min-height 0.2s;
+
+    /* margin-top: 0px;
+    transition: margin-top 0.2s */
+}
+
+/* .activetwo {
+    position: absolute;
+    margin-left: auto;
+} */
+
+.activetwo button {
+    max-width: 50px;
+    max-height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    /* margin-top: 0; */
+    transition: max-width 0s, max-height 0s, min-width 0s, min-height 0s;
+}
+
+.body {
+    transition: height 0.2s, object-position 0.2s;
+}
+
+.eyes {
+    transition: height 0.2s, object-position 0.2s;
+}
+
+.nose {
+    transition: height 0.2s, object-position 0.2s;
+}
+
+.active .body {
+    height: 42px;
+    object-position: -1% center;
+    transition: height 0.2s, object-position 0.2s;
+}
+
+.active .eyes {
+    height: 100px;
+    object-position: 0.69% 8px;
+    transition: height 0.2s, object-position 0.2s;
+}
+
+.active .nose {
+    height: 90px;
+    object-position: 45% -2px;
+    transition: height 0.2s, object-position 0.2s;
+}
+
+.carousel-arrow {
+    filter: grayscale(1)
+}

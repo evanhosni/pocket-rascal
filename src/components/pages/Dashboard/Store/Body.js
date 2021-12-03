@@ -6,6 +6,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import IconButton from "@mui/material/IconButton";
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
+import "./store.css"
 
 
 const bodyData = [
@@ -106,7 +107,7 @@ export default function StoreBodies(props) {
 
     return (
         <div>
-            <ImageList sx={{ width: '95%', height: 400 }} cols={2} rowHeight={164} style={{ overflow: 'scroll', padding: 20 }}>
+            <div style={{ overflow: 'scroll', padding: 20 }}>
                 {bodyData.map((item) => (
                     <ImageListItem key={item.img}>
                         <img
@@ -133,7 +134,7 @@ export default function StoreBodies(props) {
                         />
                     </ImageListItem>
                 ))}
-            </ImageList>
+            </div>
             <Snackbar
                 open={open}
                 autoHideDuration={6000}
