@@ -56,7 +56,14 @@ export default function ContentContainer() {
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
-        setCurrentPage("Dashboard")
+        if(currentPage!="Dashboard"){setCurrentPage("Dashboard")}
+        // const interval = setInterval(() => {
+        //   console.log('This will run every 10 seconds!');
+        //   console.log(myRascal)
+        //   setMyRascal({...myRascal,happiness:myRascal.happiness-2})
+        // }, 10000);
+        // return () => clearInterval(interval);
+        // rascalUpdate()
 
 
       }).catch(err => {
@@ -65,46 +72,6 @@ export default function ContentContainer() {
     }
 
   }, [])
-  // updates rascal whenever userstate changes
-  useEffect(async () => {
-    if (userState.id) {
-      if(!userState.firstLogin){
-
-        const rascalDat = await API.loadRascal(userState.id)
-        console.log(rascalDat)
-        const equipDat = await API.loadEquippedItems(rascalDat.data.id)
-        const unlockDat = await API.loadUnlockedItems(rascalDat.data.id)
-        setMyRascal(rascalDat.data)
-        setEquippedItems(equipDat.data)
-        setUnlockedItems(unlockDat.data)
-        setCurrentPage("Dashboard")
-      }
-
-    }
-  }, [userState])
-
-  // function for happiness decay TODO: add random effects
-  // function decayTimer(){
-  //   console.log("step2")
-  //     console.log(myRascal.happiness)
-  //     console.log(userState)
-
-
-  //       if(myRascal.happiness > 75){
-  //         updateRascalStats("happiness",myRascal.happiness-3)
-  //         console.log("big sad")
-  //       }else if(myRascal.happiness > 50){
-  //         updateRascalStats("happiness",myRascal.happiness-2)
-  //         console.log("mid sad")
-  //       }else if(myRascal.happiness > 25){
-  //         updateRascalStats("happiness",myRascal.happiness-1)
-  //         console.log("smol sad")
-  //       }
-  // }
-  // function rascalUpdate() {
-
-  //   setInterval(decayTimer,15000)
-  // }
 
 
   // logout function being passed down into navbar
@@ -133,7 +100,7 @@ export default function ContentContainer() {
       return <SignUp token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
     }
     if (currentPage === 'Login') {
-      return <Login token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
+      return <Login token={token} setToken={setToken} setMyRascal={setMyRascal} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />;
     }
     if (currentPage === 'CreateRascal') {
       return (

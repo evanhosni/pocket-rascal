@@ -73,10 +73,7 @@ ItemStoreDialogTitle.propTypes = {
 
 export default function BottomNav({ currentPage, handlePageChange, myRascal, setMyRascal, unlockedItems, equippedItems, setUnlockedItems, setEquippedItems, userCoins, setUserCoins, userLevel, setUserLevel, rascalHunger, setRascalHunger }) {
   const [customMenu, setCustomMenu] = React.useState(false);
-  
-  
-  
-  //triggered when you click the customize icon -- if carousel is open, closes it
+  const [updateEquipmentPanel,setUpdateEquipmentPanel]= React.useState(0)
   const toggleCustomMenu = () => {
     setCustomMenu(!customMenu);
     if (carousel) {
@@ -255,7 +252,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
 
       <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItems}>
-        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items">
+        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" data-update={equippedItems.length}>
           {equippedItemsCopy.map((item, index) => {
             let imgSrc = item.name || "empty"
             return (
@@ -266,12 +263,13 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
               </div>
             )
           })}
+            
         </Box>
       </Animated>
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
         <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-          <Carousel prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+          <Carousel setUpdateEquipmentPanel={setUpdateEquipmentPanel} updateEquipmentPanel={updateEquipmentPanel}prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
         </Animated>
 
         <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
