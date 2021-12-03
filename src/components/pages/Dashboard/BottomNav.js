@@ -236,7 +236,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
 
       <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItems}>
-        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
+        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id='equipped-div' >
 
           <div>
             <Button style={equippedItemBtn} >
@@ -326,11 +326,11 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
         </Animated>
 
         <div style={{ background: 'black', paddingBottom: '15px', paddingTop: '15px', zIndex: 3 }}>
-          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', background: 'black' }} onClick={() => {setRascalHunger(true); console.log(rascalHunger)}}>
-            <Button aria-label="Food">
+          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', background: 'black' }}>
+            <Button aria-label="Food" id='FeedRascal'>
               <FastfoodIcon sx={{ color: 'white' }} />
             </Button>
-            <Button aria-label="Care" >
+            <Button aria-label="Care" id='WashRascal' >
               <ShowerIcon sx={{ color: 'white' }} />
             </Button>
             <Button aria-label="Minigame" onClick={() => handlePageChange('Minigame')}>
