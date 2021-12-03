@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 import Matter from "matter-js";
 import './minigame.css'
-import { ThirtyFpsSharp } from "@mui/icons-material";
 
 class Slingshot extends React.Component {
   constructor(props) {

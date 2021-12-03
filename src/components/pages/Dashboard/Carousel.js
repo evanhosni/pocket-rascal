@@ -1,12 +1,12 @@
-import * as React from 'react';
+import React, { useState, useEffect } from "react";
 import Slider from 'infinite-react-carousel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import "./carousel.css"
 
-export default function Carousel({prevEvent}) {
+export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, setEquippedItems }) {
 
-    const settings =  {
+    const settings = {
         centerPadding: 35,
         centerMode: true,
         duration: 75,
@@ -21,21 +21,20 @@ export default function Carousel({prevEvent}) {
 
     const customBtn = {
         padding: 0,
-        cursor:'pointer',
-        background:'white',
+        cursor: 'pointer',
+        background: 'white',
         border: 'solid black 3px',
         borderRadius: '50%',
     }
 
     console.log(prevEvent)
 
-    const colorArray = [0,1,2,3]
-    const bodyArray = [0,1,2,3]
-    const eyesArray = [0,1,2,3]
-    const noseArray = [0,1,2,3]
-    const mouthArray = [0,1,2,3]
-    const itemsArray = [0,1,2,3]
-
+    const colorArray = [...unlockedItems].filter(thingy => thingy.type === 'color')
+    const bodyArray = [...unlockedItems].filter(thingy => thingy.type === 'body')
+    const eyesArray = [...unlockedItems].filter(thingy => thingy.type === 'eyes')
+    const noseArray = [...unlockedItems].filter(thingy => thingy.type === 'nose')
+    const mouthArray = [...unlockedItems].filter(thingy => thingy.type === 'mouth')
+    const itemsArray = [...unlockedItems].filter(thingy => thingy.type === 'item')
     // let array
 
     // const [content, setContent] = React.useState('bruh')
@@ -63,60 +62,75 @@ export default function Carousel({prevEvent}) {
     //     )
     // }
     const color = () => {
-        return  colorArray.map((object, i) =>
-        <div style={customDiv} obj={object} key={i}>
-            <Button style={customBtn} />
-        </div> )
+        return (
+            <div>
+                {colorArray.map((object, i) =>
+                    <div style={customDiv} obj={object} key={i}>
+                        <Button style={customBtn} />
+                    </div>)}
+            </div>
+        )
     }
 
-    const body =() => {
-        return  bodyArray.map((object, i) =>
-        <div style={customDiv} obj={object} key={i}>
-            <Button style={customBtn} />
-        </div>)
+    const body = () => {
+        return (
+            <div>
+                {bodyArray.map((object, i) =>
+                <div style={customDiv} obj={object} key={i}>
+                    <Button style={customBtn} />
+                </div>)}
+            </div>
+        )
     }
 
-    const eyes =() => {
-        return  eyesArray.map((object, i) =>
-        <div style={customDiv} obj={object} key={i}>
-            <Button style={customBtn} />
-        </div>)
-    }
-
-    const nose =() => {
-        return  noseArray.map((object, i) =>
-        <div style={customDiv} obj={object} key={i}>
-            <Button style={customBtn} />
-        </div>)
-    }
-
-    const mouth =() => {
-        return  mouthArray.map((object, i) =>
-        <div style={customDiv} obj={object} key={i}>
-            <Button style={customBtn} />
-        </div>)
-    }
-
-    const items =() => {
-        return  itemsArray.map((object, i) =>
-        <div style={customDiv} obj={object} key={i}>
-            <Button style={customBtn} />
-        </div>)
+    const eyes = () => {
+        return (
+            <div>
+                {eyesArray.map((object, i) =>
+                <div style={customDiv} obj={object} key={i}>
+                    <Button style={customBtn} />
+                </div>)}
+            </div>
+        )
     }
 
 
-    return(
-    <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}}>
-        <Slider { ...settings }>
-            {prevEvent == 'color' ? (color())
-            : prevEvent == 'body' ? (body())
-            : prevEvent == 'eyes' ? (eyes())
-            : prevEvent == 'nose' ? (nose())
-            : prevEvent == 'mouth' ? (mouth())
-            : prevEvent == 'items' ? (items())
-            :(<div/>)}
-        </Slider>
-    </div>
+    const nose = () => {
+        return noseArray.map((object, i) =>
+            <div style={customDiv} obj={object} key={i}>
+                <Button style={customBtn} />
+            </div>)
+    }
+
+    const mouth = () => {
+        return mouthArray.map((object, i) =>
+            <div style={customDiv} obj={object} key={i}>
+                <Button style={customBtn} />
+            </div>)
+    }
+
+    const items = () => {
+        return itemsArray.map((object, i) =>
+            <div style={customDiv} obj={object} key={i}>
+                <Button style={customBtn} />
+            </div>)
+    }
+
+
+    return (
+        <div style={{ width: '70%', maxWidth: '400px', margin: 'auto' }}>
+            <Slider {...settings}>
+                <div>
+                    {prevEvent == 'color' ? (color())
+                        : prevEvent == 'body' ? (body())
+                            : prevEvent == 'eyes' ? (eyes())
+                                : prevEvent == 'nose' ? (nose())
+                                    : prevEvent == 'mouth' ? (mouth())
+                                        : prevEvent == 'items' ? (items())
+                                            : (<div />)}
+                </div>
+            </Slider>
+        </div>
     )
 }
 
@@ -125,7 +139,7 @@ export default function Carousel({prevEvent}) {
 // }
 
 
-            {/* <div style={customDiv}>
+{/* <div style={customDiv}>
                 <Button style={customBtn} >
                 <img src="./assets/body_fuzzy.png" className="body" style={{objectFit: 'cover', height: '33.6px', objectPosition:'-1% center'}}/>
                 </Button>

@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useState, useEffect} from 'react';
 
 import StatusBar from './StatusBars'
 import BottomNav from './BottomNav';
@@ -40,6 +40,8 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
     console.log(copy)
   }
 
+  const [rascalHunger, setRascalHunger] = useState(false)
+
   return (
     <div>
       <div>
@@ -47,10 +49,10 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
 
       </div>
       <div>
-        <Scene equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems}/>
+        <Scene equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} myRascal={myRascal} />
       </div>
       <div>
-        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} />
+        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} rascalHunger={rascalHunger} setRascalHunger={setRascalHunger} />
       </div>
       
     </div>

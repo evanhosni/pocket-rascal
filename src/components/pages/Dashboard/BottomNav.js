@@ -24,6 +24,8 @@ import StoreMouth from './Store/Mouth';
 import StoreItem from './Store/Items'
 import SavingsIcon from '@mui/icons-material/Savings';
 import Stack from '@mui/material/Stack';
+import Slider from 'infinite-react-carousel';
+
 
 
 
@@ -69,29 +71,63 @@ ItemStoreDialogTitle.propTypes = {
 
 
 
-export default function BottomNav({ currentPage, handlePageChange, myRascal,setMyRascal, unlockedItems, equippedItems,setUnlockedItems,setEquippedItems }) {
+export default function BottomNav({ currentPage, handlePageChange, myRascal, setMyRascal, unlockedItems, equippedItems, setUnlockedItems, setEquippedItems, userCoins, setUserCoins, userLevel, setUserLevel, rascalHunger, setRascalHunger }) {
   const [customMenu, setCustomMenu] = React.useState(false);
-  const toggleCustomMenu = () => {
-    setCustomMenu(!customMenu);
-    if(carousel) {
-      setCarousel(false)
-    }
-    if(equippedItems) {
-      setEquippedItemsB(false)
-    }
-  }
-
+  
+  
   const [carousel, setCarousel] = React.useState(false)
   const [equippedItemsB, setEquippedItemsB] = React.useState(false)
   const [prevEvent, setPrevEvent] = React.useState(null)
+  
+  //triggered when you click the customize icon -- if carousel is open, closes it
+  const toggleCustomMenu = () => {
+    setCustomMenu(!customMenu);
+    if (carousel) {
+      setCarousel(false)
+    }
+    if (equippedItems) {
+      setEquippedItemsB(false)
+    }
+  }
+  // function renderCarouselContent() {
+  //   if (prevEvent === 'items') {
+  //     setEquippedItemsB(false);
+  //     setCarousel(true)
+
+  //     return (
+  //       <div>
+  //         {itemsArray.map((object, i) =>
+  //           <div obj={object} key={i}>
+  //             <Button style={customBtn} />
+  //           </div>)}
+  //       </div>
+  //     )
+
+  //   }
+
+  //   if (prevEvent === 'color') {
+  //     setEquippedItemsB(false);
+  //     setCarousel(true)
+
+  //     return (
+  //       <div>
+  //         {colorArray.map((object, i) =>
+  //       <div style={customDiv} obj={object} key={i}>
+  //           <Button style={customBtn} />
+  //       </div> )}
+  //       </div>
+  //     )
+  //   }
+  // }
+
   const toggleCarousel = (event) => {
+    setPrevEvent(event);
     if (carousel && event === prevEvent) {
       setCarousel(false)
       setEquippedItemsB(false)
     } else {
-      setCarousel(true)
+      setCarousel(true);
       if (event === 'color') {
-
         setEquippedItemsB(false)
       }
       if (event === 'body') {
@@ -111,11 +147,9 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal,setM
         setEquippedItemsB(false)
       }
       if (event === 'items') {
-
         setEquippedItemsB(true)
       }
     }
-    setPrevEvent(event)
   }
 
   const equippedItemBtn = {
@@ -171,7 +205,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal,setM
 
   const renderStoreContent = () => {
     if (storeContent === 'Bodies') {
-      return <StoreBodies userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel}  />
+      return <StoreBodies userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} />
     }
     if (storeContent === 'Eyes') {
       return <StoreEyes userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
@@ -201,8 +235,8 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal,setM
     <div>
 
 
-    <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItems}>
-      <Box sx={{ width: '98%', maxWidth: 800, mx:'auto', display:'flex', alignItems:'center', justifyContent:'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
+      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItems}>
+        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
 
           <div>
             <Button style={equippedItemBtn} >
@@ -292,7 +326,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal,setM
         </Animated>
 
         <div style={{ background: 'black', paddingBottom: '15px', paddingTop: '15px', zIndex: 3 }}>
-          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', background: 'black' }}>
+          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', background: 'black' }} onClick={() => {setRascalHunger(true); console.log(rascalHunger)}}>
             <Button aria-label="Food">
               <FastfoodIcon sx={{ color: 'white' }} />
             </Button>
