@@ -534,7 +534,8 @@ class Scene extends React.Component {
 
     const equippedItemsPanel = document.querySelector('#equipped-items')
     const customPanel = document.querySelector('#custom-slider')
-    equippedItemsPanel.addEventListener("click", (e) => {
+    const creationPanel = document.querySelector('#creation-panel')
+    if(equippedItemsPanel){equippedItemsPanel.addEventListener("click", (e) => {
 
       var source = e.target.getAttribute('src')
       // console.log(e.target)
@@ -567,8 +568,8 @@ class Scene extends React.Component {
         // }
 
       }
-    })
-    customPanel.addEventListener("click", (e) => {
+    })}
+    if(customPanel){customPanel.addEventListener("click", (e) => {
       let regNose = /nose/;
       let regBody = /body/;
       let regEyes = /eyes/;
@@ -647,33 +648,22 @@ class Scene extends React.Component {
         addItems()
         // itemArray=[]
       }
-    })
-    // document.addEventListener('click',function(e){
-    //   console.log(world)
-    //   world.bodies.forEach((item,index) => {
-    //     if(index>0){
-    //       Matter.World.remove(world,item)
-    //     }
-    //   });
-    //   world.bodies.forEach((item,index) => {
-    //     if(index>0){
-    //       Matter.World.remove(world,item)
-    //     }
-    //   });
+    })}
+    if(creationPanel){
+      creationPanel.addEventListener("click",(e)=>{
+        
+        var value = e.target.getAttribute('value')
+        let regBody = /body/;
+        let resultBody = regBody.exec(value)
+        
+        if(resultBody){
+            selectedBody=value
+            cancelAnimationFrame(animation);
+            generate()
+        }
+      })
 
-
-    //   // }
-    //   // Matter.World.remove(world,world.bodies[0])
-    //   cancelAnimationFrame(animation);
-
-    // const testBtn = document.getElementById('edit-btn')
-    // testBtn.addEventListener('click', () => {
-    //   Matter.World.remove(world,rascal)
-    //   Composite.add(world,rascal)
-    //   console.log(world.bodies)
-    //   generate();
-    //   // Matter.Sleeping.set(rascal,true)
-    // })
+    }
 
     var image = 'milkshakes'
     //setting up feeding the rascal and the food object disappearing on collision with rascal body
@@ -715,10 +705,10 @@ class Scene extends React.Component {
     }
 
     const feedBtn = document.getElementById('FeedRascal')
-    feedBtn.addEventListener('click', () => {
+    if(feedBtn){feedBtn.addEventListener('click', () => {
       createFood();
       setUpFeedRascal();
-    })
+    })}
 
     //setting up washing rascal and the soap getting smaller on collision 
     const createSoap = () => {
@@ -751,10 +741,10 @@ class Scene extends React.Component {
     }
 
     const soapBtn = document.getElementById('WashRascal')
-    soapBtn.addEventListener('click', () => {
+    if(soapBtn){soapBtn.addEventListener('click', () => {
       createSoap();
       setUpWashRascal();
-    })
+    })}
 
   }
 

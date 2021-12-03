@@ -119,8 +119,8 @@ export default function VerticalLinearStepper(props) {
         <FormControl component="fieldset">
           <FormLabel component="legend">Choose your Rascal's body:</FormLabel>
           <RadioGroup onChange={(e)=>{setNewRascalBody(e.target.value); props.setMyRascal({name:newRascalName,color:newRascalColor,body:e.target.value})}}row aria-label="gender" name="row-radio-buttons-group">
-            <FormControlLabel value="body_fuzzy" control={<Radio />} label="Fuzzy" />
-            <FormControlLabel value="body_curly" control={<Radio />} label="Curly" />
+            <FormControlLabel value="body_fuzzy" control={<Radio />} data-id="body-type" label="Fuzzy" />
+            <FormControlLabel value="body_curly" control={<Radio />} label="Curly" data-id="body-type" />
             {/* <FormControlLabel value="other" control={<Radio />} label="Body3" />
             <FormControlLabel
               value="disabled"
@@ -155,7 +155,7 @@ export default function VerticalLinearStepper(props) {
 
 
   return (
-    <Box sx={{ maxWidth: 400 }} className={classes.root}>
+    <Box sx={{ maxWidth: 400 }} id="creation-panel"className={classes.root}>
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((step, index) => (
           <Step key={step.label}>
@@ -175,6 +175,7 @@ export default function VerticalLinearStepper(props) {
                   <Button
                     variant="contained"
                     onClick={handleNext}
+                    
                     sx={{ mt: 1, mr: 1 }}
                   >
                     {index === steps.length - 1 ? 'Finish' : 'Continue'}

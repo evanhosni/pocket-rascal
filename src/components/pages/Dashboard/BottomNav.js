@@ -73,7 +73,6 @@ ItemStoreDialogTitle.propTypes = {
 
 export default function BottomNav({ currentPage, handlePageChange, myRascal, setMyRascal, unlockedItems, equippedItems, setUnlockedItems, setEquippedItems, userCoins, setUserCoins, userLevel, setUserLevel, rascalHunger, setRascalHunger }) {
   const [customMenu, setCustomMenu] = React.useState(false);
-  const [updateEquipmentPanel,setUpdateEquipmentPanel]= React.useState(0)
   const toggleCustomMenu = () => {
     setCustomMenu(!customMenu);
     if (carousel) {
@@ -269,7 +268,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
         <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-          <Carousel setUpdateEquipmentPanel={setUpdateEquipmentPanel} updateEquipmentPanel={updateEquipmentPanel}prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+          <Carousel prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
         </Animated>
 
         <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>

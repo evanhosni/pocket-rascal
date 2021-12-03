@@ -25,3 +25,6 @@
 .carousel-arrow {
     filter: grayscale(1)
 }
+.equipped {
+    background-color: green;
+}
