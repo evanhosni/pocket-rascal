@@ -535,12 +535,14 @@ class Scene extends React.Component {
         generate()
       }
     }
-
-
-    const equipedDiv = document.getElementById('equipped-div')
-    equipedDiv.addEventListener("click", (e) => {
+    console.log(item1)
+    const equippedItemsPanel = document.querySelector('#equipped-items')
+    equippedItemsPanel.addEventListener("click",(e)=>{
+      
       var source = e.target.getAttribute('src')
-      if (source) {
+      // console.log(e.target)
+      if(source){
+        
         var isolate = source.split('/')[2].split('.')[0]
         console.log(isolate)
         world.bodies.forEach((item, index) => {
@@ -548,18 +550,16 @@ class Scene extends React.Component {
             Matter.World.remove(world, [world.bodies[index], world.bodies[0]])
             return
           }
-          if (isolate == "nose_disguise" || "nose_cute") {
-            console.log(world)
-            selectedNose = isolate
-            // selectedBody="body_curly"
-
-            rascal.render.isSleeping = false;
-            wakeUpRascal();
-
-            cancelAnimationFrame(animation);
-            generate()
-          }
+          
         });
+        // if(isolate=="nose_disguise" || "nose_cute"){
+        //   console.log(world)
+        //   selectedNose=isolate
+        //   // selectedBody="body_curly"
+        //   cancelAnimationFrame(animation);
+        //   generate()
+        // }
+
       }
     })
 

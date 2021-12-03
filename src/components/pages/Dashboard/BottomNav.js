@@ -189,6 +189,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   //scrollable
   const [scroll, setScroll] = React.useState('paper');
 
+
   const handleClickOpen = (scrollType) => () => {
     setOpen(true);
     setScroll(scrollType);
@@ -197,6 +198,15 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   const handleClose = () => {
     setOpen(false);
   };
+  const removeEquip = (e) => {
+    let removeIndex = e.target.getAttribute("itemindex")
+    console.log(removeIndex)
+    let equipCopy = [...equippedItems]
+    equipCopy.splice(removeIndex, 1)
+    setEquippedItems(equipCopy)
+    elongate()
+
+  }
 
 
   //conditional rendering for store items
@@ -229,16 +239,33 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
     <Button key="five" style={{ fontSize: '12px' }} onClick={() => setStoreContent('Mouth')}>Mouth</Button>,
     <Button key="six" style={{ fontSize: '12px' }} onClick={() => setStoreContent('Items')}>Items</Button>,
   ];
-
+  let equippedItemsCopy
+  function elongate() {
+    equippedItemsCopy= [...equippedItems]
+    let lengthDiff = 8 - equippedItemsCopy.length
+    for(let i=0;i<lengthDiff;i++){
+      equippedItemsCopy.push({name:"empty"})
+    }
+  }
+  elongate()
 
   return (
     <div>
 
 
       <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItems}>
-        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id='equipped-div' >
-
-          <div>
+        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items">
+          {equippedItemsCopy.map((item, index) => {
+            let imgSrc = item.name || "empty"
+            return (
+              <div>
+                <Button style={equippedItemBtn} key={index} itemIndex={index} onClick={removeEquip}>
+                  <img itemIndex={index} src={`./assets/${imgSrc}.png`} />
+                </Button>
+              </div>
+            )
+          })}
+          {/* <div>
             <Button style={equippedItemBtn} >
             </Button>
           </div>
@@ -276,7 +303,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
             <Button style={equippedItemBtn} >
               <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
             </Button>
-          </div>
+          </div> */}
         </Box>
       </Animated>
 
