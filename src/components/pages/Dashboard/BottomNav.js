@@ -24,8 +24,8 @@ import StoreMouth from './Store/Mouth';
 import StoreItem from './Store/Items'
 import SavingsIcon from '@mui/icons-material/Savings';
 import Stack from '@mui/material/Stack';
-import Slider from 'infinite-react-carousel';
-
+import './Store/store.css'
+import { render } from "@testing-library/react";
 
 
 
@@ -120,6 +120,10 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   //   }
   // }
 
+  const [carousel, setCarousel] = React.useState(false)
+  // const [carouselContent, setCarouselContent] = React.useState(false)
+  const [equippedItemsB, setEquippedItemsB] = React.useState(false)
+  const [prevEvent, setPrevEvent] = React.useState('body')
   const toggleCarousel = (event) => {
     setPrevEvent(event);
     if (carousel && event === prevEvent) {
@@ -232,12 +236,12 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   }
 
   const buttons = [
-    <Button key="one" style={{ fontSize: '12px' }} onClick={() => setStoreContent('Color')}>Color</Button>,
-    <Button key="two" style={{ fontSize: '12px' }} onClick={() => setStoreContent('Bodies')}>Body</Button>,
-    <Button key="three" style={{ fontSize: '12px' }} onClick={() => setStoreContent('Eyes')}>Eyes</Button>,
-    <Button key="four" style={{ fontSize: '12px' }} onClick={() => setStoreContent('Nose')}>Nose</Button>,
-    <Button key="five" style={{ fontSize: '12px' }} onClick={() => setStoreContent('Mouth')}>Mouth</Button>,
-    <Button key="six" style={{ fontSize: '12px' }} onClick={() => setStoreContent('Items')}>Items</Button>,
+    <Button key="one" className="tab" onClick={() => setStoreContent('Color')}>COLOR</Button>,
+    <Button key="two" className="tab" onClick={() => setStoreContent('Bodies')}>BODY</Button>,
+    <Button key="three" className="tab" onClick={() => setStoreContent('Eyes')}>EYES</Button>,
+    <Button key="four" className="tab" onClick={() => setStoreContent('Nose')}>NOSE</Button>,
+    <Button key="five" className="tab" onClick={() => setStoreContent('Mouth')}>MOUTH</Button>,
+    <Button key="six" className="tab" onClick={() => setStoreContent('Items')}>ADD-ONS</Button>,
   ];
   let equippedItemsCopy
   function elongate() {
@@ -294,7 +298,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
             </div>
             <div>
               <Button style={customBtn} onClick={() => toggleCarousel('nose')} >
-                <img src="./assets/nose_disguise.png" style={{ objectFit: 'cover', height: '90px', objectPosition: '45% -2px' }} />
+                <img src="./assets/nose_disguise.png" style={{ objectFit: 'cover', height: '90px', objectPosition: '50% -2px' }} />
               </Button>
               <div style={customLabel}>NOSE</div>
             </div>
@@ -344,26 +348,24 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
           >
             <ItemStoreDialogTitle
               id="customized-dialog-title"
-              onClose={handleClose}
+              // onClose={handleClose}
             >
-              <ButtonGroup aria-label="small button group" variant="text" size='small'>
-                {buttons}
-              </ButtonGroup>
+            <div id="tab">
+              {buttons}
+            </div>
 
             </ItemStoreDialogTitle>
-            <DialogContent>
+            <div id="store-content">
               {renderStoreContent()}
-            </DialogContent>
-            <DialogActions>
-              <Stack direction="row" spacing={2}>
+            </div>
+              <div id="bottom-tab">
                 <Button disabled variant="outlined" startIcon={<SavingsIcon />}>
                   {`${userCoins}¢`}
                 </Button>
-                <Button autoFocus onClick={handleClose}>
+                <Button autoFocus onClick={handleClose} id="done">
                   Done
                 </Button>
-              </Stack>
-            </DialogActions>
+              </div>
           </ItemStoreDialog>
         </div>
       </div >
