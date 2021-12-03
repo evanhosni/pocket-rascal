@@ -1,0 +1,40 @@
+#tab {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#tab button {
+    margin: 3px;
+    padding: 0;
+    color: black;
+    font-family: 'Nanum Pen Script', sans-serif;
+    font-size: larger;
+    font-weight: bolder;
+    border-bottom: solid black 3px;
+    border-radius: 0;
+}
+
+#store-content {
+    background-color: gray;
+}
+
+#bottom-tab {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 50px
+}
+
+#done {
+    color: black;
+    font-family: 'Nanum Pen Script', sans-serif;
+    font-size: x-large;
+    font-weight: bolder;
+    background-color: rgb(34, 199, 19);
+    height: 30px
+}
+
+/*----------------------*/
+
