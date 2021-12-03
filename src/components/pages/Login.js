@@ -37,13 +37,20 @@ export default function SignIn(props) {
       email: data.get('email'),
       password: data.get('password')
     }
-    API.login(user).then(res=>{
+    API.login(user).then(async (res)=>{
       props.setUserState({
         email:res.data.user.email,
         id:res.data.user.id
       })
       props.setToken(res.data.token)
       localStorage.setItem("token",res.data.token)
+      const rascalDat = await API.loadRascal(res.data.user.id)
+        console.log(rascalDat)
+        const equipDat = await API.loadEquippedItems(rascalDat.data.id)
+        const unlockDat = await API.loadUnlockedItems(rascalDat.data.id)
+        props.setMyRascal(rascalDat.data)
+        props.setEquippedItems(equipDat.data)
+        props.setUnlockedItems(unlockDat.data)
       props.handlePageChange('Dashboard')
     }).catch(err=>{
       alert("Incorrect Credentials")

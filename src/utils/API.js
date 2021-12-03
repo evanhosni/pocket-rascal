@@ -22,7 +22,7 @@ const API = {
         return axios.get(`${URL_PREFIX}/item/equipped/${id}`)
     },
     loadUnlockedItems:(id)=>{
-        return axios.get(`${URL_PREFIX}/item/equipped/${id}`)
+        return axios.get(`${URL_PREFIX}/item/unlocked/${id}`)
     },
     updateEquippedItems:(id,itemData)=>{
         return axios.put(`${URL_PREFIX}/item/equipped/${id}`,itemData)

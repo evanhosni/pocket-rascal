@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-// import Navigation from './Navigation';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Scene from './pages/Dashboard/Scene';
 import MiniPlayground from './pages/Minigame/index';
 import CreateRascal from './pages/CreateRascal/index'
 import BottomNav from './pages/Dashboard/BottomNav'
-// import StatusBars from './pages/Dashboard/StatusBars'
 import Dashboard from './pages/Dashboard/Dashboard'
 import API from '../utils/API'
 
@@ -58,7 +56,7 @@ export default function ContentContainer() {
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
-        setCurrentPage("Dashboard")
+        if(currentPage!="Dashboard"){setCurrentPage("Dashboard")}
         // const interval = setInterval(() => {
         //   console.log('This will run every 10 seconds!');
         //   console.log(myRascal)
@@ -74,46 +72,6 @@ export default function ContentContainer() {
     }
 
   }, [])
-  // updates rascal whenever userstate changes
-  useEffect(async () => {
-    if (userState.id) {
-      if(!userState.firstLogin){
-
-        const rascalDat = await API.loadRascal(userState.id)
-        console.log(rascalDat)
-        const equipDat = await API.loadEquippedItems(rascalDat.data.id)
-        const unlockDat = await API.loadUnlockedItems(rascalDat.data.id)
-        setMyRascal(rascalDat.data)
-        setEquippedItems(equipDat.data)
-        setUnlockedItems(unlockDat.data)
-        setCurrentPage("Dashboard")
-      }
-
-    }
-  }, [userState])
-
-  // function for happiness decay TODO: add random effects
-  // function decayTimer(){
-  //   console.log("step2")
-  //     console.log(myRascal.happiness)
-  //     console.log(userState)
-
-
-  //       if(myRascal.happiness > 75){
-  //         updateRascalStats("happiness",myRascal.happiness-3)
-  //         console.log("big sad")
-  //       }else if(myRascal.happiness > 50){
-  //         updateRascalStats("happiness",myRascal.happiness-2)
-  //         console.log("mid sad")
-  //       }else if(myRascal.happiness > 25){
-  //         updateRascalStats("happiness",myRascal.happiness-1)
-  //         console.log("smol sad")
-  //       }
-  // }
-  // function rascalUpdate() {
-
-  //   setInterval(decayTimer,15000)
-  // }
 
 
   // logout function being passed down into navbar
@@ -129,13 +87,20 @@ export default function ContentContainer() {
     setUnlockedItems([])
     setCurrentPage('Login')
   }
+
+  //starting location for the users coins
+  const [userCoins, setUserCoins] = useState(2500);
+  //starting location for users level
+  const [userLevel, setUserLevel] = useState(myRascal.level);
+
+
   // This method is checking to see what the value of `currentPage` is. Depending on the value of currentPage, we return the corresponding component to render.
   const renderPage = () => {
     if (currentPage === 'SignUp') {
       return <SignUp token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
     }
     if (currentPage === 'Login') {
-      return <Login token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
+      return <Login token={token} setToken={setToken} setMyRascal={setMyRascal} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />;
     }
     if (currentPage === 'CreateRascal') {
       return (
@@ -156,7 +121,7 @@ export default function ContentContainer() {
     }
     return (
       <div>
-        <MiniPlayground />
+        <MiniPlayground currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} currentPage={currentPage} handlePageChange={handlePageChange} />
       </div>
     )
   };
@@ -165,9 +130,6 @@ export default function ContentContainer() {
 
   return (
     <div>
-      {/* We are passing the currentPage from state and the function to update it */}
-      {/* <Navigation currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} /> */}
-      {/* Here we are calling the renderPage method which will return a component  */}
       {renderPage()}
     </div>
   );

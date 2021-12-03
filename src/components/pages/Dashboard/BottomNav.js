@@ -71,8 +71,9 @@ ItemStoreDialogTitle.propTypes = {
 
 
 
-export default function BottomNav({ currentPage, handlePageChange, myRascal, setMyRascal, unlockedItems, equippedItems, setUnlockedItems, setEquippedItems }) {
+export default function BottomNav({ currentPage, handlePageChange, myRascal, setMyRascal, unlockedItems, equippedItems, setUnlockedItems, setEquippedItems, userCoins, setUserCoins, userLevel, setUserLevel, rascalHunger, setRascalHunger }) {
   const [customMenu, setCustomMenu] = React.useState(false);
+  const [updateEquipmentPanel,setUpdateEquipmentPanel]= React.useState(0)
   const toggleCustomMenu = () => {
     setCustomMenu(!customMenu);
     if (carousel) {
@@ -82,19 +83,49 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
       setEquippedItemsB(false)
     }
   }
+  // function renderCarouselContent() {
+  //   if (prevEvent === 'items') {
+  //     setEquippedItemsB(false);
+  //     setCarousel(true)
+
+  //     return (
+  //       <div>
+  //         {itemsArray.map((object, i) =>
+  //           <div obj={object} key={i}>
+  //             <Button style={customBtn} />
+  //           </div>)}
+  //       </div>
+  //     )
+
+  //   }
+
+  //   if (prevEvent === 'color') {
+  //     setEquippedItemsB(false);
+  //     setCarousel(true)
+
+  //     return (
+  //       <div>
+  //         {colorArray.map((object, i) =>
+  //       <div style={customDiv} obj={object} key={i}>
+  //           <Button style={customBtn} />
+  //       </div> )}
+  //       </div>
+  //     )
+  //   }
+  // }
 
   const [carousel, setCarousel] = React.useState(false)
   // const [carouselContent, setCarouselContent] = React.useState(false)
   const [equippedItemsB, setEquippedItemsB] = React.useState(false)
   const [prevEvent, setPrevEvent] = React.useState('body')
   const toggleCarousel = (event) => {
+    setPrevEvent(event);
     if (carousel && event === prevEvent) {
       setCarousel(false)
       setEquippedItemsB(false)
     } else {
-      setCarousel(true)
+      setCarousel(true);
       if (event === 'color') {
-
         setEquippedItemsB(false)
       }
       if (event === 'body') {
@@ -114,11 +145,9 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
         setEquippedItemsB(false)
       }
       if (event === 'items') {
-
         setEquippedItemsB(true)
       }
     }
-    setPrevEvent(event)
   }
 
   const equippedItemBtn = {
@@ -181,9 +210,6 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   //conditional rendering for store items
   const [storeContent, setStoreContent] = useState('Bodies')
 
-  const [userCoins, setUserCoins] = useState(2500);
-  const userLevel = myRascal.level;
-  // setUserCoins(25)
 
   const renderStoreContent = () => {
     if (storeContent === 'Bodies') {
@@ -226,7 +252,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
 
       <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItems}>
-        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items">
+        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" data-update={equippedItems.length}>
           {equippedItemsCopy.map((item, index) => {
             let imgSrc = item.name || "empty"
             return (
@@ -237,51 +263,13 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
               </div>
             )
           })}
-          {/* <div>
-            <Button style={equippedItemBtn} >
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/arm_glove.png" style={{ objectFit: 'cover', height: '33.6px', objectPosition: '-1% center' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/eyes_tired.png" style={{ objectFit: 'cover', height: '80px', objectPosition: '0.69% 6.4px' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/nose_disguise.png" style={{ objectFit: 'cover', height: '72px', objectPosition: '45% -1.6px' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <img src="./assets/nose_cute.png" style={{ height: '100%' }} />
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
-            </Button>
-          </div>
-          <div>
-            <Button style={equippedItemBtn} >
-              <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
-            </Button>
-          </div> */}
+            
         </Box>
       </Animated>
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
         <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-          <Carousel prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+          <Carousel setUpdateEquipmentPanel={setUpdateEquipmentPanel} updateEquipmentPanel={updateEquipmentPanel}prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
         </Animated>
 
         <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
@@ -326,10 +314,10 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
         <div style={{ background: 'black', paddingBottom: '15px', paddingTop: '15px', zIndex: 3 }}>
           <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', background: 'black' }}>
-            <Button aria-label="Food">
+            <Button aria-label="Food" id='FeedRascal'>
               <FastfoodIcon sx={{ color: 'white' }} />
             </Button>
-            <Button aria-label="Care" >
+            <Button aria-label="Care" id='WashRascal' >
               <ShowerIcon sx={{ color: 'white' }} />
             </Button>
             <Button aria-label="Minigame" onClick={() => handlePageChange('Minigame')}>
@@ -338,7 +326,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
             <Button aria-label="Store" onClick={handleClickOpen('paper')}>
               <StoreIcon sx={{ color: 'white' }} />
             </Button>
-            <Button aria-label="Customize" onClick={toggleCustomMenu}>
+            <Button aria-label="Customize" onClick={toggleCustomMenu} >
               <EditIcon sx={{ color: 'white' }} />
             </Button>
           </Box>

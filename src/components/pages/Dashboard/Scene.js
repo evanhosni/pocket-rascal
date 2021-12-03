@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Matter from "matter-js";
+import Matter, { World } from "matter-js";
 import "./style.css"
 
 
@@ -9,7 +9,7 @@ class Scene extends React.Component {
     super(props);
     this.state = {};
   }
-  
+
 
   componentDidMount() {
     var Engine = Matter.Engine,
@@ -23,6 +23,7 @@ class Scene extends React.Component {
 
     var engine = Engine.create({
       gravity: { scale: 0 },
+      enableSleeping: true
     });
     var world = engine.world;
 
@@ -54,12 +55,12 @@ class Scene extends React.Component {
     render.mouse = mouse; // keep the mouse in sync with rendering
 
     function setMouseScaleAndOffset() {
-      if (window.innerWidth>=window.innerHeight){
-        Mouse.setScale(mouse, {x: window.innerWidth/window.innerHeight, y: 1})
-        Mouse.setOffset(mouse, {x: 2500-(2500*(window.innerWidth/window.innerHeight)), y: 0})
+      if (window.innerWidth >= window.innerHeight) {
+        Mouse.setScale(mouse, { x: window.innerWidth / window.innerHeight, y: 1 })
+        Mouse.setOffset(mouse, { x: 2500 - (2500 * (window.innerWidth / window.innerHeight)), y: 0 })
       } else {
-        Mouse.setScale(mouse, {x: 1, y: window.innerHeight/window.innerWidth})
-        Mouse.setOffset(mouse, {x: 0, y: 2500-(2500*(window.innerHeight/window.innerWidth))})
+        Mouse.setScale(mouse, { x: 1, y: window.innerHeight / window.innerWidth })
+        Mouse.setOffset(mouse, { x: 0, y: 2500 - (2500 * (window.innerHeight / window.innerWidth)) })
       }
     }
     setMouseScaleAndOffset()
@@ -67,13 +68,16 @@ class Scene extends React.Component {
 
     var rascal = Bodies.polygon(2500, 2500, 8, 120, {
       name: "rascal",
+      label: 'rascal-body',
       inertia: "Infinity",
       frictionAir: 0.2,
       friction: 0,
       render: {
-        visible: false
+        visible: false,
+        isSleeping: true
       },
     });
+
     var rascalConstraint = Constraint.create({
       name: "rascal_constraint",
       pointA: { x: 2500, y: 2500 },
@@ -118,7 +122,7 @@ class Scene extends React.Component {
 
     var animation;
     const canvas = document.querySelector("canvas");
-    canvas.setAttribute('id','rascalCanvas')
+    canvas.setAttribute('id', 'rascalCanvas')
     const ctx = canvas.getContext("2d");
     canvas.width = 5000;
     canvas.height = 5000;
@@ -216,27 +220,27 @@ class Scene extends React.Component {
     function addItems() {
       equippedItems = []//equippedItems array is only used for devMode
 
-      
-        if(itemArray[0]){
-          item1 = Bodies.rectangle(
-            2500,
-            2340 - 1 - 50 * (itemArray[0].size - 1),
-            90,
-            100 * itemArray[0].size,
-            {
-              name: itemArray[0].name,
-              frictionAir: 0.06,
-              friction: 0,
-              render: {//TODO this breaks the site
-                sprite: {
-                  texture: `./assets/${itemArray[0].name}.png`
-                }
+
+      if (itemArray[0]) {
+        item1 = Bodies.rectangle(
+          2500,
+          2340 - 1 - 50 * (itemArray[0].size - 1),
+          90,
+          100 * itemArray[0].size,
+          {
+            name: itemArray[0].name,
+            label: itemArray[0].name,
+            frictionAir: 0.06,
+            friction: 0.5,
+            render: {//TODO this breaks the site
+              sprite: {
+                texture: `./assets/${itemArray[0].name}.png`
               }
             }
-          );
+          });
             equippedItems.push(item1)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint1 = Constraint.create({
             name: `${itemArray[0].name}_constraint`,
             pointA: rascal.position,
             bodyB: item1,
@@ -246,7 +250,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item1, itemConstraint]);
+          Composite.add(world, [item1, itemConstraint1]);
         }
         if(itemArray[1]){
           item2 = Bodies.rectangle(
@@ -267,7 +271,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item2)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint2 = Constraint.create({
             name: `${itemArray[1].name}_constraint`,
             pointA: rascal.position,
             bodyB: item2,
@@ -277,7 +281,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item2, itemConstraint]);
+          Composite.add(world, [item2, itemConstraint2]);
         }
         if(itemArray[2]){
           item3 = Bodies.rectangle(
@@ -298,7 +302,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item3)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint3 = Constraint.create({
             name: `${itemArray[2].name}_constraint`,
             pointA: rascal.position,
             bodyB: item3,
@@ -308,7 +312,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item3, itemConstraint]);
+          Composite.add(world, [item3, itemConstraint3]);
         }
         if(itemArray[3]){
           item4 = Bodies.rectangle(
@@ -329,7 +333,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item4)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint4 = Constraint.create({
             name: `${itemArray[3].name}_constraint`,
             pointA: rascal.position,
             bodyB: item4,
@@ -339,7 +343,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item4, itemConstraint]);
+          Composite.add(world, [item4, itemConstraint4]);
         }
         if(itemArray[4]){
           item5 = Bodies.rectangle(
@@ -360,7 +364,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item5)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint5 = Constraint.create({
             name: `${itemArray[4].name}_constraint`,
             pointA: rascal.position,
             bodyB: item5,
@@ -370,7 +374,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item5, itemConstraint]);
+          Composite.add(world, [item5, itemConstraint5]);
         }
         if(itemArray[5]){
           item6 = Bodies.rectangle(
@@ -391,7 +395,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item6)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint6 = Constraint.create({
             name: `${itemArray[5].name}_constraint`,
             pointA: rascal.position,
             bodyB: item6,
@@ -401,7 +405,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item6, itemConstraint]);
+          Composite.add(world, [item6, itemConstraint6]);
         }
         if(itemArray[6]){
           item7 = Bodies.rectangle(
@@ -422,7 +426,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item7)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint7 = Constraint.create({
             name: `${itemArray[6].name}_constraint`,
             pointA: rascal.position,
             bodyB: item7,
@@ -432,7 +436,7 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item7, itemConstraint]);
+          Composite.add(world, [item7, itemConstraint7]);
         }
         if(itemArray[7]){
           item8 = Bodies.rectangle(
@@ -453,7 +457,7 @@ class Scene extends React.Component {
           );
             equippedItems.push(item8)//equippedItems array is only used for devMode
   
-          var itemConstraint = Constraint.create({
+          var itemConstraint8 = Constraint.create({
             name: `${itemArray[7].name}_constraint`,
             pointA: rascal.position,
             bodyB: item8,
@@ -463,37 +467,14 @@ class Scene extends React.Component {
               visible: false,
             },
           });  
-          Composite.add(world, [item8, itemConstraint]);
+          Composite.add(world, [item8, itemConstraint8]);
         }
       }
-      // //test one: spawns arm on right side of body
-      //     var item = Bodies.rectangle(985.8227253725269, 591.5253089907833, 90, (100 * 1.5), {
-      //         name: 'test',
-      //         frictionAir: 0.06,
-      //         friction: 0,
-      //         angle: 1.569390697291188,
-      //         render: {
-      //             sprite: {
-      //                 texture: `./assets/party_hat.png`
-      //             }
-      //         }
-      //     })
-
-      //     // Body.rotate(item,90)
-
-      // var itemConstraint = Constraint.create({
-      //     pointA: rascal.position,
-      //     bodyB: item,
-      //     pointB: {x: -74.99992647502606, y: 0.10501781127428417},
-      //     stiffness: 0.05
-      // });
-
-      // Composite.add(world, [
-      //     item,
-      //     itemConstraint
-      // ]);
     
+
+
     addItems();
+    // itemArray=[]
 
     function checkCoor() {
       var bodies = Composite.allBodies(world);
@@ -506,15 +487,15 @@ class Scene extends React.Component {
       }
     }
 
-    const changeSelections = ()=> {
+    const changeSelections = () => {
       selectedBody = this.props.myRascal.body || "empty";
 
       selectedEyes = this.props.myRascal.eyes || "empty";
-  
+
       selectedMouth = this.props.myRascal.mouth || "empty";
-  
+
       selectedNose = this.props.myRascal.nose || "empty";
-  
+
       itemArray = [...this.props.equippedItems
         // { name: "top_hat", size: 2.2 },
         // { name: "arm_glove", size: 3.4 },
@@ -532,26 +513,27 @@ class Scene extends React.Component {
 
     var devModeActive;
     function devMode() {
-    var checkBox = document.getElementById("devMode");
-      if (checkBox.checked == true){
-          devModeActive = true
-          cancelAnimationFrame(animation)
-          rascal.render.visible = true
-          for (let i = 0; i < equippedItems.length; i++) {
-              equippedItems[i].render.sprite = 0
-          }
+      var checkBox = document.getElementById("devMode");
+      if (checkBox.checked == true) {
+        devModeActive = true
+        cancelAnimationFrame(animation)
+        rascal.render.visible = true
+        for (let i = 0; i < equippedItems.length; i++) {
+          equippedItems[i].render.sprite = 0
+        }
       } else {
-          devModeActive = false
-          cancelAnimationFrame(animation)
-          rascal.render.visible = false
-          for (let i = 0; i < equippedItems.length; i++) {
-              equippedItems[i].render.sprite = {xScale: 1, yScale: 1, xOffset: 0.5, yOffset: 0.5, texture: `./assets/${equippedItems[i].name}.png`}
-          }
-          generate()
+        devModeActive = false
+        cancelAnimationFrame(animation)
+        rascal.render.visible = false
+        for (let i = 0; i < equippedItems.length; i++) {
+          equippedItems[i].render.sprite = { xScale: 1, yScale: 1, xOffset: 0.5, yOffset: 0.5, texture: `./assets/${equippedItems[i].name}.png` }
+        }
+        generate()
       }
     }
-    console.log(item1)
+    
     const equippedItemsPanel = document.querySelector('#equipped-items')
+    const customPanel = document.querySelector('#custom-slider')
     equippedItemsPanel.addEventListener("click",(e)=>{
       
       var source = e.target.getAttribute('src')
@@ -559,14 +541,23 @@ class Scene extends React.Component {
       if(source){
         
         var isolate = source.split('/')[2].split('.')[0]
-        console.log(isolate)
-        world.bodies.forEach((item,index) => {
+        
+        world.bodies.every((item,index) => {
           if(item.name==isolate){
             Matter.World.remove(world,world.bodies[index])
-            return
+            return false
+          }else{
+            return true
           }
           
         });
+        itemArray.forEach((item,index)=>{
+          if(item.name==isolate){
+            console.log("match")
+            itemArray.splice(index,1)
+            return
+          }
+        })
         // if(isolate=="nose_disguise" || "nose_cute"){
         //   console.log(world)
         //   selectedNose=isolate
@@ -575,6 +566,68 @@ class Scene extends React.Component {
         //   generate()
         // }
 
+      }
+    })
+    customPanel.addEventListener("click",(e)=>{
+      let regNose= /nose/;
+      let regBody= /body/;
+      let regEyes= /eyes/;
+      let regMouth= /mouth/;
+      var source = e.target.getAttribute('src')
+      var itemSource = e.target.getAttribute('item-size')
+      if(source){
+        var isolate = source.split('/')[2].split('.')[0]
+        let resultNose = regNose.exec(isolate)
+        let resultBody = regNose.exec(isolate)
+        let resultEyes = regNose.exec(isolate)
+        let resultMouth = regNose.exec(isolate)
+        if(resultNose){
+          if(isolate==selectedNose){
+            selectedNose="empty"
+          }else{
+            isolate=selectedNose
+          }
+        }
+        if(resultBody){
+          if(isolate==selectedBody){
+            selectedBody="empty"
+          }else{
+            isolate=selectedBody
+          }
+        }
+        if(resultEyes){
+          if(isolate==selectedEyes){
+            selectedEyes="empty"
+          }else{
+            isolate=selectedEyes
+          }
+        }
+        if(resultMouth){
+          if(isolate==selectedMouth){
+            selectedMouth="empty"
+          }else{
+            isolate=selectedMouth
+          }
+        }
+        
+        
+      }
+      if(itemSource){
+        
+       if(item1){ Matter.World.remove(world,item1)}
+       if(item2){ Matter.World.remove(world,item2)}
+       if(item3){ Matter.World.remove(world,item3)}
+       if(item4){ Matter.World.remove(world,item4)}
+       if(item5){ Matter.World.remove(world,item5)}
+       if(item6){ Matter.World.remove(world,item6)}
+       if(item7){ Matter.World.remove(world,item7)}
+       if(item8){ Matter.World.remove(world,item8)}
+        itemArray.push({
+          name:isolate,
+          size:parseFloat(itemSource)
+        })
+        addItems()
+        // itemArray=[]
       }
     })
     // document.addEventListener('click',function(e){
@@ -589,25 +642,109 @@ class Scene extends React.Component {
     //       Matter.World.remove(world,item)
     //     }
     //   });
-    //   // for (let index = 0; index < world.bodies.length; index++) {
-    //   //   const element = world.bodies[index];
-    //   //   if(index>0){
-    //   //     Matter.World.remove(world,element)
-    //   //   }
+      
         
     //   // }
     //   // Matter.World.remove(world,world.bodies[0])
     //   cancelAnimationFrame(animation);
 
+    // const testBtn = document.getElementById('edit-btn')
+    // testBtn.addEventListener('click', () => {
+    //   Matter.World.remove(world,rascal)
+    //   Composite.add(world,rascal)
+    //   console.log(world.bodies)
     //   generate();
+    //   // Matter.Sleeping.set(rascal,true)
     // })
-  }
+
+    var image = 'milkshakes'
+    //setting up feeding the rascal and the food object disappearing on collision with rascal body
+    const createFood = () => {
+      var food = Matter.Bodies.rectangle(2055, 2750, 70, 150, {
+        label: 'food',
+        friction: 1
+      })
+
+      Matter.World.add(engine.world, food)
+    }
+
+    function detectFoodCollision(pair) {
+      var condition1 = pair.bodyA.label === "food" && pair.bodyB.label === "rascal-body";
+      var condition2 = pair.bodyA.label === "rascal-body" && pair.bodyB.label === "food";
+      return condition1 || condition2
+    }
+
+    function onFoodCollision(pair) {
+      if (pair.bodyA.label === "food") {
+        Matter.World.remove(world, pair.bodyA);
+      }
+      if (pair.bodyB.label === "food") {
+        Matter.World.remove(world, pair.bodyB);
+      }
+    }
+
+    function setUpFeedRascal() {
+      Matter.Events.on(engine, "collisionStart", (event) => {
+        event.pairs
+          .filter((pair) => {
+            return detectFoodCollision(pair);
+          })
+          .forEach((pair) => {
+            console.log(pair);
+            onFoodCollision(pair);
+          });
+      });
+    }
+
+    const feedBtn = document.getElementById('FeedRascal')
+    feedBtn.addEventListener('click', () => {
+      createFood();
+      setUpFeedRascal();
+    })
+
+    //setting up washing rascal and the soap getting smaller on collision 
+    const createSoap = () => {
+      var soap = Matter.Bodies.rectangle(2200, 2750, 150, 90, {
+        label: 'soap',
+        friction: 1,
+        isSensor:true,
+      })
+      Matter.World.add(engine.world, soap)
+    }
+
+    function detectSoapCollision(pair) {
+      var condition1 = pair.bodyA.label === "soap" && pair.bodyB.label === "rascal-body";
+      var condition2 = pair.bodyA.label === "rascal-body" && pair.bodyB.label === "soap";
+      return condition1 || condition2
+    }
+
+
+    function setUpWashRascal() {
+      Matter.Events.on(engine, 'collisionActive', function (event) {
+        event.pairs
+        .filter((pair) => {
+          return detectSoapCollision(pair);
+        })
+        .forEach((pair) => {
+          console.log(pair)
+        })
+
+      })
+    }
+
+    const soapBtn = document.getElementById('WashRascal')
+    soapBtn.addEventListener('click', () => {
+      createSoap();
+      setUpWashRascal();
+    })
   
+  }
+
   render() {
     return (
       <>
-      
-      <div ref="scene" id="canvas_container"/>
+
+        <div ref="scene" id="canvas_container" />
       </>
     )
   }
