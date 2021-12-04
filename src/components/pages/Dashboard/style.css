@@ -8,6 +8,28 @@
     user-select: none;
 }
 
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+  * {
+    scrollbar-width: 10px;
+    scrollbar-color: rgb(73, 73, 73);
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: rgb(73, 73, 73);
+    border-radius: 10px;
+    /* border: 3px solid #ffffff; */
+  }
+
 #rascalCanvas { 
     z-index: -1;
     position: fixed;
