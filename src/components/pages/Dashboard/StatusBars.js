@@ -55,14 +55,14 @@ export default function StatusBars({ currentPage, handlePageChange, userId, myRa
 
 
   return (
-    <div style={{ paddingTop: 10, paddingBottom: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'black' }}>
+    <div style={{ paddingTop: 12, paddingBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'space-between', backgroundImage: 'linear-gradient(rgb(0, 100, 166), rgb(0, 69, 124))', borderBottom: 'solid rgb(0, 35, 90) 5px' }}>
       <div style={{ width: '1%', maxWidth: 55, textAlign: 'left' }} />
       <div style={{ width: '100%', maxWidth: 500, display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginLeft: '0.5%' }}>
         <IconButton aria-describedby={id} type="button" onClick={handleClick} size="large">
           <SentimentSatisfiedAltIcon sx={{ color: 'white' }} fontSize="inherit" />
         </IconButton>
         <Popper id={id} open={open} anchorEl={anchorEl}>{/* TODO: use hover w popover instead, better for mobile */}
-          <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
+          <Box sx={{ border: 2, p: 1, bgcolor: 'background.paper', borderRadius: '15px', fontWeight: 'bold', fontSize: '20px' }}>
             {statusPopper()}
           </Box>
         </Popper>

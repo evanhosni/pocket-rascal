@@ -14,18 +14,21 @@ const bodyData = [
   {
     img: "body_curly",
     title: "Curly",
-    price: 50,
+    price: 250,
     level: 1,
   },
   {
     img: "body_fuzzy",
     title: "Fuzzy",
-    price: 25,
+    price: 250,
     level: 0,
-  },
+  }
 ];
 
 export default function StoreBodies(props) {
+
+    console.log('yeee',props.unlockedItems)
+
   //functions for snackbar for successful purchase from store
   const [open, setOpen] = React.useState(false);
 
@@ -82,6 +85,34 @@ export default function StoreBodies(props) {
     </React.Fragment>
   );
 
+    //functions for get more coins dialog
+    const [moreCoins, setMoreCoins] = React.useState(false);
+
+    const handleMoreCoins = () => {
+      setMoreCoins(true);
+    };
+  
+    const handleCloseCoins = (event, reason) => {
+      if (reason === "clickaway") {
+        return;
+      }
+  
+      setMoreCoins(false);
+    };
+  
+    const moreCoinsFail = (
+      <React.Fragment>
+        <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={handleCloseCoins}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </React.Fragment>
+    );
+
   const saveNewItem = (item) => {
     const newItem = {
       name: item.img,
@@ -101,7 +132,7 @@ export default function StoreBodies(props) {
   //update the coin value displayed at the bottom of store window
   const purchaseItem = (item) => {
     if (props.userCoins >= item.price) {
-      props.myRascal.coins = (props.myRascal.coins - item.price)
+      props.myRascal.coins -= item.price
       props.setUserCoins(props.myRascal.coins);
       handleClick();
       saveNewItem(item);
@@ -110,34 +141,31 @@ export default function StoreBodies(props) {
     }
   };
 
+  const checkIfOwned = (item) => {
+    var tempArray = []
+    for (let i = 0; i < props.unlockedItems.length; i++) {
+        tempArray.push(props.unlockedItems[i].name);
+    }
+      if (tempArray.includes(item.img)) {
+        return (
+            <div className="alreadyowned">
+                [<span>ALREADY OWNED</span>]
+            </div>
+        )
+    } else {
+        return (
+          <div className="priceandpurchase">
+              <div className="price">{item.price}<span>¢</span></div>
+              <Button id="purchase" onClick={() => {purchaseItem(item)}}>BUY</Button>
+          </div>
+        )
+      }
+  }
+
   return (
-    <div>
-      <div style={{ overflow: "scroll", padding: 20 }}>
+    <div style={{display: 'flex', flexDirection:'column'}}>
+      <div style={{ padding: 20}}>
         {bodyData.map((item) => (
-          // <ImageListItem key={item.img} className="itemforsale">
-          //     <img
-          //         src={`./assets/${item.img}.png`}
-          //         srcSet={`./assets/${item.img}.png`}
-          //         alt={item.title}
-          //         style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }}
-          //         loading="lazy"
-          //     />
-          //     <ImageListItemBar
-          //         title={item.title}
-          //         subtitle={`${item.price}¢`}
-          //         actionIcon={
-          //             <IconButton
-          //                 sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-          //                 aria-label={`info about ${item.title}`}
-          //                 onClick={() => {
-          //                     purchaseItem(item)
-          //                 }}
-          //             >
-          //                 <AddCircleIcon />
-          //             </IconButton>
-          //         }
-          //     />
-          // </ImageListItem>
           <div
             obj={item}
             key={item}
@@ -145,74 +173,57 @@ export default function StoreBodies(props) {
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              paddingBottom: '3px',
+              paddingTop: '3px',
+              borderBottom: "dashed black 3px"
             }}
           >
-            <div className="titleandprice">
-              <Button className="itemforsale">
+            <div className="imgandtitle">
+                <div className="itemforsale">
                 <img
-                  src={`./assets/${item.img}.png`}
-                  alt={item.title}
-                  style={{
+                    src={`./assets/${item.img}.png`}
+                    alt={item.title}
+                    style={{
                     objectFit: "cover",
-                    height: "84px",
-                    objectPosition: "-0.5% center",
-                  }}
-                  loading="lazy"
+                    height: "90px",
+                    objectPosition: "0 -11px",
+                    // backgroundColor: 'white'
+                    }}
+                    loading="lazy"
                 />
-
-              </Button>
-              <div className="title">{item.title}</div>
+                </div>
+                <div className="title">{item.title}</div>
             </div>
-            {/* <div className="dots">..............................................................................................................................................................</div> */}
-            {/* <div className="titleandprice"> */}
-            {/* <div className="title">{item.title}</div> */}
-            <div className="coins">{item.price}<span>¢</span></div>
-            <Button id="purchase">BUY</Button>
-
-            {/* <IconButton
-              sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-              aria-label={`info about ${item.title}`}
-              onClick={() => {
-                purchaseItem(item);
-              }}
-            >
-              <AddCircleIcon />
-            </IconButton> */}
+                {/* <div className="priceandpurchase">
+                    <div className="price">{item.price}<span>¢</span></div>
+                    <Button id="purchase" onClick={() => {purchaseItem(item)}}>BUY</Button>
+                </div> */}
+                {checkIfOwned(item)}
           </div>
         ))}
       </div>
+      <Button id="clickbait" onClick={() => {handleMoreCoins()}}><div>Get more <span id="cents">¢</span> !</div></Button>
       <Snackbar
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={5000}
         onClose={handleClose}
-        message="Item Saved"
+        message="Item Purchased"
         action={action}
       />
       <Snackbar
         open={openFail}
-        autoHideDuration={6000}
+        autoHideDuration={5000}
         onClose={handleCloseFail}
         message="You need more coins for this item!"
         action={actionFail}
       />
+      <Snackbar
+        open={moreCoins}
+        autoHideDuration={5000}
+        onClose={handleCloseCoins}
+        message="Play minigames to earn more coins!"
+        action={moreCoinsFail}
+      />
     </div>
   );
 }
-
-
-
-{/* <ImageListItemBar
-                            title={item.title}
-                            subtitle={`${item.price}¢`}
-                            actionIcon={
-                                <IconButton
-                                    sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                                    aria-label={`info about ${item.title}`}
-                                    onClick={() => {
-                                        purchaseItem(item)
-                                    }}
-                                >
-                                    <AddCircleIcon />
-                                </IconButton>
-                            }
-                        /> */}
