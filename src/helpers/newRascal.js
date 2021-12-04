@@ -1,84 +1,317 @@
-// when a user creates a new account - aka a post request rather than a get if they log in - redirects to this page which creates and initializes a rascal 
+import React from "react";
+import ReactDOM from "react-dom";
+import Matter from "matter-js";
+import "./style.css"
+
+class Scene extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rerender:false
+    };
+  }
 
 
-//initialize the rascal 
+  componentDidMount() {
+    var Engine = Matter.Engine,
+      Render = Matter.Render,
+      Runner = Matter.Runner,
+      Bodies = Matter.Bodies,
+      Composite = Matter.Composite,
+      Constraint = Matter.Constraint,
+      Mouse = Matter.Mouse,
+      MouseConstraint = Matter.MouseConstraint;
 
-const initialAge = 0;
-const initialHappiness = 75;
-const initialHunger = 50;
-const initialAttention = 75;
-const initialEnergy = 75;
+    var engine = Engine.create({
+      gravity: { scale: 0 },
+    });
+    var world = engine.world;
 
-const maxHappiness = 100;
-const maxHunger = 100;
-const maxAttention = 100;
-const maxEnergy = 100;
+    var render = Render.create({
+      element: this.refs.scene,
+      engine: engine,
+      options: {
+        wireframes: false,
+        background: 'transparent'
+      },
+    });
 
-function chooseBody() {
-    const bodyOptions = ['./assets/body.png']
-    //add in additional body types once they are created
+    Render.run(render); // run the renderer
 
-    var selectedBody = bodyOptions[Math.floor(Math.random() * bodyOptions.length)]
+    var runner = Runner.create(); // create runner
 
-    return selectedBody
-}
+    Runner.run(runner, engine); // run the engine
 
-function newRascal(name) {
-    //actually initialize the rascal - create an object that contains properties that belong to the rascal like name, ect 
-    this.name = name;
-    this.age = initialAge;
-    this.happiness = initialHappiness;
-    this.hunger = initialHunger;
-    this.attention = initialAttention;
-    this.energy = initialEnergy;
-    this.body = chooseBody();
-    this.attributes = [];
-    this.items = [];
-}
+    var mouse = Mouse.create(render.canvas), // add mouse control
+      mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: {
+          stiffness: 1,
+          render: {
+            visible: false,
+          },
+        },
+      });
+    render.mouse = mouse; // keep the mouse in sync with rendering
 
-function rascalStatus() {
-    //interval to reduce meters over time
-    //thought bubble pop ups if those meters hit a specific value
-}
+    function setMouseScaleAndOffset() {
+      if (window.innerWidth >= window.innerHeight) {
+        Mouse.setScale(mouse, { x: window.innerWidth / window.innerHeight, y: 1 })
+        Mouse.setOffset(mouse, { x: 2500 - (2500 * (window.innerWidth / window.innerHeight)), y: 0 })
+      } else {
+        Mouse.setScale(mouse, { x: 1, y: window.innerHeight / window.innerWidth })
+        Mouse.setOffset(mouse, { x: 0, y: 2500 - (2500 * (window.innerHeight / window.innerWidth)) })
+      }
+    }
+    setMouseScaleAndOffset()
+    window.addEventListener('resize', setMouseScaleAndOffset)
 
-const isAlive = function () {
-    if (happiness > 0 && attention > 0 && energy > 0 && hunger < 100){
-        return true }
-    else {return false}
-}
+    var rascal = Bodies.polygon(2500, 2500, 8, 120, {
+      name: "rascal",
+      inertia: "Infinity",
+      frictionAir: 0.2,
+      friction: 0,
+      render: {
+        visible: false
+      },
+    });
+    var rascalConstraint = Constraint.create({
+      name: "rascal_constraint",
+      pointA: { x: 2500, y: 2500 },
+      bodyB: rascal,
+      pointB: { x: 0, y: 0 },
+      stiffness: 0.02,
+      render: {
+        visible: false,
+      },
+    });
+    Composite.clear(world);
+    Composite.add(world, [mouseConstraint, rascal, rascalConstraint]);
 
-const feedRascal = function () {
+    //////////////////////////////////////////////////////////////////////////////////////
 
-    //when you feed the rascal -- hunger decreases 
-    //based on type of food you choose or is this consistent? 
+    var selectedBody = "body_fuzzy";
 
-    //updateHappiness function called here?
+    var selectedEyes = "eyes_pretty";
 
-}
+    var selectedMouth = "mouth_simple";
 
-const petRascal = function () {
+    // var selectedNose = "nose_disguise";
 
-    //pet rascal -- increases the attention by 5 pts 
+    var itemArray = [...this.props.equippedItems
+      // { name: "top_hat", size: 2.2 },
+      // { name: "arm_glove", size: 3.4 },
+      // { name: "arm_glove", size: 3.4 },
+      // { name: "party_hat", size: 1.7 },
+      // { name: "cherry", size: 2.5 },
+      // { name: "arm_default", size: 2.8 },
+      // { name: "arm_default", size: 2.8 },
+      // {name: 'waffle_cone', size: 1.7}
+    ];
+    //////////////////////////////////////////////////////////////////////////////////////
 
-    //which is passed onto happiness to increase it 
+    var animation;
+    const canvas = document.querySelector("canvas");
+    canvas.setAttribute('id', 'rascalCanvas')
+    const ctx = canvas.getContext("2d");
+    canvas.width = 5000;
+    canvas.height = 5000;
 
-}
+    const generate = async () => {
+      const bodyImage = await new Promise((resolve, reject) => {
+        const bodyImage = new Image();
+        bodyImage.onload = () => resolve(bodyImage);
+        bodyImage.onerror = reject;
+        bodyImage.src = `./assets/${selectedBody}.png`;
+      });
+      const eyesImage = await new Promise((resolve, reject) => {
+        const eyesImage = new Image();
+        eyesImage.onload = () => resolve(eyesImage);
+        eyesImage.onerror = reject;
+        eyesImage.src = `./assets/${selectedEyes}.png`;
+      });
+      const mouthImage = await new Promise((resolve, reject) => {
+        const mouthImage = new Image();
+        mouthImage.onload = () => resolve(mouthImage);
+        mouthImage.onerror = reject;
+        mouthImage.src = `./assets/${selectedMouth}.png`;
+      });
+      // const noseImage = await new Promise((resolve, reject) => {
+      //   const noseImage = new Image();
+      //   noseImage.onload = () => resolve(noseImage);
+      //   noseImage.onerror = reject;
+      //   noseImage.src = `./assets/${selectedNose}.png`;
+      // });
 
-function overallHappiness () {
-    //if hunger decreases by 5 -- happiness increases by 2
-    //once hunger decreases by 5 -- happiness decreases by 2
+      const w = 500;
+      const h = 500;
+      let frameNumber = 0;
 
-    // if attention increases by 5 -- happiness increases by 2
-    // once attention decreases by 5 -- happiness decreases by 2
+      (function rerender() {
+        const bodyOffset = (~~frameNumber * w) % bodyImage.width;
+        const eyesOffset = (~~frameNumber * w) % eyesImage.width;
+        const mouthOffset = (~~frameNumber * w) % mouthImage.width;
+        // const noseOffset = (~~frameNumber * w) % noseImage.width;
+        const { x, y } = rascal.position;
+        ctx.drawImage(
+          bodyImage, // image
+          bodyOffset, // sx
+          0, // sy
+          w, // sWidth
+          h, // sHeight
+          x - w / 2, // dx
+          y - h / 2, // dy
+          w, // dWidth
+          h // dHeight
+        );
+        ctx.drawImage(
+          eyesImage, // image
+          eyesOffset, // sx
+          0, // sy
+          w, // sWidth
+          h, // sHeight
+          x - w / 2, // dx
+          y - h / 2, // dy
+          w, // dWidth
+          h // dHeight
+        );
+        ctx.drawImage(
+          mouthImage, // image
+          mouthOffset, // sx
+          0, // sy
+          w, // sWidth
+          h, // sHeight
+          x - w / 2, // dx
+          y - h / 2, // dy
+          w, // dWidth
+          h // dHeight
+        );
+        // ctx.drawImage(
+        //   noseImage, // image
+        //   noseOffset, // sx
+        //   0, // sy
+        //   w, // sWidth
+        //   h, // sHeight
+        //   x - w / 2, // dx
+        //   y - h / 2, // dy
+        //   w, // dWidth
+        //   h // dHeight
+        // );
+        frameNumber += 0.1;
+        // Matter.Engine.update(engine);
+        animation = requestAnimationFrame(rerender);
+      })();
+    };
+    generate();
 
-    // 
-}
+    var equippedItems
 
-function logOnUpdate(rascal) {
-    if(user.session) {
-    rascal.age = (age+1)
+    function addItems() {
+      equippedItems = []//equippedItems array is only used for devMode
+
+      for (let i = 0; i < itemArray.length; i++) {
+        var item = Bodies.rectangle(
+          2500,
+          2340 - 1 - 50 * (itemArray[i].size - 1),
+          90,
+          100 * itemArray[i].size,
+          {
+            name: itemArray[i].name,
+            frictionAir: 0.06,
+            friction: 0,
+            render: {//TODO this breaks the site
+              sprite: {
+                texture: `./assets/${itemArray[i].name}.png`
+              }
+            }
+          }
+        );
+        equippedItems.push(item)//equippedItems array is only used for devMode
+
+        var itemConstraint = Constraint.create({
+          name: `${itemArray[i].name}_constraint`,
+          pointA: rascal.position,
+          bodyB: item,
+          pointB: { x: 0, y: itemArray[i].size / 0.02 },
+          stiffness: 0.05,
+          render: {
+            visible: false,
+          },
+        });
+
+        Composite.add(world, [item, itemConstraint]);
+      }
 
     }
+    addItems();
+
+    //functions for feeding the rascal
+
+    const Food = () => {
+      var milkshake = Matter.Bodies.rectangle(2055, 2750, 52, 120)
+
+      Matter.World.add(engine.world, milkshake)
+    }
+
+    const FeedRascal = () => {
+
+    }
+
+    // Food();
+
+    function checkCoor() {
+      var bodies = Composite.allBodies(world);
+      var constraints = Composite.allConstraints(world);
+      for (var i = 0; i < bodies.length; i++) {
+        console.log(bodies[i].name, bodies[i].position, bodies[i].angle);
+      }
+      for (var i = 0; i < constraints.length; i++) {
+        console.log(constraints[i].name, constraints[i].pointB);
+      }
+    }
+
+    function changeSelections() {
+      selectedBody = "body_curly";
+      cancelAnimationFrame(animation);
+      generate();
+    }
+
+    if (this.state.rerender === 'true') {
+      changeSelections()
+      console.log('ur function is working')
+    }
+
+    var devModeActive;
+    function devMode() {
+      var checkBox = document.getElementById("devMode");
+      if (checkBox.checked == true) {
+        devModeActive = true
+        cancelAnimationFrame(animation)
+        rascal.render.visible = true
+        for (let i = 0; i < equippedItems.length; i++) {
+          equippedItems[i].render.sprite = 0
+        }
+      } else {
+        devModeActive = false
+        cancelAnimationFrame(animation)
+        rascal.render.visible = false
+        for (let i = 0; i < equippedItems.length; i++) {
+          equippedItems[i].render.sprite = { xScale: 1, yScale: 1, xOffset: 0.5, yOffset: 0.5, texture: `./assets/${equippedItems[i].name}.png` }
+        }
+        generate()
+      }
+    }
+  }
+
+  handleStatusChange()
+
+  render() {
+    return (
+      <div>
+        <div ref="scene" id="canvas_container" />
+        <button onClick={()=> this.setState({rerender:true})}>hi</button>
+
+      </div>
+    )}
 }
-
-
+export default Scene;

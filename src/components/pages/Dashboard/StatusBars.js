@@ -10,6 +10,16 @@ import Chip from '@mui/material/Chip';
 import Navigation from '../../Navigation';
 
 
+function statusPopper() {
+  const messages = ['Wow, I sure could use a tasty lil snack...',
+    'Does anyone else feel a bit dirty right now, or is it just me?',
+    'All this sitting around being adorable gets kind of boring... A minigame might fix that...',
+    "I look incredible! But it's always fun to switch it up a bit..."
+  ]
+  const selected = messages[Math.floor(Math.random() * (messages.length))]
+
+  return selected
+}
 
 
 export default function StatusBars({ currentPage, handlePageChange, userId, myRascal, logOut }) {
@@ -53,7 +63,7 @@ export default function StatusBars({ currentPage, handlePageChange, userId, myRa
         </IconButton>
         <Popper id={id} open={open} anchorEl={anchorEl}>{/* TODO: use hover w popover instead, better for mobile */}
           <Box sx={{ border: 1, p: 1, bgcolor: 'background.paper' }}>
-            Wow, I sure could use a tasty lil snack....
+            {statusPopper()}
           </Box>
         </Popper>
         <Box sx={{ flexGrow: 1, border: 5, borderRadius: 5 }}>
