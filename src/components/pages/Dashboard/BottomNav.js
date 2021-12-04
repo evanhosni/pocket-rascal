@@ -91,32 +91,16 @@ export default function BottomNav({ openFail, setOpenFail }) {
   const [prevEvent, setPrevEvent] = React.useState('body')
   const toggleCarousel = (event) => {
     setPrevEvent(event);
+    setUserCoins(10000)
     if (carousel && event === prevEvent) {
       setCarousel(false)
       setEquippedItemsWindow(false)
     } else {
       setCarousel(true);
-      if (event === 'color') {
-        setEquippedItemsWindow(false)
-      }
-      if (event === 'body') {
-
-        setEquippedItemsWindow(false)
-      }
-      if (event === 'eyes') {
-
-        setEquippedItemsWindow(false)
-      }
-      if (event === 'nose') {
-
-        setEquippedItemsWindow(false)
-      }
-      if (event === 'mouth') {
-
-        setEquippedItemsWindow(false)
-      }
       if (event === 'items') {
         setEquippedItemsWindow(true)
+      } else {
+        setEquippedItemsWindow(false)
       }
     }
   }
@@ -151,6 +135,10 @@ export default function BottomNav({ openFail, setOpenFail }) {
     color: 'black',
     textAlign: 'center',
     fontWeight: 'bolder'
+  }
+
+  const bottomNavBtn = {
+    maxHeight: '35px',
   }
 
   //for store modal pop up 
@@ -249,7 +237,7 @@ export default function BottomNav({ openFail, setOpenFail }) {
 
   return (
     <div>
-      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={myContext.equipItems}>
+      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItemsWindow}>
         <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" data-update={myContext.equipItems.length}>
           {equippedItemsCopy.map((item, index) => {
             let imgSrc = item.name || "empty"
@@ -310,22 +298,22 @@ export default function BottomNav({ openFail, setOpenFail }) {
           </Box>
         </Animated>
 
-        <div style={{ background: 'black', paddingBottom: '15px', paddingTop: '15px', zIndex: 3 }}>
-          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', background: 'black' }}>
-            <Button aria-label="Food" id='FeedRascal' >
-              <FastfoodIcon sx={{ color: 'white' }} />
+        <div style={{ backgroundImage: 'linear-gradient(rgb(0, 69, 124), rgb(0, 100, 166))', borderTop: 'solid rgb(0, 35, 90) 5px', paddingBottom: '10px', paddingTop: '10px', zIndex: 3 }}>
+          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap' }}>
+            <Button aria-label="Food" id='FeedRascal'>
+              <img src="./assets/cookie.png" alt="cookie" style={bottomNavBtn} />
             </Button>
             <Button aria-label="Care" id='WashRascal' >
-              <ShowerIcon sx={{ color: 'white' }} />
+              <img src="./assets/soap.png" alt="soap" style={bottomNavBtn} />
             </Button>
             <Button aria-label="Minigame" onClick={() => myContext.setCurrentPage('Minigame')}>
-              <VideogameAssetIcon sx={{ color: 'white' }} />
+              <img src="./assets/game.png" alt="game" style={bottomNavBtn} />
             </Button>
             <Button aria-label="Store" onClick={handleClickOpen('paper')}>
-              <StoreIcon sx={{ color: 'white' }} />
+              <img src="./assets/money.png" alt="money" style={bottomNavBtn} />
             </Button>
-            <Button aria-label="Customize" onClick={toggleCustomMenu} >
-              <EditIcon sx={{ color: 'white' }} />
+            <Button aria-label="Customize" onClick={toggleCustomMenu}>
+              <img src="./assets/pencil.png" alt="pencil" style={bottomNavBtn} />
             </Button>
           </Box>
         </div>
@@ -371,5 +359,5 @@ export default function BottomNav({ openFail, setOpenFail }) {
 
       </div >
     </div>
-  );
+    );
 }
