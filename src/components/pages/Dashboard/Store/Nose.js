@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -6,6 +6,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import IconButton from "@mui/material/IconButton";
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
+import AppContext from "./../../../AppContext";
+import API from "../../../../utils/API";
 
 const noseData = [
     {
@@ -25,6 +27,8 @@ const noseData = [
 
 
 export default function StoreNose(props) {
+
+    const myContext = useContext(AppContext);
 
     //functions for snackbar for successful purchase from store 
     const [open, setOpen] = React.useState(false);
@@ -89,19 +93,28 @@ export default function StoreNose(props) {
             type: 'nose'
         }
 
-        props.setUnlockedItems([...props.unlockedItems,newItem])
-    }
+        console.log(myContext.unlockItems);
+        if (myContext.unlockItems.length > 0) {
+            myContext.setUnlockItems([...myContext.unlockItems, newItem]);
+        } else {
+            myContext.setUnlockItems([newItem]);
+        }
+        API.addUnlockedItem(myContext.userRascal.id, newItem);
+        console.log(myContext.unlockItems);
+    };
 
     //update the coin value displayed at the bottom of store window
     const purchaseItem = (item) => {
-        if (props.userCoins >= item.price) {
-            props.myRascal.coins = (props.myRascal.coins - item.price)
-            props.setUserCoins(props.myRascal.coins);
+        if (myContext.coins >= item.price) {
+            myContext.userRascal.coins = (myContext.userRascal.coins - item.price)
+            myContext.setCoins(myContext.userRascal.coins);
             handleClick();
             saveNewItem(item);
-        } else { handleFail() }
+        } else {
+            handleFail();
+        }
+    };
 
-    }
 
 
 

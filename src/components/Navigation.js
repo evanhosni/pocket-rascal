@@ -1,11 +1,14 @@
-import * as React from 'react';
+import React, { useContext } from "react";
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import AppContext from './AppContext'
 
 
-function Navigation({ currentPage, handlePageChange, userId, logOut }) {
+function Navigation({ userId }) {
+
+  const myContext = useContext(AppContext);
 
 
   const [auth, setAuth] = React.useState(true);
@@ -52,12 +55,12 @@ function Navigation({ currentPage, handlePageChange, userId, logOut }) {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-        <MenuItem onClick={() => handlePageChange('CreateRascal')} color='inherit'>Create</MenuItem>
-        <MenuItem onClick={() => handlePageChange('Minigame')} color='inherit'>Minigame</MenuItem>
-        <MenuItem onClick={() => handlePageChange('Dashboard')} color='inherit'>Dash</MenuItem>
-        {!userId && <MenuItem onClick={() => handlePageChange('Login')} color="inherit">Login</MenuItem>}
-        {!userId && <MenuItem onClick={() => handlePageChange('SignUp')} color="inherit">Sign Up</MenuItem>}
-        {userId && <MenuItem onClick={() => logOut()} color="inherit">Logout</MenuItem>}
+        <MenuItem onClick={() => myContext.setCurrentPage('CreateRascal')} color='inherit'>Create</MenuItem>
+        <MenuItem onClick={() => myContext.setCurrentPage('Minigame')} color='inherit'>Minigame</MenuItem>
+        <MenuItem onClick={() => myContext.setCurrentPage('Dashboard')} color='inherit'>Dash</MenuItem>
+        {!userId && <MenuItem onClick={() => myContext.setCurrentPage('Login')} color="inherit">Login</MenuItem>}
+        {!userId && <MenuItem onClick={() => myContext.setCurrentPage('SignUp')} color="inherit">Sign Up</MenuItem>}
+        {userId && <MenuItem onClick={() => myContext.logOut()} color="inherit">Logout</MenuItem>}
       </Menu>
     </>
   );

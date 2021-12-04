@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, {useContext} from "react";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
@@ -9,6 +9,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Button from "@mui/material/Button";
 import API from "../../../../utils/API";
 import "./store.css";
+import AppContext from "./../../../AppContext";
 
 const bodyData = [
   {
@@ -26,6 +27,9 @@ const bodyData = [
 ];
 
 export default function StoreBodies(props) {
+
+  const myContext = useContext(AppContext);
+
   //functions for snackbar for successful purchase from store
   const [open, setOpen] = React.useState(false);
 
@@ -40,6 +44,7 @@ export default function StoreBodies(props) {
 
     setOpen(false);
   };
+
 
   const action = (
     <React.Fragment>
@@ -88,21 +93,21 @@ export default function StoreBodies(props) {
       equipped: false,
       type: "body",
     };
-    console.log(props.unlockedItems);
-    if (props.unlockedItems.length > 0) {
-      props.setUnlockedItems([...props.unlockedItems, newItem]);
+    console.log(myContext.unlockItems);
+    if (myContext.unlockItems.length > 0) {
+      myContext.setUnlockItems([...myContext.unlockItems, newItem]);
     } else {
-      props.setUnlockedItems([newItem]);
+      myContext.setUnlockItems([newItem]);
     }
-    API.addUnlockedItem(props.myRascal.id, newItem);
-    console.log(props.unlockedItems);
+    API.addUnlockedItem(myContext.userRascal.id, newItem);
+    console.log(myContext.unlockItems);
   };
 
   //update the coin value displayed at the bottom of store window
   const purchaseItem = (item) => {
-    if (props.userCoins >= item.price) {
-      props.myRascal.coins = (props.myRascal.coins - item.price)
-      props.setUserCoins(props.myRascal.coins);
+    if (myContext.coins >= item.price) {
+      myContext.userRascal.coins = (myContext.userRascal.coins - item.price)
+      myContext.setCoins(myContext.userRascal.coins);
       handleClick();
       saveNewItem(item);
     } else {
@@ -167,7 +172,7 @@ export default function StoreBodies(props) {
             {/* <div className="titleandprice"> */}
             {/* <div className="title">{item.title}</div> */}
             <div className="coins">{item.price}<span>¢</span></div>
-            <Button id="purchase">BUY</Button>
+            <Button id="purchase" onClick={()=>(console.log(myContext.coins))}>BUY</Button>
 
             {/* <IconButton
               sx={{ color: "rgba(255, 255, 255, 0.54)" }}
