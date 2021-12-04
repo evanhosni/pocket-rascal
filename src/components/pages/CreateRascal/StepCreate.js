@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useContext } from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -18,6 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { makeStyles } from '@mui/styles';
 import API from "../../../utils/API"
+import AppContext from "./../../AppContext";
 
 const useStyles = makeStyles({
   root: {
@@ -31,10 +32,13 @@ const useStyles = makeStyles({
 
 
 export default function VerticalLinearStepper(props) {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [newRascalName,setNewRascalName] = React.useState('');
-  const [newRascalColor,setNewRascalColor]=React.useState('');
-  const [newRascalBody,setNewRascalBody]=React.useState('');
+
+  const myContext = useContext(AppContext);
+
+  const [activeStep, setActiveStep] = useState(0);
+  const [newRascalName,setNewRascalName] = useState('');
+  const [newRascalColor,setNewRascalColor]= useState('');
+  const [newRascalBody,setNewRascalBody]= useState('');
   
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -81,7 +85,7 @@ export default function VerticalLinearStepper(props) {
       })
       API.addUnlockedItem(promise.data.id,{name:newRascalBody,type:"body"}).then(promises=>{
 
-        props.handlePageChange("Dashboard")
+        myContext.setCurrentPage("Dashboard")
       }).catch(err=>{
         console.log(err)
       })

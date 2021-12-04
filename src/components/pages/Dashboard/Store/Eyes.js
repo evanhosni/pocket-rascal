@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -6,6 +6,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import IconButton from "@mui/material/IconButton";
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
+import AppContext from "./../../../AppContext";
+import API from "../../../../utils/API";
 import Button from "@mui/material/Button";
 import "./store.css";
 
@@ -36,7 +38,8 @@ const eyeData = [
 
 export default function StoreEyes(props) {
 
-  //functions for snackbar for successful purchase from store
+    const myContext = useContext(AppContext);
+
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -122,31 +125,37 @@ export default function StoreEyes(props) {
 
     const saveNewItem = (item) => {
         const newItem = {
-            name: item.img,
-            equipped: false,
-            type: 'eyes'
+          name: item.img,
+          equipped: false,
+          type: "eyes",
+        };
+        console.log(myContext.unlockItems);
+        if (myContext.unlockItems.length > 0) {
+          myContext.setUnlockItems([...myContext.unlockItems, newItem]);
+        } else {
+          myContext.setUnlockItems([newItem]);
         }
-        props.setUnlockedItems([...props.unlockedItems,newItem])
-    }
+        API.addUnlockedItem(myContext.userRascal.id, newItem);
+        console.log(myContext.unlockItems);
+      };
+    
+      //update the coin value displayed at the bottom of store window
+      const purchaseItem = (item) => {
+        if (myContext.coins >= item.price) {
+          myContext.userRascal.coins = (myContext.userRascal.coins - item.price)
+          myContext.setCoins(myContext.userRascal.coins);
+          handleClick();
+          saveNewItem(item);
+        } else {
+          handleFail();
+        }
+      };
 
-    //update the coin value displayed at the bottom of store window
-    const purchaseItem = (item) => {
-        if (props.userCoins >= item.price) {
-          props.myRascal.coins -= item.price
-            props.setUserCoins(props.myRascal.coins);
-            handleClick();
-            saveNewItem(item);
-        } else { handleFail() }
-
-    }
-
-    const checkIfOwned = (item) => {
+      const checkIfOwned = (item) => {
         var tempArray = []
-        for (let i = 0; i < props.unlockedItems.length; i++) {
-            tempArray.push(props.unlockedItems[i].name);
+        for (let i = 0; i < myContext.unlockItems.length; i++) {
+            tempArray.push(myContext.unlockItems[i].name);
         }
-        console.log(tempArray)
-        console.log(item.img)
           if (tempArray.includes(item.img)) {
             return (
                 <div className="alreadyowned">

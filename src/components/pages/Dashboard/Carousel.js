@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Slider from 'infinite-react-carousel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import "./carousel.css"
+import AppContext from "./../../AppContext";
 
-export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEquippedItems, equippedItems,setUpdateEquipmentPanel, updateEquipmentPanel}) {
+export default function Carousel({prevEvent}) {
+
+    const myContext = useContext(AppContext);
+
     useEffect(()=>{
         
-    },[equippedItems])
+    },[myContext.equipItems])
 
-    // console.log('carousel',unlockedItems)
 
     const settings = {
         centerPadding: 35,
@@ -17,13 +20,13 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         duration: 75,
         slidesToShow: 3
     };
-    const colorArray = [...unlockedItems].filter(thingy => thingy.type === 'color')
-    const bodyArray = [...unlockedItems].filter(thingy => thingy.type === 'body')
-    const eyesArray = [...unlockedItems].filter(thingy => thingy.type === 'eyes')
-    const noseArray = [...unlockedItems].filter(thingy => thingy.type === 'nose')
-    const mouthArray = [...unlockedItems].filter(thingy => thingy.type === 'mouth')
-    const itemsArray = [...unlockedItems].filter(thingy => thingy.type === 'item')
-    var newEquippedArray = [...equippedItems]
+    const colorArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'color')
+    const bodyArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'body')
+    const eyesArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'eyes')
+    const noseArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'nose')
+    const mouthArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'mouth')
+    const itemsArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'item')
+    var newEquippedArray = [...myContext.equipItems]
     function equipItem(e){
         let source = e.target.getAttribute("src")
         var isolate = source.split('/')[2].split('.')[0]
@@ -32,7 +35,7 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         newEquippedArray.push(findItem[0])
         console.log(newEquippedArray)
         if(newEquippedArray.length>8){newEquippedArray.length=8}
-        setEquippedItems(newEquippedArray)
+        myContext.setEquipItems(newEquippedArray)
         
         findItem = []
     }

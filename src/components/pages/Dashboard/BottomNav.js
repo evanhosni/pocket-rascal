@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Animated } from "react-animated-css";
 import Carousel from './Carousel';
 import Box from '@mui/material/Box';
@@ -23,6 +23,7 @@ import SavingsIcon from '@mui/icons-material/Savings';
 import './Store/store.css'
 import { render } from "@testing-library/react";
 import Snackbar from '@mui/material/Snackbar';
+import AppContext from "./../../AppContext";
 
 
 
@@ -68,14 +69,18 @@ ItemStoreDialogTitle.propTypes = {
 
 
 
-export default function BottomNav({ currentPage, handlePageChange, myRascal, setMyRascal, unlockedItems, equippedItems, setUnlockedItems, setEquippedItems, userCoins, setUserCoins, userLevel, openFail, setOpenFail }) {
+export default function BottomNav({ openFail, setOpenFail }) {
+
+  const myContext = useContext(AppContext);
+
+
   const [customMenu, setCustomMenu] = React.useState(false);
   const toggleCustomMenu = () => {
     setCustomMenu(!customMenu);
     if (carousel) {
       setCarousel(false)
     }
-    if (equippedItems) {
+    if (myContext.equipItems) {
       setEquippedItemsWindow(false)
     }
   }
@@ -86,7 +91,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   const [prevEvent, setPrevEvent] = React.useState('body')
   const toggleCarousel = (event) => {
     setPrevEvent(event);
-    setUserCoins(10000)
+    myContext.setCoins(10000)
     if (carousel && event === prevEvent) {
       setCarousel(false)
       setEquippedItemsWindow(false)
@@ -100,6 +105,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
     }
   }
 
+  //custom styling variables 
   const equippedItemBtn = {
     padding: 0,
     cursor: 'pointer',
@@ -150,12 +156,15 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   const handleClose = () => {
     setOpen(false);
   };
+
+
+  //remove currently equipped item from rascal
   const removeEquip = (e) => {
     let removeIndex = e.target.getAttribute("itemindex")
     console.log(removeIndex)
-    let equipCopy = [...equippedItems]
+    let equipCopy = [...myContext.equipItems]
     equipCopy.splice(removeIndex, 1)
-    setEquippedItems(equipCopy)
+    myContext.setEquipItems(equipCopy)
     elongate()
 
   }
@@ -163,23 +172,21 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
   //conditional rendering for store items
   const [storeContent, setStoreContent] = useState('Bodies')
-
-
   const renderStoreContent = () => {
     if (storeContent === 'Bodies') {
-      return <StoreBodies myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreBodies />
     }
     if (storeContent === 'Eyes') {
-      return <StoreEyes myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreEyes />
     }
     if (storeContent === 'Nose') {
-      return <StoreNose myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreNose />
     }
     if (storeContent === 'Mouth') {
-      return <StoreMouth myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreMouth />
     }
     if (storeContent === 'Items') {
-      return <StoreItem myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreItem />
     }
   }
 
@@ -191,9 +198,13 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
     <Button key="five" className="tab" onClick={() => setStoreContent('Mouth')}>MOUTH</Button>,
     <Button key="six" className="tab" onClick={() => setStoreContent('Items')}>ADD-ONS</Button>,
   ];
+
+  ///end consts for store 
+
+
   let equippedItemsCopy
   function elongate() {
-    equippedItemsCopy = [...equippedItems]
+    equippedItemsCopy = [...myContext.equipItems]
     let lengthDiff = 8 - equippedItemsCopy.length
     for (let i = 0; i < lengthDiff; i++) {
       equippedItemsCopy.push({ name: "empty" })
@@ -201,8 +212,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   }
   elongate()
 
-  //feed/wash fail message functions (test)
-
+  /////feed/wash fail message snackbar functions 
   const handleCloseFail = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -224,10 +234,11 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
     </React.Fragment>
   );
 
+
   return (
     <div>
       <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItemsWindow}>
-        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" data-update={equippedItems.length}>
+        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" data-update={myContext.equipItems.length}>
           {equippedItemsCopy.map((item, index) => {
             let imgSrc = item.name || "empty"
             return (
@@ -244,7 +255,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
         <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
-          <Carousel prevEvent={prevEvent} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+          <Carousel prevEvent={prevEvent} />
         </Animated>
 
         <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
@@ -288,21 +299,21 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
         </Animated>
 
         <div style={{ backgroundImage: 'linear-gradient(rgb(0, 69, 124), rgb(0, 100, 166))', borderTop: 'solid rgb(0, 35, 90) 5px', paddingBottom: '10px', paddingTop: '10px', zIndex: 3 }}>
-          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap'}}>
+          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap' }}>
             <Button aria-label="Food" id='FeedRascal'>
-            <img src="./assets/cookie.png" alt="cookie" style={bottomNavBtn}/>
+              <img src="./assets/cookie.png" alt="cookie" style={bottomNavBtn} />
             </Button>
             <Button aria-label="Care" id='WashRascal' >
-            <img src="./assets/soap.png" alt="soap" style={bottomNavBtn}/>
+              <img src="./assets/soap.png" alt="soap" style={bottomNavBtn} />
             </Button>
-            <Button aria-label="Minigame" onClick={() => handlePageChange('Minigame')}>
-            <img src="./assets/game.png" alt="game" style={bottomNavBtn}/>
+            <Button aria-label="Minigame" onClick={() => myContext.setCurrentPage('Minigame')}>
+              <img src="./assets/game.png" alt="game" style={bottomNavBtn} />
             </Button>
             <Button aria-label="Store" onClick={handleClickOpen('paper')}>
-            <img src="./assets/money.png" alt="money" style={bottomNavBtn}/>
+              <img src="./assets/money.png" alt="money" style={bottomNavBtn} />
             </Button>
             <Button aria-label="Customize" onClick={toggleCustomMenu}>
-              <img src="./assets/pencil.png" alt="pencil" style={bottomNavBtn}/>
+              <img src="./assets/pencil.png" alt="pencil" style={bottomNavBtn} />
             </Button>
           </Box>
         </div>
@@ -327,26 +338,26 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
             <div id="store-content">
               {renderStoreContent()}
             </div>
-              <div id="bottom-tab">
-                <div startIcon={<SavingsIcon />} className="coins">
-                  {`${userCoins}`}<span>¢</span>
-                </div>
-                <Button autoFocus onClick={handleClose} id="done">
-                  Done
-                </Button>
+            <div id="bottom-tab">
+              <div startIcon={<SavingsIcon />} className="coins">
+                {`${myContext.coins}`}<span>¢</span>
               </div>
+              <Button autoFocus onClick={handleClose} id="done">
+                Done
+              </Button>
+            </div>
           </ItemStoreDialog>
         </div>
 
         <Snackbar
-                open={openFail}
-                autoHideDuration={6000}
-                onClose={handleCloseFail}
-                message="You need more coins for this!"
-                action={actionFail}
-            />
+          open={openFail}
+          autoHideDuration={6000}
+          onClose={handleCloseFail}
+          message="You need more coins for this!"
+          action={actionFail}
+        />
 
       </div >
     </div>
-  );
+    );
 }

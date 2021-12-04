@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,7 +10,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import API from '../../utils/API'
+import API from '../../utils/API';
+import AppContext from './../AppContext'
 
 function Copyright(props) {
   return (
@@ -28,6 +29,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignUp(props) {
+
+  const myContext = useContext(AppContext);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -38,14 +42,14 @@ export default function SignUp(props) {
     API.signup(newUser).then(response=>{
       API.login(newUser).then(res=>{
         console.log(res)
-        props.setUserState({
+        myContext.setUser({
           email:res.data.user.email,
           id:res.data.user.id,
           firstLogin:true
         })
-        props.setToken(res.data.token)
+        myContext.setUserToken(res.data.token)
         localStorage.setItem("token",res.data.token)
-        props.handlePageChange('CreateRascal')
+        myContext.setCurrentPage('CreateRascal')
       }).catch(err=>{
         alert("Signup Failed")
         console.log(err);
@@ -106,7 +110,7 @@ export default function SignUp(props) {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Button onClick={()=>props.handlePageChange('Login')} variant="body2">
+                <Button onClick={()=>myContext.setCurrentPage('Login')} variant="body2">
                   Already have an account? Sign in
                 </Button>
               </Grid>
