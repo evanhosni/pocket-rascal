@@ -1,5 +1,4 @@
-
-import * as React from 'react';
+import React, { useState, useContext } from "react";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
@@ -8,6 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import Popper from '@mui/material/Popper';
 import Chip from '@mui/material/Chip';
 import Navigation from '../../Navigation';
+import AppContext from "./../../AppContext";
+
 
 
 function statusPopper() {
@@ -22,7 +23,9 @@ function statusPopper() {
 }
 
 
-export default function StatusBars({ currentPage, handlePageChange, userId, myRascal, logOut }) {
+export default function StatusBars({ }) {
+
+  const myContext = useContext(AppContext);
   //style status bar to customize -- made it thicker and green
   const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 25,
@@ -38,7 +41,7 @@ export default function StatusBars({ currentPage, handlePageChange, userId, myRa
 
 
   //functions for the pop up window when the smiley button is clicked
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -46,11 +49,11 @@ export default function StatusBars({ currentPage, handlePageChange, userId, myRa
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popper' : undefined;
+  ////// end pop up functions
+
 
   //level variable
-
-  var userLvl = myRascal.level;
-  const chipLabel = ('LVL ' + userLvl)
+  const chipLabel = ('LVL ' + myContext.level)
 
 
 
@@ -67,12 +70,12 @@ export default function StatusBars({ currentPage, handlePageChange, userId, myRa
           </Box>
         </Popper>
         <Box sx={{ flexGrow: 1, border: 5, borderRadius: 5 }}>
-          <BorderLinearProgress variant="determinate" value={myRascal.happiness} />
+          <BorderLinearProgress variant="determinate" value={myContext.userRascal.happiness} />
         </Box>
         <Chip sx={{ color: 'white', background: 'transparent' }} label={chipLabel} />
       </div>
       <div style={{ width: 55, textAlign: 'right', marginRight: '1%' }}>
-        <Navigation currentPage={currentPage} handlePageChange={handlePageChange} userId={userId} logOut={logOut} />
+        <Navigation />
       </div>
     </div>
   );

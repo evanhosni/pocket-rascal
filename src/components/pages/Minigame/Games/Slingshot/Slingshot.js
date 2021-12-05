@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import ReactDOM from "react-dom";
 import Matter from "matter-js";
 import './minigame.css'
+import AppContext from "./../../../../AppContext"
 
 class Slingshot extends React.Component {
   constructor(props) {
@@ -11,7 +12,13 @@ class Slingshot extends React.Component {
     };
   }
 
+  static contextType = AppContext;
+
   componentDidMount() {
+
+    const myContext = this.context;
+
+
     var Engine = Matter.Engine,
       Render = Matter.Render,
       World = Matter.World,
@@ -180,11 +187,8 @@ class Slingshot extends React.Component {
     const collisionCount = () => {
       this.setState({ collisions: this.state.collisions + 1 })
       console.log(this.state.collisions)
+      console.log(myContext.coins)
       // coinCount();
-    }
-
-    const coinCount = () => {
-      this.props.setEarnedCoins(this.props.earnedCoins + 1)
     }
 
 
@@ -315,7 +319,6 @@ class Slingshot extends React.Component {
       createEnemyInTheHouse(535, 500);
     }
 
-    console.log(this.props.earnedCoins)
   }
 
   render() {
