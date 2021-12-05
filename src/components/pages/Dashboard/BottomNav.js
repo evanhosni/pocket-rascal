@@ -91,7 +91,6 @@ export default function BottomNav({ openFail, setOpenFail }) {
   const [prevEvent, setPrevEvent] = React.useState('body')
   const toggleCarousel = (event) => {
     setPrevEvent(event);
-    myContext.setCoins(10000)
     if (carousel && event === prevEvent) {
       setCarousel(false)
       setEquippedItemsWindow(false)
