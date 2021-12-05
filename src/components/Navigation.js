@@ -108,9 +108,9 @@ function Navigation({ userId }) {
         <MenuItem onClick={() => myContext.setCurrentPage('CreateRascal')} color='inherit'>Create</MenuItem>
         <MenuItem onClick={handleClickOpen} color='inherit'>Tutorial</MenuItem>
         <MenuItem onClick={() => myContext.setCurrentPage('Dashboard')} color='inherit'>Dash</MenuItem>
-        {!userId && <MenuItem onClick={() => myContext.setCurrentPage('Login')} color="inherit">Login</MenuItem>}
-        {!userId && <MenuItem onClick={() => myContext.setCurrentPage('SignUp')} color="inherit">Sign Up</MenuItem>}
-        {userId && <MenuItem onClick={() => myContext.logOut()} color="inherit">Logout</MenuItem>}
+        {!myContext.user.id && <MenuItem onClick={() => myContext.setCurrentPage('Login')} color="inherit">Login</MenuItem>}
+        {!myContext.user.id && <MenuItem onClick={() => myContext.setCurrentPage('SignUp')} color="inherit">Sign Up</MenuItem>}
+        {myContext.user.id && <MenuItem onClick={() => myContext.logOut()} color="inherit">Logout</MenuItem>}
       </Menu>
 
 

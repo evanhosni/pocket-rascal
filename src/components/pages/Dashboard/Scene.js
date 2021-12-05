@@ -127,7 +127,7 @@ class Scene extends React.Component {
       // {name: 'waffle_cone', size: 1.7}
     ];
     //////////////////////////////////////////////////////////////////////////////////////
-
+    
     var animation;
     const canvas = document.querySelector("canvas");
     canvas.setAttribute('id', 'rascalCanvas')
@@ -136,6 +136,8 @@ class Scene extends React.Component {
     canvas.height = 5000;
 
     const generate = async () => {
+    
+
       cancelAnimationFrame(animation);
       const bodyImage = await new Promise((resolve, reject) => {
         const bodyImage = new Image();
@@ -149,11 +151,13 @@ class Scene extends React.Component {
         eyesImage.onerror = reject;
         eyesImage.src = `./assets/${selectedEyes}.png`;
       });
+      
       const mouthImage = await new Promise((resolve, reject) => {
         const mouthImage = new Image();
         mouthImage.onload = () => resolve(mouthImage);
         mouthImage.onerror = reject;
         mouthImage.src = `./assets/${selectedMouth}.png`;
+        
       });
       const noseImage = await new Promise((resolve, reject) => {
         const noseImage = new Image();
@@ -161,10 +165,11 @@ class Scene extends React.Component {
         noseImage.onerror = reject;
         noseImage.src = `./assets/${selectedNose}.png`;
       });
-
+      
       const w = 500;
       const h = 500;
       let frameNumber = 0;
+      
 
       (function rerender() {
         const bodyOffset = (~~frameNumber * w) % bodyImage.width;
@@ -219,9 +224,12 @@ class Scene extends React.Component {
         frameNumber += 0.1;
         // Matter.Engine.update(engine);
         animation = requestAnimationFrame(rerender);
+        
       })();
     };
+    
     generate();
+
 
     var equippedItems
 
@@ -481,7 +489,7 @@ class Scene extends React.Component {
 
 
 
-    addItems();
+    // addItems();
     // itemArray=[]
 
     function checkCoor() {
@@ -515,7 +523,6 @@ class Scene extends React.Component {
         // {name: 'waffle_cone', size: 1.7}
       ];
       cancelAnimationFrame(animation);
-
       generate();
     }
 
@@ -562,7 +569,6 @@ class Scene extends React.Component {
         });
         itemArray.forEach((item, index) => {
           if (item.name == isolate) {
-            console.log("match")
             itemArray.splice(index, 1)
             return
           }
@@ -620,7 +626,6 @@ class Scene extends React.Component {
             generate()
           } else {
             selectedEyes = isolate
-            console.log(isolate)
             cancelAnimationFrame(animation);
             generate()
           }

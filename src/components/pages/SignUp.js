@@ -42,11 +42,7 @@ export default function SignUp(props) {
     API.signup(newUser).then(response=>{
       API.login(newUser).then(res=>{
         console.log(res)
-        myContext.setUser({
-          email:res.data.user.email,
-          id:res.data.user.id,
-          firstLogin:true
-        })
+        myContext.setUser(res.data.user.email,res.data.user.id)
         myContext.setUserToken(res.data.token)
         localStorage.setItem("token",res.data.token)
         myContext.setCurrentPage('CreateRascal')
