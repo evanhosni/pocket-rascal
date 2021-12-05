@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import API from "../../utils/API"
+import AppContext from './../AppContext'
 
 function Copyright(props) {
   return (
@@ -30,6 +31,9 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn(props) {
+
+  const myContext = useContext(AppContext);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -38,20 +42,20 @@ export default function SignIn(props) {
       password: data.get('password')
     }
     API.login(user).then(async (res)=>{
-      props.setUserState({
+      myContext.setUser({
         email:res.data.user.email,
         id:res.data.user.id
       })
-      props.setToken(res.data.token)
+      myContext.setUserToken(res.data.token)
       localStorage.setItem("token",res.data.token)
       const rascalDat = await API.loadRascal(res.data.user.id)
         console.log(rascalDat)
         const equipDat = await API.loadEquippedItems(rascalDat.data.id)
         const unlockDat = await API.loadUnlockedItems(rascalDat.data.id)
-        props.setMyRascal(rascalDat.data)
-        props.setEquippedItems(equipDat.data)
-        props.setUnlockedItems(unlockDat.data)
-      props.handlePageChange('Dashboard')
+        myContext.setUserRascal(rascalDat.data)
+        myContext.setEquipItems(equipDat.data)
+        myContext.setUnlockItems(unlockDat.data)
+      myContext.setCurrentPage('Dashboard')
     }).catch(err=>{
       alert("Incorrect Credentials")
       console.log(err);
@@ -116,7 +120,7 @@ export default function SignIn(props) {
                 </Link>
               </Grid> */}
               <Grid item>
-                <Button onClick={()=>props.handlePageChange('SignUp')} variant="body2">
+                <Button onClick={()=>myContext.setCurrentPage('SignUp')} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Button>
               </Grid>

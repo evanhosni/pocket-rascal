@@ -1,7 +1,10 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback, useContext } from 'react';
 import './snake.css';
+import AppContext from './../../../../AppContext'
 
 const SnakeMini = (props) => {
+
+    const myContext = useContext(AppContext);
 
     const [dim, setDim] = useState(0);
     const [chunk, setChunk] = useState(0);
@@ -19,7 +22,10 @@ const SnakeMini = (props) => {
     ]);
 
     const reset = () => {
-        props.setUserCoins(props.userCoins + points)
+        myContext.userRascal.coins = (myContext.userRascal.coins + points)
+        myContext.setCoins(myContext.userRascal.coins)
+        myContext.userRascal.xp = (myContext.userRascal.xp + points)
+        myContext.setXP(myContext.userRascal.xp)
         speedRef.current = 100;
         setPoints(0)
         setDirection('right')
@@ -225,13 +231,6 @@ const SnakeMini = (props) => {
     }, [turn, width, dim, chunk, snake, direction, points, fruit, game])
 
 
-    //update state of earned coins when points value changes
-    // useEffect(() => {
-    //     props.setEarnedCoins(props.earnedCoins + 1)
-    // }, [points])
-
-
-
 
     return (
         <div className="snake-container" id="snake-container">
@@ -259,20 +258,27 @@ const SnakeMini = (props) => {
                     >
                         <div>Game Over!</div>
                         <button
-                        onClick={() => reset()}>
+                            onClick={() => reset()}>
                             Play Again
                         </button>
-                        <button 
-                        onClick={() => {
-                        props.handlePageChange('Minigame'); 
-                        props.setUserCoins(props.userCoins+points);
-                        props.setEarnedCoins(props.earnedCoins+points)
-                        }}>
+                        <button
+                            onClick={() => {
+                                myContext.setCurrentPage('Minigame');
+                                myContext.userRascal.coins = (myContext.userRascal.coins + points)
+                                myContext.setCoins(myContext.userRascal.coins)
+                                myContext.toggleEarnedCoins(myContext.earnings + points)
+                                myContext.userRascal.xp = (myContext.userRascal.xp + points)
+                                myContext.setXP(myContext.userRascal.xp)
+                            }}>
                             Play Another Game</button>
-                        <button 
-                        onClick={() => {
-                        props.handlePageChange('Dashboard');
-                        props.setUserCoins(props.userCoins+points)}}>
+                        <button
+                            onClick={() => {
+                                myContext.setCurrentPage('Dashboard');
+                                myContext.userRascal.coins = (myContext.userRascal.coins + points)
+                                myContext.setCoins(myContext.userRascal.coins)
+                                myContext.userRascal.xp = (myContext.userRascal.xp + points)
+                                myContext.setXP(myContext.userRascal.xp)
+                            }}>
                             Exit
                         </button>
                     </div>

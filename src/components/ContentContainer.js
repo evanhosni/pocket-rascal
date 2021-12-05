@@ -1,34 +1,94 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Scene from './pages/Dashboard/Scene';
 import MiniPlayground from './pages/Minigame/index';
 import CreateRascal from './pages/CreateRascal/index'
-import BottomNav from './pages/Dashboard/BottomNav'
 import Dashboard from './pages/Dashboard/Dashboard'
 import API from '../utils/API'
+import AppContext from "./AppContext";
 
 export default function ContentContainer() {
 
-  const [currentPage, setCurrentPage] = useState('Login');
+  //////////////////////////////////////setting all use state variables/functions to save in global context
 
-  // State variable for current user and token for authentication
+  //update content being displayed
+  const [currentPage, setCurrentPage] = useState('Login');
+  const toggleCurrentPage = (value) => {
+    setCurrentPage(value)
+  }
+
+  //current user and token for authentication
   const [userState, setUserState] = useState({
     email: "",
     id: 0
   })
+  const toggleUserState = (email,id) => {
+    setUserState({
+      email: email,
+      id: id
+    })
+  }
+
   const [token, setToken] = useState("")
+  const toggleToken = (value) => {
+    setToken(value)
+
+  }
+
+  //update users rascal settings
   const [myRascal, setMyRascal] = useState({
     name: '',
     color: '',
-    level: 50,
+    level: 1,
+    xp: 0,
+    xpToLevelUp: 100,
     happiness: 50,
     hunger: 50,
     love: 50,
-    care: 50
+    care: 50,
+    coins: 500
   })
+  const toggleRascal = (value) => {
+    setMyRascal(value)
+  }
+
+  //unlocked items -- items in the carousel that can be equipped
   const [unlockedItems, setUnlockedItems] = useState([])
+  const toggleUnlockedItems = (value) => {
+    setUnlockedItems(value)
+  }
+
+  //items currently equipped on the rascal
   const [equippedItems, setEquippedItems] = useState([])
+  const toggleEquippedItems = (value) => {
+    setEquippedItems(value)
+  }
+
+  //user level - based on xp points from interacting/minigames
+  const [userLevel, setUserLevel] = useState(myRascal.level);
+  //user level is only set in content container - doesn't need to be set anywhere
+
+  //xp impacts level -- increases from interactions/minigames
+  const [userXP, setUserXP] = useState(myRascal.xp)
+  const toggleUserXP = (value) => {
+    setUserXP(value)
+  }
+
+  //coins to unlock items/buy interactions -- increase via minigames
+  const [userCoins, setUserCoins] = useState(myRascal.coins);
+  const toggleUserCoins = (value) => {
+    setUserCoins(value)
+  }
+
+  //coins earned during current minigame sesh -- persistent if you keep playing games, added to user coins once you leave the minigame page -- not actually connected to the rascal at all 
+  const [earnedCoins, setEarnedCoins] = useState(2)
+  const toggleEarnedCoins = (value) => {
+    setEarnedCoins(value)
+  }
+
+
+  //////////////////////////////////////////////////////////////// end set state variables 
 
   function updateRascalStats(key, val) {
     console.log("called")
@@ -56,7 +116,7 @@ export default function ContentContainer() {
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
-        if(currentPage!="Dashboard"){setCurrentPage("Dashboard")}
+        if (currentPage !== "Dashboard") { setCurrentPage("Dashboard") }
         // const interval = setInterval(() => {
         //   console.log('This will run every 10 seconds!');
         //   console.log(myRascal)
@@ -88,26 +148,67 @@ export default function ContentContainer() {
     setCurrentPage('Login')
   }
 
-  //starting location for the users coins
-  const [userCoins, setUserCoins] = useState(2500);
-  //starting location for users level
-  const [userLevel, setUserLevel] = useState(myRascal.level);
+  //////////////////////////////saving all useState variables and const functions to the global context
+
+  const userSettings = {
+    currentPage: currentPage,
+    setCurrentPage: toggleCurrentPage,
+    user: userState,
+    setUser: toggleUserState,
+    userToken: token,
+    setUserToken: toggleToken,
+    userRascal: myRascal,
+    setUserRascal: setMyRascal,
+    equipItems: equippedItems,
+    setEquipItems: toggleEquippedItems,
+    unlockItems: unlockedItems,
+    setUnlockItems: toggleUnlockedItems,
+    coins: userCoins,
+    setCoins: toggleUserCoins,
+    level: userLevel,
+    xp: userXP,
+    setXP:toggleUserXP,
+    logOut: logOut,
+    earnings: earnedCoins,
+    setEarnings: toggleEarnedCoins,
+  }
+
+///////////////////////////////////////end context save
 
 
-  // This method is checking to see what the value of `currentPage` is. Depending on the value of currentPage, we return the corresponding component to render.
+//use effect for rascal level - runs anytime XP is updated
+  useEffect(() => {
+    let level = myRascal.level;
+    let xp = myRascal.xp;
+    let xpToLevelUp = myRascal.xpToLevelUp;
+    console.log('hi working')
+
+    if (xp > xpToLevelUp) {
+      level++;
+      console.log(level)
+      xpToLevelUp = xpToLevelUp + (50 * level)
+      myRascal.level = level;
+      myRascal.xpToLevelUp = xpToLevelUp;
+      setUserLevel(myRascal.level);
+    } else { return }
+  }, [userXP])
+
+
+//render correct content for page 
   const renderPage = () => {
     if (currentPage === 'SignUp') {
-      return <SignUp token={token} setToken={setToken} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} />;
+      return <SignUp />;
     }
     if (currentPage === 'Login') {
-      return <Login token={token} setToken={setToken} setMyRascal={setMyRascal} userState={userState} setUserState={setUserState} currentPage={currentPage} handlePageChange={handlePageChange} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />;
+      return <Login />;
     }
     if (currentPage === 'CreateRascal') {
       return (
         <div>
-          <CreateRascal setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userState={userState} handlePageChange={handlePageChange} />
-          <Scene currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
-          
+          <CreateRascal 
+          setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userState={userState} />
+          <Scene />
+
 
         </div>
       )
@@ -115,22 +216,25 @@ export default function ContentContainer() {
     if (currentPage === 'Dashboard') {
       return (
         <div>
-          {myRascal.color && unlockedItems[0] && <Dashboard currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />}
+          {myRascal.color && unlockedItems[0] && <Dashboard myRascal={myRascal} setMyRascal={setMyRascal} />}
         </div>
       )
     }
     return (
       <div>
-        <MiniPlayground currentPage={currentPage} handlePageChange={handlePageChange} userId={userState.id} logOut={logOut} myRascal={myRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} currentPage={currentPage} handlePageChange={handlePageChange} />
+        <MiniPlayground />
       </div>
     )
   };
 
-  const handlePageChange = (page) => setCurrentPage(page);
 
+  ///////////////
+  //returning the rendering function wrapped in the context provider. Allows all children to access the global context variables 
   return (
     <div>
-      {renderPage()}
+      <AppContext.Provider value={userSettings}>
+        {renderPage()}
+      </AppContext.Provider>
     </div>
   );
 }

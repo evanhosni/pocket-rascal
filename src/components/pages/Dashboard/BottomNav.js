@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Animated } from "react-animated-css";
 import Carousel from './Carousel';
 import Box from '@mui/material/Box';
@@ -12,20 +12,18 @@ import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import ButtonGroup from '@mui/material/ButtonGroup';
 import StoreBodies from './Store/Body';
 import StoreEyes from './Store/Eyes';
 import StoreNose from './Store/Nose';
 import StoreMouth from './Store/Mouth';
 import StoreItem from './Store/Items'
 import SavingsIcon from '@mui/icons-material/Savings';
-import Stack from '@mui/material/Stack';
 import './Store/store.css'
 import { render } from "@testing-library/react";
+import Snackbar from '@mui/material/Snackbar';
+import AppContext from "./../../AppContext";
 
 
 
@@ -71,84 +69,43 @@ ItemStoreDialogTitle.propTypes = {
 
 
 
-export default function BottomNav({ currentPage, handlePageChange, myRascal, setMyRascal, unlockedItems, equippedItems, setUnlockedItems, setEquippedItems, userCoins, setUserCoins, userLevel, setUserLevel, rascalHunger, setRascalHunger }) {
+export default function BottomNav({ openFail, setOpenFail }) {
+
+  const myContext = useContext(AppContext);
+
+
   const [customMenu, setCustomMenu] = React.useState(false);
   const toggleCustomMenu = () => {
     setCustomMenu(!customMenu);
     if (carousel) {
       setCarousel(false)
     }
-    if (equippedItems) {
-      setEquippedItemsB(false)
+    if (myContext.equipItems) {
+      setEquippedItemsWindow(false)
     }
   }
-  // function renderCarouselContent() {
-  //   if (prevEvent === 'items') {
-  //     setEquippedItemsB(false);
-  //     setCarousel(true)
-
-  //     return (
-  //       <div>
-  //         {itemsArray.map((object, i) =>
-  //           <div obj={object} key={i}>
-  //             <Button style={customBtn} />
-  //           </div>)}
-  //       </div>
-  //     )
-
-  //   }
-
-  //   if (prevEvent === 'color') {
-  //     setEquippedItemsB(false);
-  //     setCarousel(true)
-
-  //     return (
-  //       <div>
-  //         {colorArray.map((object, i) =>
-  //       <div style={customDiv} obj={object} key={i}>
-  //           <Button style={customBtn} />
-  //       </div> )}
-  //       </div>
-  //     )
-  //   }
-  // }
 
   const [carousel, setCarousel] = React.useState(false)
   // const [carouselContent, setCarouselContent] = React.useState(false)
-  const [equippedItemsB, setEquippedItemsB] = React.useState(false)
+  const [equippedItemsWindow, setEquippedItemsWindow] = React.useState(false)
   const [prevEvent, setPrevEvent] = React.useState('body')
   const toggleCarousel = (event) => {
     setPrevEvent(event);
+    myContext.setCoins(10000)
     if (carousel && event === prevEvent) {
       setCarousel(false)
-      setEquippedItemsB(false)
+      setEquippedItemsWindow(false)
     } else {
       setCarousel(true);
-      if (event === 'color') {
-        setEquippedItemsB(false)
-      }
-      if (event === 'body') {
-
-        setEquippedItemsB(false)
-      }
-      if (event === 'eyes') {
-
-        setEquippedItemsB(false)
-      }
-      if (event === 'nose') {
-
-        setEquippedItemsB(false)
-      }
-      if (event === 'mouth') {
-
-        setEquippedItemsB(false)
-      }
       if (event === 'items') {
-        setEquippedItemsB(true)
+        setEquippedItemsWindow(true)
+      } else {
+        setEquippedItemsWindow(false)
       }
     }
   }
 
+  //custom styling variables 
   const equippedItemBtn = {
     padding: 0,
     cursor: 'pointer',
@@ -180,6 +137,10 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
     fontWeight: 'bolder'
   }
 
+  const bottomNavBtn = {
+    maxHeight: '35px',
+  }
+
   //for store modal pop up 
   const [open, setOpen] = React.useState(false);
 
@@ -195,12 +156,15 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
   const handleClose = () => {
     setOpen(false);
   };
+
+
+  //remove currently equipped item from rascal
   const removeEquip = (e) => {
     let removeIndex = e.target.getAttribute("itemindex")
     console.log(removeIndex)
-    let equipCopy = [...equippedItems]
+    let equipCopy = [...myContext.equipItems]
     equipCopy.splice(removeIndex, 1)
-    setEquippedItems(equipCopy)
+    myContext.setEquipItems(equipCopy)
     elongate()
 
   }
@@ -208,23 +172,21 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
 
   //conditional rendering for store items
   const [storeContent, setStoreContent] = useState('Bodies')
-
-
   const renderStoreContent = () => {
     if (storeContent === 'Bodies') {
-      return <StoreBodies myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreBodies />
     }
     if (storeContent === 'Eyes') {
-      return <StoreEyes myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreEyes />
     }
     if (storeContent === 'Nose') {
-      return <StoreNose myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreNose />
     }
     if (storeContent === 'Mouth') {
-      return <StoreMouth myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreMouth />
     }
     if (storeContent === 'Items') {
-      return <StoreItem myRascal={myRascal} setMyRascal={setMyRascal} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} />
+      return <StoreItem />
     }
   }
 
@@ -236,22 +198,47 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
     <Button key="five" className="tab" onClick={() => setStoreContent('Mouth')}>MOUTH</Button>,
     <Button key="six" className="tab" onClick={() => setStoreContent('Items')}>ADD-ONS</Button>,
   ];
+
+  ///end consts for store 
+
+
   let equippedItemsCopy
   function elongate() {
-    equippedItemsCopy= [...equippedItems]
+    equippedItemsCopy = [...myContext.equipItems]
     let lengthDiff = 8 - equippedItemsCopy.length
-    for(let i=0;i<lengthDiff;i++){
-      equippedItemsCopy.push({name:"empty"})
+    for (let i = 0; i < lengthDiff; i++) {
+      equippedItemsCopy.push({ name: "empty" })
     }
   }
   elongate()
 
+  /////feed/wash fail message snackbar functions 
+  const handleCloseFail = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenFail(false);
+  };
+
+  const actionFail = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseFail}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
+
   return (
     <div>
-
-
-      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItems}>
-        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" data-update={equippedItems.length}>
+      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItemsWindow}>
+        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" data-update={myContext.equipItems.length}>
           {equippedItemsCopy.map((item, index) => {
             let imgSrc = item.name || "empty"
             return (
@@ -262,7 +249,7 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
               </div>
             )
           })}
-            
+
         </Box>
       </Animated>
 
@@ -311,22 +298,22 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
           </Box>
         </Animated>
 
-        <div style={{ background: 'black', paddingBottom: '15px', paddingTop: '15px', zIndex: 3 }}>
-          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', background: 'black' }}>
+        <div style={{ backgroundImage: 'linear-gradient(rgb(0, 69, 124), rgb(0, 100, 166))', borderTop: 'solid rgb(0, 35, 90) 5px', paddingBottom: '10px', paddingTop: '10px', zIndex: 3 }}>
+          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap' }}>
             <Button aria-label="Food" id='FeedRascal'>
-              <FastfoodIcon sx={{ color: 'white' }} />
+              <img src="./assets/cookie.png" alt="cookie" style={bottomNavBtn} />
             </Button>
             <Button aria-label="Care" id='WashRascal' >
-              <ShowerIcon sx={{ color: 'white' }} />
+              <img src="./assets/soap.png" alt="soap" style={bottomNavBtn} />
             </Button>
-            <Button aria-label="Minigame" onClick={() => handlePageChange('Minigame')}>
-              <VideogameAssetIcon sx={{ color: 'white' }} />
+            <Button aria-label="Minigame" onClick={() => myContext.setCurrentPage('Minigame')}>
+              <img src="./assets/game.png" alt="game" style={bottomNavBtn} />
             </Button>
             <Button aria-label="Store" onClick={handleClickOpen('paper')}>
-              <StoreIcon sx={{ color: 'white' }} />
+              <img src="./assets/money.png" alt="money" style={bottomNavBtn} />
             </Button>
-            <Button aria-label="Customize" onClick={toggleCustomMenu} >
-              <EditIcon sx={{ color: 'white' }} />
+            <Button aria-label="Customize" onClick={toggleCustomMenu}>
+              <img src="./assets/pencil.png" alt="pencil" style={bottomNavBtn} />
             </Button>
           </Box>
         </div>
@@ -341,27 +328,36 @@ export default function BottomNav({ currentPage, handlePageChange, myRascal, set
           >
             <ItemStoreDialogTitle
               id="customized-dialog-title"
-              // onClose={handleClose}
+            // onClose={handleClose}
             >
-            <div id="tab">
-              {buttons}
-            </div>
+              <div id="tab">
+                {buttons}
+              </div>
 
             </ItemStoreDialogTitle>
             <div id="store-content">
               {renderStoreContent()}
             </div>
-              <div id="bottom-tab">
-                <Button disabled variant="outlined" startIcon={<SavingsIcon />}>
-                  {`${userCoins}¢`}
-                </Button>
-                <Button autoFocus onClick={handleClose} id="done">
-                  Done
-                </Button>
+            <div id="bottom-tab">
+              <div startIcon={<SavingsIcon />} className="coins">
+                {`${myContext.coins}`}<span>¢</span>
               </div>
+              <Button autoFocus onClick={handleClose} id="done">
+                Done
+              </Button>
+            </div>
           </ItemStoreDialog>
         </div>
+
+        <Snackbar
+          open={openFail}
+          autoHideDuration={6000}
+          onClose={handleCloseFail}
+          message="You need more coins for this!"
+          action={actionFail}
+        />
+
       </div >
     </div>
-  );
+    );
 }

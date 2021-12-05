@@ -1,11 +1,15 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, useContext } from 'react';
 
 import StatusBar from './StatusBars'
 import BottomNav from './BottomNav';
 import Scene from './Scene'
 import API from '../../../utils/API'
+import AppContext from "./../../AppContext";
 
-export default function Dashboard({currentPage,handlePageChange,userId,myRascal,setMyRascal, unlockedItems,equippedItems,setUnlockedItems,setEquippedItems,logOut,userCoins, setUserCoins, userLevel, setUserLevel}) {
+export default function Dashboard({ myRascal,setMyRascal }) {
+
+  const myContext = useContext(AppContext);
+
   let newRascal
   useEffect(() => {
     // console.log(myRascal)
@@ -41,19 +45,22 @@ export default function Dashboard({currentPage,handlePageChange,userId,myRascal,
     console.log(copy)
   }
 
-  const [rascalHunger, setRascalHunger] = useState(false)
+  ////triggers not enough coins snackbar for feeding/washing
+  const [openFail, setOpenFail] = useState(false);
+
 
   return (
     <div>
       <div>
-      <StatusBar currentPage={currentPage} handlePageChange={handlePageChange} userId={userId}  logOut={logOut} myRascal={myRascal}/>
-
+      <StatusBar />
       </div>
       <div>
-        <Scene myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems}/>
+        <Scene openFail={openFail} setOpenFail={setOpenFail}
+        />
       </div>
       <div>
-        <BottomNav currentPage={currentPage} handlePageChange={handlePageChange} myRascal={myRascal} setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userCoins={userCoins} setUserCoins={setUserCoins} userLevel={userLevel} setUserLevel={setUserLevel} rascalHunger={rascalHunger} setRascalHunger={setRascalHunger} />
+        <BottomNav openFail={openFail} setOpenFail={setOpenFail}
+        />
       </div>
       
     </div>

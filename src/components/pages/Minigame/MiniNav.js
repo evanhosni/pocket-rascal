@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import SavingsIcon from '@mui/icons-material/Savings';
@@ -9,14 +9,17 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import AppContext from "./../../AppContext";
 
 
 
 
 
-export default function MiniNav({ userCoins, setUserCoins, userLevel, setUserLevel, currentPage, handlePageChange, earnedCoins }) {
+export default function MiniNav() {
 
-    const [open, setOpen] = React.useState(false);
+    const myContext = useContext(AppContext);
+
+    const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
       setOpen(true);
@@ -35,9 +38,9 @@ export default function MiniNav({ userCoins, setUserCoins, userLevel, setUserLev
                         <HomeIcon sx={{ color: 'white' }} />
                     </Button>
                     <Button variant="outlined" sx={{ color: 'white' }} startIcon={<SavingsIcon />}>
-                        {`${userCoins}¢`}
+                        {`${myContext.coins}¢`}
                     </Button>
-                    <Chip sx={{ color: 'white', background: 'transparent' }} label={`LVL ${userLevel}`} />
+                    <Chip sx={{ color: 'white', background: 'transparent' }} label={`LVL ${myContext.level}`} />
                 </Box>
             </div>
             <Dialog
@@ -56,7 +59,7 @@ export default function MiniNav({ userCoins, setUserCoins, userLevel, setUserLev
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Continue Game</Button>
-                    <Button onClick={()=>handlePageChange('Dashboard')} autoFocus>
+                    <Button onClick={()=>myContext.setCurrentPage('Dashboard')} autoFocus>
                         Exit
                     </Button>
                 </DialogActions>

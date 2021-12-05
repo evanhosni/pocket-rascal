@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Slider from 'infinite-react-carousel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import "./carousel.css"
+import AppContext from "./../../AppContext";
 
 export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEquippedItems, equippedItems,myRascal,setMyRascal}) {
 
-    // console.log('carousel',unlockedItems)
+    const myContext = useContext(AppContext);
+
+    useEffect(()=>{
+        
+    },[myContext.equipItems])
+
 
     const settings = {
         centerPadding: 35,
@@ -14,24 +20,22 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         duration: 75,
         slidesToShow: 3
     };
-    const colorArray = [...unlockedItems].filter(thingy => thingy.type === 'color')
-    const bodyArray = [...unlockedItems].filter(thingy => thingy.type === 'body')
-    const eyesArray = [...unlockedItems].filter(thingy => thingy.type === 'eyes')
-    const noseArray = [...unlockedItems].filter(thingy => thingy.type === 'nose')
-    const mouthArray = [...unlockedItems].filter(thingy => thingy.type === 'mouth')
-    const itemsArray = [...unlockedItems].filter(thingy => thingy.type === 'item')
-    var newEquippedArray = [...equippedItems]
-    var count = 0
+    const colorArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'color')
+    const bodyArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'body')
+    const eyesArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'eyes')
+    const noseArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'nose')
+    const mouthArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'mouth')
+    const itemsArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'item')
+    var newEquippedArray = [...myContext.equipItems]
+    
     function equipItem(e){
         let source = e.target.getAttribute("src")
         var isolate = source.split('/')[2].split('.')[0]
-        let findItem = itemsArray.filter(item=>item.name==isolate)
+        let findItem = itemsArray.filter(item=>item.name===isolate)
+        console.log(findItem)
         newEquippedArray.push(findItem[0])
         if(newEquippedArray.length>8){newEquippedArray.length=8}
-        newEquippedArray.slice()
-        setEquippedItems(newEquippedArray)
-        count+=1
-        setMyRascal({...myRascal,updated:count})
+        myContext.setEquipItems(newEquippedArray)
         
         findItem = []
     }
@@ -70,7 +74,7 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         <div obj={object} key={i}>
             <div>
                 <Button >
-                    <img src={`./assets/${object.name}.png`} style={{height: '100%'}}/>
+                    <img src={`./assets/${object.name}.png`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }}/>
                 </Button>
             </div>
         </div>)
@@ -156,12 +160,12 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
 
     var tempArray = () => {
         return(
-            prevEvent == 'color' ? (colorArray)
-            : prevEvent == 'body' ? (bodyArray)
-            : prevEvent == 'eyes' ? (eyesArray)
-            : prevEvent == 'nose' ? (noseArray)
-            : prevEvent == 'mouth' ? (mouthArray)
-            : prevEvent == 'items' ? (itemsArray)
+            prevEvent === 'color' ? (colorArray)
+            : prevEvent === 'body' ? (bodyArray)
+            : prevEvent === 'eyes' ? (eyesArray)
+            : prevEvent === 'nose' ? (noseArray)
+            : prevEvent === 'mouth' ? (mouthArray)
+            : prevEvent === 'items' ? (itemsArray)
             :[]
         )
     }
@@ -185,12 +189,12 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         return(
             <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}} id="custom-slider">
                 <Slider { ...settings } prevEvent={prevEvent}>
-                    {prevEvent == 'color' ? (color())
-                    : prevEvent == 'body' ? (body())
-                    : prevEvent == 'eyes' ? (eyes())
-                    : prevEvent == 'nose' ? (nose())
-                    : prevEvent == 'mouth' ? (mouth())
-                    : prevEvent == 'items' ? (items())
+                    {prevEvent === 'color' ? (color())
+                    : prevEvent === 'body' ? (body())
+                    : prevEvent === 'eyes' ? (eyes())
+                    : prevEvent === 'nose' ? (nose())
+                    : prevEvent === 'mouth' ? (mouth())
+                    : prevEvent === 'items' ? (items())
                     :(<div/>)}
                 </Slider>
         </div>

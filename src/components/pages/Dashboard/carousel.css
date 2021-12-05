@@ -23,8 +23,11 @@
 }
 
 .carousel-arrow {
-    filter: grayscale(1)
+    filter: grayscale(1);
+    margin-top: 0
 }
+
 .equipped {
     background-color: green;
+    /* color: rgb(0, 86, 136) */
 }

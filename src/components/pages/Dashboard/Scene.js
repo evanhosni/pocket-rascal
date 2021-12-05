@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useContext} from "react";
 import ReactDOM from "react-dom";
 import Matter, { World } from "matter-js";
 import "./style.css"
+import AppContext from "./../../AppContext";
 
 
 class Scene extends React.Component {
@@ -10,8 +11,15 @@ class Scene extends React.Component {
     this.state = {};
   }
 
+  static contextType = AppContext;
+
 
   componentDidMount() {
+
+    const myContext = this.context;
+
+    // const myContext = useContext(AppContext);
+
     var Engine = Matter.Engine,
       Render = Matter.Render,
       Runner = Matter.Runner,
@@ -100,15 +108,15 @@ class Scene extends React.Component {
     var item6
     var item7
     var item8
-    var selectedBody = this.props.myRascal.body || "empty";
+    var selectedBody = myContext.userRascal.body || "empty";
 
-    var selectedEyes = this.props.myRascal.eyes || "empty";
+    var selectedEyes = myContext.userRascal.eyes || "empty";
 
-    var selectedMouth = this.props.myRascal.mouth || "empty";
+    var selectedMouth = myContext.userRascal.mouth || "empty";
 
-    var selectedNose = this.props.myRascal.nose || "empty";
+    var selectedNose = myContext.userRascal.nose || "empty";
 
-    var itemArray = [...this.props.equippedItems
+    var itemArray = [...myContext.equipItems
       // { name: "top_hat", size: 2.2 },
       // { name: "arm_glove", size: 3.4 },
       // { name: "arm_glove", size: 3.4 },
@@ -488,15 +496,15 @@ class Scene extends React.Component {
     }
 
     const changeSelections = () => {
-      selectedBody = this.props.myRascal.body || "empty";
+      selectedBody = myContext.userRascal.body || "empty";
 
-      selectedEyes = this.props.myRascal.eyes || "empty";
+      selectedEyes = myContext.userRascal.eyes || "empty";
 
-      selectedMouth = this.props.myRascal.mouth || "empty";
+      selectedMouth = myContext.userRascal.mouth || "empty";
 
-      selectedNose = this.props.myRascal.nose || "empty";
+      selectedNose = myContext.userRascal.nose || "empty";
 
-      itemArray = [...this.props.equippedItems
+      itemArray = [...myContext.equipItems
         // { name: "top_hat", size: 2.2 },
         // { name: "arm_glove", size: 3.4 },
         // { name: "arm_glove", size: 3.4 },
@@ -535,7 +543,7 @@ class Scene extends React.Component {
     const equippedItemsPanel = document.querySelector('#equipped-items')
     const customPanel = document.querySelector('#custom-slider')
     const creationPanel = document.querySelector('#creation-panel')
-    if(equippedItemsPanel){equippedItemsPanel.addEventListener("click", (e) => {
+    if (equippedItemsPanel){equippedItemsPanel.addEventListener("click", (e) => {
 
       var source = e.target.getAttribute('src')
       // console.log(e.target)
@@ -665,15 +673,27 @@ class Scene extends React.Component {
 
     }
 
-    var image = 'milkshakes'
+    
     //setting up feeding the rascal and the food object disappearing on collision with rascal body
     const createFood = () => {
-      var food = Matter.Bodies.rectangle(2055, 2750, 70, 150, {
+      var food = Matter.Bodies.circle(2100, 2750, 20, {
+        label: 'food',
+        friction: 0.8
+      })
+      var food2 = Matter.Bodies.circle(2050, 2600, 20, {
+        label: 'food',
+        friction: 1
+      })
+      var food3 = Matter.Bodies.circle(2300, 2800, 20, {
+        label: 'food',
+        friction: 1
+      })
+      var food4 = Matter.Bodies.circle(2200, 2700, 20, {
         label: 'food',
         friction: 1
       })
 
-      Matter.World.add(engine.world, food)
+      Matter.World.add(engine.world, [food, food2, food3, food4])
     }
 
     function detectFoodCollision(pair) {
@@ -704,10 +724,27 @@ class Scene extends React.Component {
       });
     }
 
+    const feedRascal = () => {
+      if (myContext.coins >= 20) {
+        myContext.coins = (myContext.coins - 20);
+        myContext.userRascal.happiness = (myContext.userRascal.happiness + 5);
+        myContext.userRascal.xp = (myContext.userRascal.xp + 5)
+        myContext.setXP(myContext.userRascal.xp)
+        myContext.setCoins(myContext.coins);
+        createFood();
+        setUpFeedRascal();
+      } else {
+        this.props.setOpenFail(true)}
+    }
+
     const feedBtn = document.getElementById('FeedRascal')
     if(feedBtn){feedBtn.addEventListener('click', () => {
-      createFood();
-      setUpFeedRascal();
+      for (let i = 0; i < world.bodies.length; i++) {
+        if (world.bodies[i].label === 'food') {
+          return
+        } 
+      }
+      feedRascal();
     })}
 
     //setting up washing rascal and the soap getting smaller on collision 
@@ -740,10 +777,26 @@ class Scene extends React.Component {
       })
     }
 
+    const washRascal = () => {
+      if (myContext.coins >= 10) {
+        myContext.coins = (myContext.coins - 10);
+        myContext.userRascal.happiness = (myContext.userRascal.happiness + 5);
+        myContext.userRascal.xp = (myContext.userRascal.xp + 5)
+        myContext.setXP(myContext.userRascal.xp)
+        myContext.setCoins(myContext.coins);
+        createSoap();
+        setUpWashRascal();
+      } else {this.props.setOpenFail(true)}
+    }
+
     const soapBtn = document.getElementById('WashRascal')
     if(soapBtn){soapBtn.addEventListener('click', () => {
-      createSoap();
-      setUpWashRascal();
+      for (let i = 0; i < world.bodies.length; i++) {
+        if (world.bodies[i].label === 'soap') {
+          return
+        } 
+      }
+      washRascal();
     })}
 
   }
@@ -751,7 +804,6 @@ class Scene extends React.Component {
   render() {
     return (
       <>
-
         <div ref="scene" id="canvas_container" />
       </>
     )
