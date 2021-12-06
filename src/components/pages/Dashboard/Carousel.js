@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import "./carousel.css"
 import AppContext from "./../../AppContext";
 
-export default function Carousel({prevEvent}) {
+export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEquippedItems, equippedItems,myRascal,setMyRascal}) {
 
     const myContext = useContext(AppContext);
 
@@ -27,13 +27,13 @@ export default function Carousel({prevEvent}) {
     const mouthArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'mouth')
     const itemsArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'item')
     var newEquippedArray = [...myContext.equipItems]
+    
     function equipItem(e){
         let source = e.target.getAttribute("src")
         var isolate = source.split('/')[2].split('.')[0]
         let findItem = itemsArray.filter(item=>item.name===isolate)
         console.log(findItem)
         newEquippedArray.push(findItem[0])
-        console.log(newEquippedArray)
         if(newEquippedArray.length>8){newEquippedArray.length=8}
         myContext.setEquipItems(newEquippedArray)
         

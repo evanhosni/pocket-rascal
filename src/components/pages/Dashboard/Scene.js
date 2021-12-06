@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import ReactDOM from "react-dom";
 import Matter, { World } from "matter-js";
 import "./style.css"
@@ -136,6 +136,8 @@ class Scene extends React.Component {
     canvas.height = 5000;
 
     const generate = async () => {
+
+
       cancelAnimationFrame(animation);
       const bodyImage = await new Promise((resolve, reject) => {
         const bodyImage = new Image();
@@ -149,11 +151,13 @@ class Scene extends React.Component {
         eyesImage.onerror = reject;
         eyesImage.src = `./assets/${selectedEyes}.png`;
       });
+
       const mouthImage = await new Promise((resolve, reject) => {
         const mouthImage = new Image();
         mouthImage.onload = () => resolve(mouthImage);
         mouthImage.onerror = reject;
         mouthImage.src = `./assets/${selectedMouth}.png`;
+
       });
       const noseImage = await new Promise((resolve, reject) => {
         const noseImage = new Image();
@@ -165,6 +169,7 @@ class Scene extends React.Component {
       const w = 500;
       const h = 500;
       let frameNumber = 0;
+
 
       (function rerender() {
         const bodyOffset = (~~frameNumber * w) % bodyImage.width;
@@ -219,9 +224,12 @@ class Scene extends React.Component {
         frameNumber += 0.1;
         // Matter.Engine.update(engine);
         animation = requestAnimationFrame(rerender);
+
       })();
     };
+
     generate();
+
 
     var equippedItems
 
@@ -481,7 +489,7 @@ class Scene extends React.Component {
 
 
 
-    addItems();
+    // addItems();
     // itemArray=[]
 
     function checkCoor() {
@@ -515,7 +523,6 @@ class Scene extends React.Component {
         // {name: 'waffle_cone', size: 1.7}
       ];
       cancelAnimationFrame(animation);
-
       generate();
     }
 
@@ -543,137 +550,160 @@ class Scene extends React.Component {
     const equippedItemsPanel = document.querySelector('#equipped-items')
     const customPanel = document.querySelector('#custom-slider')
     const creationPanel = document.querySelector('#creation-panel')
-    if (equippedItemsPanel){equippedItemsPanel.addEventListener("click", (e) => {
+    if (equippedItemsPanel) {
+      equippedItemsPanel.addEventListener("click", (e) => {
 
-      var source = e.target.getAttribute('src')
-      // console.log(e.target)
-      if (source) {
+        var source = e.target.getAttribute('src')
+        // console.log(e.target)
+        if (source) {
 
-        var isolate = source.split('/')[2].split('.')[0]
+          var isolate = source.split('/')[2].split('.')[0]
 
-        world.bodies.every((item, index) => {
-          if (item.name == isolate) {
-            Matter.World.remove(world, world.bodies[index])
-            return false
-          } else {
-            return true
-          }
+          world.bodies.every((item, index) => {
+            if (item.name == isolate) {
+              Matter.World.remove(world, world.bodies[index])
+              return false
+            } else {
+              return true
+            }
 
-        });
-        itemArray.forEach((item, index) => {
-          if (item.name == isolate) {
-            console.log("match")
-            itemArray.splice(index, 1)
-            return
-          }
-        })
-        // if(isolate=="nose_disguise" || "nose_cute"){
-        //   console.log(world)
-        //   selectedNose=isolate
-        //   // selectedBody="body_curly"
-        //   cancelAnimationFrame(animation);
-        //   generate()
-        // }
+          });
+          itemArray.forEach((item, index) => {
+            if (item.name == isolate) {
+              itemArray.splice(index, 1)
+              return
+            }
+          })
+          // if(isolate=="nose_disguise" || "nose_cute"){
+          //   console.log(world)
+          //   selectedNose=isolate
+          //   // selectedBody="body_curly"
+          //   cancelAnimationFrame(animation);
+          //   generate()
+          // }
 
-      }
-    })}
-    if(customPanel){customPanel.addEventListener("click", (e) => {
-      let regNose = /nose/;
-      let regBody = /body/;
-      let regEyes = /eyes/;
-      let regMouth = /mouth/;
-      var source = e.target.getAttribute('src')
-      var itemSource = e.target.getAttribute('item-size')
-      if (source) {
-        var isolate = source.split('/')[2].split('.')[0]
-        
-        let resultNose = regNose.exec(isolate)
-        let resultBody = regBody.exec(isolate)
-        let resultEyes = regEyes.exec(isolate)
-        let resultMouth = regMouth.exec(isolate)
-        if (resultNose) {
-          if (isolate == selectedNose) {
-            selectedNose = "empty"
-            cancelAnimationFrame(animation);
-            generate()
-          } else {
-            selectedNose = isolate
-            cancelAnimationFrame(animation);
-            generate()
-          }
         }
-        if (resultBody) {
-          if (isolate == selectedBody) {
-            selectedBody = "empty"
-            cancelAnimationFrame(animation);
-            generate()
-          } else {
-            selectedBody = isolate
-            cancelAnimationFrame(animation);
-            generate()
+      })
+    }
+    if (customPanel) {
+      customPanel.addEventListener("click", (e) => {
+        let regNose = /nose/;
+        let regBody = /body/;
+        let regEyes = /eyes/;
+        let regMouth = /mouth/;
+        var source = e.target.getAttribute('src')
+        var itemSource = e.target.getAttribute('item-size')
+        if (source) {
+          var isolate = source.split('/')[2].split('.')[0]
+
+          let resultNose = regNose.exec(isolate)
+          let resultBody = regBody.exec(isolate)
+          let resultEyes = regEyes.exec(isolate)
+          let resultMouth = regMouth.exec(isolate)
+          if (resultNose) {
+            if (isolate == selectedNose) {
+              selectedNose = "empty"
+              cancelAnimationFrame(animation);
+              generate()
+            } else {
+              selectedNose = isolate
+              cancelAnimationFrame(animation);
+              generate()
+            }
           }
+          if (resultBody) {
+            if (isolate == selectedBody) {
+              selectedBody = "empty"
+              cancelAnimationFrame(animation);
+              generate()
+            } else {
+              selectedBody = isolate
+              cancelAnimationFrame(animation);
+              generate()
+            }
+          }
+          if (resultEyes) {
+            if (isolate == selectedEyes) {
+              selectedEyes = "empty"
+              cancelAnimationFrame(animation);
+              generate()
+            } else {
+              selectedEyes = isolate
+              cancelAnimationFrame(animation);
+              generate()
+            }
+          }
+          if (resultMouth) {
+            if (isolate == selectedMouth) {
+              selectedMouth = "empty"
+              cancelAnimationFrame(animation);
+              generate()
+            } else {
+              selectedMouth = isolate
+              cancelAnimationFrame(animation);
+              generate()
+            }
+          }
+
+
+        }
+        if (itemSource) {
+
+          if (item1) { Matter.World.remove(world, item1) }
+          if (item2) { Matter.World.remove(world, item2) }
+          if (item3) { Matter.World.remove(world, item3) }
+          if (item4) { Matter.World.remove(world, item4) }
+          if (item5) { Matter.World.remove(world, item5) }
+          if (item6) { Matter.World.remove(world, item6) }
+          if (item7) { Matter.World.remove(world, item7) }
+          if (item8) { Matter.World.remove(world, item8) }
+          itemArray.push({
+            name: isolate,
+            size: parseFloat(itemSource)
+          })
+          addItems()
+          // itemArray=[]
+        }
+      })
+    }
+    if (creationPanel) {
+      creationPanel.addEventListener("click", (e) => {
+
+        var value = e.target.getAttribute('value')
+        let regNose = /nose/;
+        let regBody = /body/;
+        let regEyes = /eyes/;
+        let regMouth = /mouth/;
+        let resultBody = regBody.exec(value)
+        let resultNose = regNose.exec(value)
+        let resultEyes = regEyes.exec(value)
+        let resultMouth = regMouth.exec(value)
+
+        if (resultBody) {
+          selectedBody = value
+          cancelAnimationFrame(animation);
+          generate()
         }
         if (resultEyes) {
-          if (isolate == selectedEyes) {
-            selectedEyes = "empty"
-            cancelAnimationFrame(animation);
-            generate()
-          } else {
-            selectedEyes = isolate
-            console.log(isolate)
-            cancelAnimationFrame(animation);
-            generate()
-          }
+          selectedEyes = value
+          cancelAnimationFrame(animation);
+          generate()
+        }
+        if (resultNose) {
+          selectedNose = value
+          cancelAnimationFrame(animation);
+          generate()
         }
         if (resultMouth) {
-          if (isolate == selectedMouth) {
-            selectedMouth = "empty"
-            cancelAnimationFrame(animation);
-            generate()
-          } else {
-            selectedMouth=isolate
-            cancelAnimationFrame(animation);
-            generate()
-          }
-        }
-
-
-      }
-      if (itemSource) {
-
-        if (item1) { Matter.World.remove(world, item1) }
-        if (item2) { Matter.World.remove(world, item2) }
-        if (item3) { Matter.World.remove(world, item3) }
-        if (item4) { Matter.World.remove(world, item4) }
-        if (item5) { Matter.World.remove(world, item5) }
-        if (item6) { Matter.World.remove(world, item6) }
-        if (item7) { Matter.World.remove(world, item7) }
-        if (item8) { Matter.World.remove(world, item8) }
-        itemArray.push({
-          name: isolate,
-          size: parseFloat(itemSource)
-        })
-        addItems()
-        // itemArray=[]
-      }
-    })}
-    if(creationPanel){
-      creationPanel.addEventListener("click",(e)=>{
-        
-        var value = e.target.getAttribute('value')
-        let regBody = /body/;
-        let resultBody = regBody.exec(value)
-        
-        if(resultBody){
-            selectedBody=value
-            cancelAnimationFrame(animation);
-            generate()
+          selectedMouth = value
+          cancelAnimationFrame(animation);
+          generate()
         }
       })
 
     }
 
-    
+
     //setting up feeding the rascal and the food object disappearing on collision with rascal body
     const createFood = () => {
       var food = Matter.Bodies.circle(2100, 2750, 20, {
@@ -734,18 +764,21 @@ class Scene extends React.Component {
         createFood();
         setUpFeedRascal();
       } else {
-        this.props.setOpenFail(true)}
+        this.props.setOpenFail(true)
+      }
     }
 
     const feedBtn = document.getElementById('FeedRascal')
-    if(feedBtn){feedBtn.addEventListener('click', () => {
-      for (let i = 0; i < world.bodies.length; i++) {
-        if (world.bodies[i].label === 'food') {
-          return
-        } 
-      }
-      feedRascal();
-    })}
+    if (feedBtn) {
+      feedBtn.addEventListener('click', () => {
+        for (let i = 0; i < world.bodies.length; i++) {
+          if (world.bodies[i].label === 'food') {
+            return
+          }
+        }
+        feedRascal();
+      })
+    }
 
     //setting up washing rascal and the soap getting smaller on collision 
     const createSoap = () => {
@@ -786,18 +819,20 @@ class Scene extends React.Component {
         myContext.setCoins(myContext.coins);
         createSoap();
         setUpWashRascal();
-      } else {this.props.setOpenFail(true)}
+      } else { this.props.setOpenFail(true) }
     }
 
     const soapBtn = document.getElementById('WashRascal')
-    if(soapBtn){soapBtn.addEventListener('click', () => {
-      for (let i = 0; i < world.bodies.length; i++) {
-        if (world.bodies[i].label === 'soap') {
-          return
-        } 
-      }
-      washRascal();
-    })}
+    if (soapBtn) {
+      soapBtn.addEventListener('click', () => {
+        for (let i = 0; i < world.bodies.length; i++) {
+          if (world.bodies[i].label === 'soap') {
+            return
+          }
+        }
+        washRascal();
+      })
+    }
 
   }
 
