@@ -313,7 +313,6 @@ export default function VerticalLinearStepper() {
         //   </FormControl>
         // </Box>
         <FormControl component="fieldset">
-          <FormLabel component="legend">Choose your Rascal's color:</FormLabel>
           <RadioGroup onChange={(e)=>{setNewRascalColor(e.target.value)}}row aria-label="color" name="color-radio">
             <FormControlLabel value="white" control={<Radio />} data-id="color" label="White" />
             <FormControlLabel value="blue" control={<Radio />} label="Blue" data-id="color" />

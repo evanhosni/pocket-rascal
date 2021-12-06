@@ -22,19 +22,19 @@ const noseData = [
   },
   {
     img: 'nose_clown',
-    title: 'Nose Disguise',
+    title: 'Clown Nose',
     price: 25,
     level: 0
   },
   {
     img: 'nose_pinkcarrot',
-    title: 'Nose Disguise',
+    title: 'Lil Pink Nose',
     price: 25,
     level: 0
   },
   {
     img: 'nose_strong',
-    title: 'Nose Disguise',
+    title: 'Strong Nose',
     price: 25,
     level: 0
   },
