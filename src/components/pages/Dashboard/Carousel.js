@@ -3,14 +3,15 @@ import Slider from 'infinite-react-carousel';
 import Button from '@mui/material/Button';
 import "./carousel.css"
 import AppContext from "./../../AppContext";
+import API from '../../../utils/API'
 
 export default function Carousel({ prevEvent }) {
 
     const myContext = useContext(AppContext);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-    }, [myContext.equipItems])
+    // }, [myContext.equipItems])
 
 
     const settings = {
@@ -26,15 +27,18 @@ export default function Carousel({ prevEvent }) {
     const mouthArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'mouth')
     const itemsArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'item')
     var newEquippedArray = [...myContext.equipItems]
-
+    var count = 0
     function equipItem(e) {
+        ++count
         let source = e.target.getAttribute("src")
         var isolate = source.split('/')[2].split('.')[0]
         let findItem = itemsArray.filter(item => item.name === isolate)
-        console.log(findItem)
         newEquippedArray.push(findItem[0])
         if (newEquippedArray.length > 8) { newEquippedArray.length = 8 }
         myContext.setEquipItems(newEquippedArray)
+        myContext.setUserRascal({...myContext.userRascal,count:count})
+        console.log(newEquippedArray)
+        API.updateEquippedItems(myContext.userRascal.id,newEquippedArray)
 
         findItem = []
     }
@@ -74,7 +78,7 @@ export default function Carousel({ prevEvent }) {
             <div obj={object} key={i}>
                 <div>
                     <Button >
-                        <img src={`./assets/body_fuzzy.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} alt='' />
+                        <img src={`./assets/${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} />
                     </Button>
                 </div>
             </div>)

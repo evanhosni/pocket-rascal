@@ -19,6 +19,7 @@ import SavingsIcon from '@mui/icons-material/Savings';
 import './Store/store.css'
 import Snackbar from '@mui/material/Snackbar';
 import AppContext from "./../../AppContext";
+import API from "../../../utils/API";
 
 
 
@@ -155,7 +156,6 @@ export default function BottomNav({ openFail, setOpenFail }) {
   //remove currently equipped item from rascal
   const removeEquip = (e) => {
     let removeIndex = e.target.getAttribute("itemindex")
-    console.log(removeIndex)
     let equipCopy = [...myContext.equipItems]
     equipCopy.splice(removeIndex, 1)
     myContext.setEquipItems(equipCopy)
@@ -206,6 +206,7 @@ export default function BottomNav({ openFail, setOpenFail }) {
     for (let i = 0; i < lengthDiff; i++) {
       equippedItemsCopy.push({ name: "empty" })
     }
+    API.updateEquippedItems(myContext.userRascal.id,equippedItemsCopy)
   }
   elongate()
 
@@ -231,7 +232,7 @@ export default function BottomNav({ openFail, setOpenFail }) {
     </React.Fragment>
   );
 
-  console.log(myContext.equipItems)
+
 
   return (
     <div>
