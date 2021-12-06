@@ -116,7 +116,7 @@ export default function ContentContainer() {
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
-        toggleUserCoins(res.data.coins)
+        toggleUserCoins(rascalDat.data.coins)
         if (currentPage !== "Dashboard") { setCurrentPage("Dashboard") }
         // const interval = setInterval(() => {
         //   console.log('This will run every 10 seconds!');

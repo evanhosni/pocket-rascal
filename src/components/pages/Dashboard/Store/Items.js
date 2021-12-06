@@ -170,7 +170,7 @@ export default function StoreItem(props) {
     const purchaseItem = (item) => {
         if (myContext.coins >= item.price) {
             myContext.userRascal.coins = (myContext.userRascal.coins - item.price)
-            myContext.setCoins(myContext.userRascal.coins);
+            // myContext.setCoins(myContext.userRascal.coins);
             handleClick();
             saveNewItem(item);
         } else {
