@@ -12,36 +12,177 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import { styled } from '@mui/material/styles';
+import Stack from '@mui/material/Stack';
 import { makeStyles } from '@mui/styles';
 import API from "../../../utils/API"
 import AppContext from "./../../AppContext";
+import './stepstyle.css'
 
 const useStyles = makeStyles({
   root: {
     background: 'white',
+    fontFamily: "'Nanum Pen Script', sans-serif",
+    marginBottom: 1
+  },
+  stepLabelLabel: {
+    fontFamily: "'Nanum Pen Script', sans-serif",
+    "&.Mui-active": {
+      fontFamily: "'Nanum Pen Script', sans-serif"
+    },
+    "&.Mui-completed": {
+      fontFamily: "'Nanum Pen Script', sans-serif"
+    },
+  },
+  stepIconRoot: {
+    color: "rgba(0,169,191,0.7)",
+    fontFamily: "'Nanum Pen Script', sans-serif",
+    "&.Mui-active": {
+      color: "#00717f",
+      fontFamily: "'Nanum Pen Script', sans-serif"
+    },
+    "&.Mui-completed": {
+      color: "#30694b",
+      fontFamily: "'Nanum Pen Script', sans-serif"
+    },
+  },
+  stepIconText: {
+    fontFamily: "'Nanum Pen Script', sans-serif",
+  },
+  typography: {
+    fontFamily: "'Nanum Pen Script', sans-serif"
+  },
+  select: {
+    height: '2.5em',
+  },
+  menuItem: {
+    fontFamily: "'Nanum Pen Script', sans-serif",
+  },
+  form: {
+    fontFamily: "'Nanum Pen Script', sans-serif",
+    "&MuiInputLabel-root": {
+      fontFamily: "'Nanum Pen Script', sans-serif",
+    }
+
+  }
+});
+
+const BpIcon = styled('span')(() => ({
+  fontFamily: "'Nanum Pen Script', sans-serif",
+  borderRadius: '50%',
+  width: 16,
+  height: 16,
+  boxShadow: '0 0 0 1px rgb(16 22 26 / 40%)',
+
+  backgroundColor: '#f5f8fa',
+  '.Mui-focusVisible &': {
+    outline: '2px auto rgba(19,124,189,.6)',
+    outlineOffset: 2,
+  },
+  'input:hover ~ &': {
+    backgroundColor: '#ebf1f5',
+  },
+
+}));
+
+const BpCheckedIcon = styled(BpIcon)({
+  backgroundColor: '#00717f',
+  backgroundImage: 'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
+  '&:before': {
+    display: 'block',
+    width: 16,
+    height: 16,
+    backgroundImage: 'radial-gradient(#fff,#fff 28%,transparent 32%)',
+    content: '""',
+  },
+  'input:hover ~ &': {
+    backgroundColor: '#00717f',
   },
 });
+
+// Inspired by blueprintjs
+function BpRadio(props) {
+  return (
+    <Radio
+      sx={{
+        '&:hover': {
+          bgcolor: 'transparent',
+        },
+        marginLeft: 2
+      }}
+      disableRipple
+      color="default"
+      checkedIcon={<BpCheckedIcon />}
+      icon={<BpIcon />}
+      {...props}
+    />
+  );
+}
 
 
 //what are you doing, StepCreate?
 
 
+const BootstrapButton = styled(Button)({
+  boxShadow: 'none',
+  color: 'black',
+  textTransform: 'none',
+  fontSize: 16,
+  padding: '6px 12px',
+  lineHeight: 1.5,
+  backgroundColor: 'transparent',
+  fontFamily: [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    '"Segoe UI"',
+    'Roboto',
+    '"Helvetica Neue"',
+    'Arial',
+    'sans-serif',
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ].join(','),
+  '&:hover': {
+    backgroundColor: 'transparent',
+    borderBottom: 'purple solid 1px',
+    boxShadow: 'none',
+    borderRadius: '0'
+  },
+  '&:active': {
+    boxShadow: 'none',
+    borderColor: '#005cbf',
+  },
+  '&:focus': {
+    boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+  },
+});
+
+const Btn = {
+  color: "white",
+  fontFamily: "'Nanum Pen Script', sans-serif",
+  fontSize: "x-large",
+  /* font-weight: bolder; */
+  backgroundColor: "rgb(187, 0, 0)",
+  minHeight: "30px",
+  maxHeight: "30px",
+}
 
 export default function VerticalLinearStepper() {
 
   const myContext = useContext(AppContext);
 
   const [activeStep, setActiveStep] = useState(0);
-  const [newRascalName,setNewRascalName] = useState('');
-  const [newRascalColor,setNewRascalColor]= useState('');
-  const [newRascalBody,setNewRascalBody]= useState('');
-  const [newRascalEyes,setNewRascalEyes]= useState('');
-  const [newRascalMouth,setNewRascalMouth]= useState('');
-  
+  const [newRascalName, setNewRascalName] = useState('');
+  const [newRascalColor, setNewRascalColor] = useState('');
+  const [newRascalBody, setNewRascalBody] = useState('');
+  const [newRascalEyes, setNewRascalEyes] = useState('');
+  const [newRascalMouth, setNewRascalMouth] = useState('');
+
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -53,52 +194,52 @@ export default function VerticalLinearStepper() {
   const handleReset = () => {
     setActiveStep(0);
   };
-  const handleFinish = () =>{
+  const handleFinish = () => {
     myContext.setUserRascal({
-      name:newRascalName,
-      color:newRascalColor,
-      body:newRascalBody,
-      eyes:newRascalEyes,
-      mouth:newRascalMouth,
-      happiness:50,
-      hunger:50,
-      level:1,
-      coins:50
+      name: newRascalName,
+      color: newRascalColor,
+      body: newRascalBody,
+      eyes: newRascalEyes,
+      mouth: newRascalMouth,
+      happiness: 50,
+      hunger: 50,
+      level: 1,
+      coins: 50
     })
-    myContext.setUnlockItems([{name:newRascalBody,type:'body'},{name:newRascalMouth, type:"mouth"},{name:newRascalEyes,type:"eyes"}])
-    API.createRascal(myContext.user.id,{
-      name:newRascalName,
-      color:newRascalColor,
-      body:newRascalBody,
-      eyes:newRascalEyes,
-      mouth:newRascalMouth,
-      happiness:50,
-      hunger:50,
-      level:1,
-      coins:50
-    }).then(promise=>{
+    myContext.setUnlockItems([{ name: newRascalBody, type: 'body' }, { name: newRascalMouth, type: "mouth" }, { name: newRascalEyes, type: "eyes" }])
+    API.createRascal(myContext.user.id, {
+      name: newRascalName,
+      color: newRascalColor,
+      body: newRascalBody,
+      eyes: newRascalEyes,
+      mouth: newRascalMouth,
+      happiness: 50,
+      hunger: 50,
+      level: 1,
+      coins: 50
+    }).then(promise => {
       console.log(promise)
       myContext.setUserRascal({
-        name:newRascalName,
-        color:newRascalColor,
-        body:newRascalBody,
-        eyes:newRascalEyes,
-        mouth:newRascalMouth,
-        happiness:50,
-        hunger:50,
-        level:1,
-        coins:50,
-        UserId:promise.data.UserId,
-        id:promise.data.id
+        name: newRascalName,
+        color: newRascalColor,
+        body: newRascalBody,
+        eyes: newRascalEyes,
+        mouth: newRascalMouth,
+        happiness: 50,
+        hunger: 50,
+        level: 1,
+        coins: 50,
+        UserId: promise.data.UserId,
+        id: promise.data.id
       })
-      
-      API.addUnlockedItem(promise.data.id,[{name:newRascalBody,type:'body'},{name:newRascalMouth, type:"mouth"},{name:newRascalEyes,type:"eyes"}]).then(promises=>{
+
+      API.addUnlockedItem(promise.data.id, [{ name: newRascalBody, type: 'body' }, { name: newRascalMouth, type: "mouth" }, { name: newRascalEyes, type: "eyes" }]).then(promises => {
 
         myContext.setCurrentPage("Dashboard")
-      }).catch(err=>{
+      }).catch(err => {
         console.log(err)
       })
-    }).catch(err=>{
+    }).catch(err => {
       console.log(err)
     })
 
@@ -111,150 +252,158 @@ export default function VerticalLinearStepper() {
 
   const steps = [
     {
-      label: 'Choose a name for your Rascal:',
-      description:
-        <Box
-          component="form"
-          sx={{
-            '& > :not(style)': { m: 1, width: '25ch' },
-          }}
-          noValidate
-          autoComplete="off"
-          value={newRascalName}
-          onChange={(e)=>{setNewRascalName(e.target.value)}}
-        >
-          <TextField className={classes.root} id="standard-basic" label="Enter name here" variant="standard" />
-        </Box>
-    },
-    {
-      label: 'Select a body for your pocket Rascal:',
+      label: 'Select a body for your buddy:',
       description:
         <FormControl component="fieldset">
-          <FormLabel component="legend">Choose your Rascal's body:</FormLabel>
-          <RadioGroup onChange={(e)=>{setNewRascalBody(e.target.value)}}row aria-label="body" name="row-radio-buttons-group">
-            <FormControlLabel value="body_fuzzy" control={<Radio />} data-id="body-type" label="Fuzzy" />
-            <FormControlLabel value="body_curly" control={<Radio />} label="Curly" data-id="body-type" />
-            {/* <FormControlLabel value="other" control={<Radio />} label="Body3" />
+          <RadioGroup size="small" onChange={(e) => { setNewRascalBody(e.target.value) }} row aria-label="body" name="row-radio-buttons-group">
             <FormControlLabel
-              value="disabled"
-              disabled
-              control={<Radio />}
-              label="other"
-            /> */}
+              classes={{ label: classes.typography }}
+              value="body_fuzzy" control={<BpRadio />} data-id="body-type" label="Fuzzy" />
+            <FormControlLabel
+              classes={{ label: classes.typography }}
+              value="body_curly" control={<BpRadio />} label="Curly" data-id="body-type" />
           </RadioGroup>
         </FormControl>
     },
     {
-      label: 'Select eyes for your pocket Rascal:',
+      label: 'Pick out some eyes for your Rascal:',
       description:
         <FormControl component="fieldset">
-          <FormLabel component="legend">Choose your Rascal's eyes:</FormLabel>
-          <RadioGroup onChange={(e)=>{setNewRascalEyes(e.target.value)}}row aria-label="eyes" name="row-radio-buttons-group">
-            <FormControlLabel value="eyes_cute" control={<Radio />} data-id="eyes-type" label="Cute" />
-            <FormControlLabel value="eyes_tired" control={<Radio />} label="Tired" data-id="eyes-type" />
-            <FormControlLabel value="eyes_glasses" control={<Radio />} label="Glasses" data-id="eyes-type" />
-            {/* <FormControlLabel value="other" control={<Radio />} label="Body3" />
+          <RadioGroup onChange={(e) => { setNewRascalEyes(e.target.value) }} row aria-label="eyes" name="row-radio-buttons-group">
             <FormControlLabel
-              value="disabled"
-              disabled
-              control={<Radio />}
-              label="other"
-            /> */}
+              classes={{ label: classes.typography }}
+              value="eyes_cute" control={<BpRadio />} data-id="eyes-type" label="Cute" />
+            <FormControlLabel
+              classes={{ label: classes.typography }}
+              value="eyes_tired" control={<BpRadio />} label="Tired" data-id="eyes-type" />
+            <FormControlLabel
+              classes={{ label: classes.typography }}
+              value="eyes_glasses" control={<BpRadio />} label="Glasses" data-id="eyes-type" />
           </RadioGroup>
         </FormControl>
     },
     {
-      label: 'Select eyes for your pocket Rascal:',
+      label: 'Choose a mouth:',
       description:
         <FormControl component="fieldset">
-          <FormLabel component="legend">Choose your Rascal's mouth:</FormLabel>
-          <RadioGroup onChange={(e)=>{setNewRascalMouth(e.target.value)}}row aria-label="mouth" name="row-radio-buttons-group">
-            <FormControlLabel value="mouth_simple" control={<Radio />} data-id="mouth-type" label="Simple" />
-            {/* <FormControlLabel value="mouth_tired" control={<Radio />} label="Tired" data-id="mouth-type" />
-            <FormControlLabel value="mouth_glasses" control={<Radio />} label="Glasses" data-id="mouth-type" /> */}
-            {/* <FormControlLabel value="other" control={<Radio />} label="Body3" />
+          <RadioGroup onChange={(e) => { setNewRascalMouth(e.target.value) }} row aria-label="mouth" name="row-radio-buttons-group">
             <FormControlLabel
-              value="disabled"
-              disabled
-              control={<Radio />}
-              label="other"
-            /> */}
+              classes={{ label: classes.typography }}
+              value="mouth_simple" control={<BpRadio />} data-id="mouth-type" label="Simple" />
           </RadioGroup>
         </FormControl>
     },
     {
-      label: 'Choose a color for your new friend:',
+      label: 'Pick a color for your lint:',
       description:
         <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth>
+          <FormControl fullWidth classes={{ root: classes.select }}>
             <InputLabel className={classes.root} id="demo-simple-select-label">Color</InputLabel>
             <Select
+              classes={{ select: classes.select, input: classes.menuItem }}
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={newRascalColor}
               label="Color"
-              onChange={(e)=>{setNewRascalColor(e.target.value)}}
-            >
-              <MenuItem value={'blue'}>Blue</MenuItem>
-              <MenuItem value={'green'}>Green</MenuItem>
-              <MenuItem value={'red'}>Red</MenuItem>
+              onChange={(e) => { setNewRascalColor(e.target.value) }}>
+              <MenuItem classes={{ root: classes.menuItem }} value={'blue'}>Blue</MenuItem>
+              <MenuItem classes={{ root: classes.menuItem }} value={'green'}>Green</MenuItem>
+              <MenuItem classes={{ root: classes.menuItem }} value={'red'}>Red</MenuItem>
             </Select>
           </FormControl>
         </Box>
     },
+    {
+      label: 'Give your new lil friend a name:',
+      description:
+        <Box
+          component="form"
+          sx={{
+            '& > :not(style)': { width: '25ch' },
+          }}
+          noValidate
+          autoComplete="off"
+          value={newRascalName}
+          onChange={(e) => { setNewRascalName(e.target.value) }}
+        >
+          <TextField style={{ background: 'transparent' }} className={classes.root} id="standard-basic" label="Enter name here" variant="standard"
+            InputProps={{ classes: { root: classes.form, label: classes.form, input: classes.form, inputbase: classes.form } }}
+            InputLabelProps={{ classes: { root: classes.form, label: classes.form, input: classes.form, inputbase: classes.form } }} />
+        </Box>
+    }
   ];
+
+  const canvas = document.getElementById('rascalCanvas')
+  if(canvas){
+  canvas.setAttribute('style', 'top: -180%')
+  }
+ 
 
 
   return (
-    <Box sx={{ maxWidth: 400 }} id="creation-panel"className={classes.root} style={{background:'transparent'}}>
-      <Stepper activeStep={activeStep} orientation="vertical">
-        {steps.map((step, index) => (
-          <Step key={step.label}>
-            <StepLabel 
-              optional={
-                index === 2 ? (
-                  <Typography variant="caption">Last step</Typography>
-                ) : null
-              }
-            >
-              {step.label}
-            </StepLabel>
-            <StepContent>
-              <Typography>{step.description}</Typography>
-              <Box sx={{ mb: 2 }}>
-                <div>
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                  </Button>
-                  <Button
-                    disabled={index === 0}
-                    onClick={handleBack}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    Back
-                  </Button>
-                </div>
-              </Box>
-            </StepContent>
-          </Step>
-        ))}
-      </Stepper>
-      {activeStep === steps.length && (
-        <Paper square elevation={0} sx={{ p: 3 }}>
-          <Typography>All steps completed - you&apos;re finished</Typography>
-          <Button onClick={handleReset} sx={{ mt: 1, mr: 1 }}>
-            Reset
-          </Button>
-          <Button onClick={handleFinish} sx={{ mt: 1, mr: 1 }}>
-            Continue
-          </Button>
-        </Paper>
-      )}
-    </Box>
+    <>
+      <Box sx={{ maxWidth: 400 }} id="creation-panel" className={classes.root} style={{
+        background: 'transparent',
+        marginLeft: 10,
+        marginTop: 10,
+      }}>
+        <Stepper activeStep={activeStep} orientation="vertical">
+          {steps.map((step, index) => (
+            <Step
+              key={step.label}>
+              <StepLabel classes={{ label: classes.stepLabelLabel }}
+                StepIconProps={{
+                  classes: { root: classes.stepIconRoot, text: classes.stepIconText, label: classes.stepLabelLabel },
+                }}
+              >
+                {step.label}
+              </StepLabel>
+              <StepContent>
+                <Typography
+                  TypographyProps={{
+                    classes: { root: classes.typography }
+                  }}
+                >{step.description}</Typography>
+                <Box sx={{ mb: 2 }}>
+                  <div>
+                    <Button
+                      style={Btn} 
+                      variant="contained"
+                      onClick={handleNext}
+
+                      sx={{ mt: 1, mr: 1 }}
+                    >
+                      {index === steps.length - 1 ? 'Finish' : 'Next'}
+                    </Button>
+                    <Button style={{ color: 'black' }}
+                      disabled={index === 0}
+                      onClick={handleBack}
+                      sx={{ mt: 1, mr: 1 }}
+                    >
+                      Back
+                    </Button>
+                  </div>
+                </Box>
+              </StepContent>
+            </Step>
+          ))}
+        </Stepper>
+        {activeStep === steps.length && (
+          <Paper square elevation={0} sx={{ p: 3, background:'transparent' }}>
+            <Button style={Btn} onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
+              Edit
+            </Button>
+            <Button style={Btn} onClick={handleFinish} sx={{ mt: 1, mr: 1 }}>
+              START PLAYING!
+            </Button>
+          </Paper>
+        )}
+      </Box>
+      <div style={{position:"absolute", bottom:100, left:'0', right:'0', marginRight:'auto',marginLeft:'auto',textAlign:'center'}}>
+        {
+        newRascalName && <h1 style={{fontSize:'48px'}}>{`Hi, I'm ${newRascalName}`}</h1> }
+
+      </div>
+    </>
   );
 }

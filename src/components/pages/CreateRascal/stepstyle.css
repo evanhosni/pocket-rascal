@@ -1,0 +1,10 @@
+
+#rascalCanvas { 
+    z-index: -1;
+    position: fixed;
+    /* top: -180%; */
+    left: -200%;
+    height: 500%;
+    width: 500%;
+    object-fit: contain;
+}

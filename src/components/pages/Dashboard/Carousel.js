@@ -54,7 +54,7 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         <div obj={object} key={i}>
             <div>
                 <Button >
-                    <img src={`./assets/${object.name}.png`} style={{height: '100%'}}/>
+                    <img src={`./assets/${myContext.userRascal.body}_${object.name}.png`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }}/>
                 </Button>
             </div>
         </div> )

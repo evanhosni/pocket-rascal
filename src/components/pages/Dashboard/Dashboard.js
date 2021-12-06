@@ -5,6 +5,7 @@ import BottomNav from './BottomNav';
 import Scene from './Scene'
 import API from '../../../utils/API'
 import AppContext from "./../../AppContext";
+import "./style.css"
 
 export default function Dashboard({ myRascal,setMyRascal }) {
 
