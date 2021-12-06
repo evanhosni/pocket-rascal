@@ -108,62 +108,62 @@ export default function StoreMouth(props) {
     </React.Fragment>
   );
 
-  //functions for get more coins dialog
-  const [moreCoins, setMoreCoins] = React.useState(false);
+    //functions for get more coins dialog
+    const [moreCoins, setMoreCoins] = React.useState(false);
 
-  const handleMoreCoins = () => {
-    setMoreCoins(true);
-  };
+    const handleMoreCoins = () => {
+      setMoreCoins(true);
+    };
+  
+    const handleCloseCoins = (event, reason) => {
+      if (reason === "clickaway") {
+        return;
+      }
+  
+      setMoreCoins(false);
+    };
+  
+    const moreCoinsFail = (
+      <React.Fragment>
+        <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={handleCloseCoins}
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </React.Fragment>
+    );
 
-  const handleCloseCoins = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+    const saveNewItem = (item) => {
+        const newItem = {
+            name: item.img,
+            equipped: false,
+            type: 'mouth'
+        }
 
-    setMoreCoins(false);
-  };
+        console.log(myContext.unlockItems);
+        if (myContext.unlockItems.length > 0) {
+            myContext.setUnlockItems([...myContext.unlockItems, newItem]);
+        } else {
+            myContext.setUnlockItems([newItem]);
+        }
+        API.addUnlockedItem(myContext.userRascal.id, newItem);
+        console.log(myContext.unlockItems);
+    };
 
-  const moreCoinsFail = (
-    <React.Fragment>
-      <IconButton
-        size="small"
-        aria-label="close"
-        color="inherit"
-        onClick={handleCloseCoins}
-      >
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
-
-  const saveNewItem = (item) => {
-    const newItem = {
-      name: item.img,
-      equipped: false,
-      type: 'mouth'
-    }
-
-    console.log(myContext.unlockItems);
-    if (myContext.unlockItems.length > 0) {
-      myContext.setUnlockItems([...myContext.unlockItems, newItem]);
-    } else {
-      myContext.setUnlockItems([newItem]);
-    }
-    API.addUnlockedItem(myContext.userRascal.id, newItem);
-    console.log(myContext.unlockItems);
-  };
-
-  //update the coin value displayed at the bottom of store window
-  const purchaseItem = (item) => {
-    if (myContext.coins >= item.price) {
-      myContext.userRascal.coins = (myContext.userRascal.coins - item.price)
-      myContext.setCoins(myContext.userRascal.coins);
-      handleClick();
-      saveNewItem(item);
-    } else {
-      handleFail();
-    }
-  };
+    //update the coin value displayed at the bottom of store window
+    const purchaseItem = (item) => {
+        if (myContext.coins >= item.price) {
+            myContext.setUserRascal({...myContext.userRascal, coins:myContext.coins-item.price})
+            // myContext.setCoins(myContext.userRascal.coins);
+            handleClick();
+            saveNewItem(item);
+        } else {
+            handleFail();
+        }
+    };
 
 
   const checkIfOwned = (item) => {

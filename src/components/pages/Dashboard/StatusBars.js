@@ -70,7 +70,7 @@ export default function StatusBars({ }) {
           </Box>
         </Popper>
         <Box sx={{ flexGrow: 1, border: 5, borderRadius: 5 }}>
-          <BorderLinearProgress variant="determinate" value={myContext.userRascal.happiness} />
+          <BorderLinearProgress variant="determinate" value={parseInt(myContext.userRascal.happiness)} />
         </Box>
         <Chip sx={{ color: 'white', background: 'transparent' }} label={chipLabel} />
       </div>

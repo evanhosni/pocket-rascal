@@ -49,6 +49,7 @@ export default function ContentContainer() {
     care: 50,
     coins: 1000
   })
+  const [rascalBodySave,setRascalBodySave]= useState({})
   const toggleRascal = (value) => {
     setMyRascal(value)
   }
@@ -116,7 +117,7 @@ export default function ContentContainer() {
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
-        toggleUserCoins(res.data.coins)
+        toggleUserCoins(rascalDat.data.coins)
         if (currentPage !== "Dashboard") { setCurrentPage("Dashboard") }
         // const interval = setInterval(() => {
         //   console.log('This will run every 10 seconds!');
@@ -172,6 +173,8 @@ export default function ContentContainer() {
     logOut: logOut,
     earnings: earnedCoins,
     setEarnings: toggleEarnedCoins,
+    rascalBodySave:rascalBodySave,
+    setRascalBodySave:setRascalBodySave
   }
 
   ///////////////////////////////////////end context save
@@ -192,14 +195,19 @@ export default function ContentContainer() {
       setUserLevel(level);
     } else { return }
   }, [userXP])
-  useEffect(() => {
-    if (myRascal.coins != userCoins) {
+  useEffect(()=>{
+    setMyRascal({...myRascal,...rascalBodySave})
+  },[rascalBodySave])
+  useEffect(()=>{
+    if(myRascal.coins!=userCoins){
       setUserCoins(myRascal.coins)
     }
     if (myRascal.level != userLevel) {
       setUserLevel(myRascal.level)
     }
-  }, [myRascal])
+    API.updateRascal(userState.id,myRascal)
+    
+  },[myRascal])
 
 
   //render correct content for page 
@@ -213,11 +221,8 @@ export default function ContentContainer() {
     if (currentPage === 'CreateRascal') {
       return (
         <div>
-          <CreateRascal
-            setMyRascal={setMyRascal} equippedItems={equippedItems} unlockedItems={unlockedItems} setEquippedItems={setEquippedItems} setUnlockedItems={setUnlockedItems} userState={userState} />
-          <div style={{maxHeight:'75%'}}>
-            <Scene />
-          </div>
+          <CreateRascal />
+          <Scene />
 
 
         </div>

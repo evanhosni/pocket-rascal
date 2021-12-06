@@ -19,6 +19,7 @@ class Scene extends React.Component {
     const myContext = this.context;
 
     // const myContext = useContext(AppContext);
+    const ongoingRascal = {}
 
     var Engine = Matter.Engine,
       Render = Matter.Render,
@@ -108,7 +109,7 @@ class Scene extends React.Component {
     var item6
     var item7
     var item8
-    var selectedBody = myContext.userRascal.body || "empty";
+    var selectedBody = myContext.userRascal.body + '_' + myContext.userRascal.color || "empty";
 
     var selectedEyes = myContext.userRascal.eyes || "empty";
 
@@ -504,7 +505,7 @@ class Scene extends React.Component {
     }
 
     const changeSelections = () => {
-      selectedBody = myContext.userRascal.body || "empty";
+      selectedBody = myContext.userRascal.body + '_' + myContext.userRascal.color || "empty";
 
       selectedEyes = myContext.userRascal.eyes || "empty";
 
@@ -593,6 +594,10 @@ class Scene extends React.Component {
         let regMouth = /mouth/;
         var source = e.target.getAttribute('src')
         var itemSource = e.target.getAttribute('item-size')
+        var colorCheck = e.target.getAttribute('data-id')
+        var colorValue = e.target.getAttribute('value')
+        console.log(colorCheck)
+        console.log(colorValue)
         if (source) {
           var isolate = source.split('/')[2].split('.')[0]
 
@@ -600,26 +605,44 @@ class Scene extends React.Component {
           let resultBody = regBody.exec(isolate)
           let resultEyes = regEyes.exec(isolate)
           let resultMouth = regMouth.exec(isolate)
+          if(colorCheck=='color'){
+            let bodyArray = selectedBody.split('_')
+            selectedBody = bodyArray[0] + '_' + bodyArray[1]+ '_' + colorValue;
+            cancelAnimationFrame(animation);
+            generate()
+            ongoingRascal.color=colorValue
+            myContext.setRascalBodySave({...ongoingRascal})
+          }
           if (resultNose) {
             if (isolate == selectedNose) {
               selectedNose = "empty"
               cancelAnimationFrame(animation);
               generate()
+              ongoingRascal.nose='empty'
+              myContext.setRascalBodySave({...ongoingRascal})
             } else {
               selectedNose = isolate
               cancelAnimationFrame(animation);
               generate()
+              ongoingRascal.nose=isolate
+              myContext.setRascalBodySave({...ongoingRascal})
             }
           }
-          if (resultBody) {
-            if (isolate == selectedBody) {
+          if (resultBody && !colorCheck) {
+            let bodyArray = selectedBody.split('_')
+            let bodyDefault = bodyArray[0] + '_' + bodyArray[1]
+            if (isolate == bodyDefault) {
               selectedBody = "empty"
               cancelAnimationFrame(animation);
               generate()
+              ongoingRascal.body='empty'
+              myContext.setRascalBodySave({...ongoingRascal})
             } else {
-              selectedBody = isolate
+              selectedBody = isolate + '_' + myContext.userRascal.color
               cancelAnimationFrame(animation);
               generate()
+              ongoingRascal.body=bodyDefault
+              myContext.setRascalBodySave({...ongoingRascal})
             }
           }
           if (resultEyes) {
@@ -627,10 +650,14 @@ class Scene extends React.Component {
               selectedEyes = "empty"
               cancelAnimationFrame(animation);
               generate()
+              ongoingRascal.eyes='empty'
+              myContext.setRascalBodySave({...ongoingRascal})
             } else {
               selectedEyes = isolate
               cancelAnimationFrame(animation);
               generate()
+              ongoingRascal.eyes=isolate
+              myContext.setRascalBodySave({...ongoingRascal})
             }
           }
           if (resultMouth) {
@@ -638,10 +665,14 @@ class Scene extends React.Component {
               selectedMouth = "empty"
               cancelAnimationFrame(animation);
               generate()
+              ongoingRascal.mouth='empty'
+              myContext.setRascalBodySave({...ongoingRascal})
             } else {
               selectedMouth = isolate
               cancelAnimationFrame(animation);
               generate()
+              ongoingRascal.mouth=isolate
+              myContext.setRascalBodySave({...ongoingRascal})
             }
           }
 
@@ -666,9 +697,10 @@ class Scene extends React.Component {
         }
       })
     }
+    let tempColor = "white"
     if (creationPanel) {
       creationPanel.addEventListener("click", (e) => {
-
+        var colorCheck = e.target.getAttribute('name')
         var value = e.target.getAttribute('value')
         let regNose = /nose/;
         let regBody = /body/;
@@ -678,9 +710,16 @@ class Scene extends React.Component {
         let resultNose = regNose.exec(value)
         let resultEyes = regEyes.exec(value)
         let resultMouth = regMouth.exec(value)
-
+        if(colorCheck=='color-radio'){
+          tempColor=value
+          let bodyArray = selectedBody.split('_')
+          selectedBody = bodyArray[0] + '_' + bodyArray[1]+ '_' + tempColor;
+          cancelAnimationFrame(animation);
+          generate()
+        }
+        
         if (resultBody) {
-          selectedBody = value
+          selectedBody = value + '_' + tempColor
           cancelAnimationFrame(animation);
           generate()
         }

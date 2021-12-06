@@ -19,25 +19,19 @@ export default function Dashboard({ myRascal,setMyRascal }) {
 
       // setMyRascal(myRascal=>({...myRascal, happiness:(myRascal.happiness*.99)}));
       setMyRascal(myRascal=>{
-        newRascal = {...myRascal, happiness:(myRascal.happiness*.99)}
+        newRascal = {...myRascal, happiness:(myRascal.happiness*.98)}
         // console.log(newRascal)
         return newRascal
       });
     
       
-    }, 15000);
+    }, 60000);
 
-    const saveTimer = setInterval(()=> {
-      console.log(newRascal)
-      // UNCOMMNET OUT FOR RASCAL AND ITEM UPLOADING
-      // let newItemArray = [...rascalItemArray]
-      // API.updateRascal(newRascal)
-      // API.updateItems(rascalItemArray,myRascal.id)
-    },60000)
+
     
     return () => {
       // Since useEffect dependency array is empty, this will be called only on unmount
-      clearInterval(saveTimer)
+
       clearInterval(decayTimer);
     };
   }, []);
