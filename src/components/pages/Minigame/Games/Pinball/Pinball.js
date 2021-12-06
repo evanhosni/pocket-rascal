@@ -619,7 +619,7 @@ class Pinball extends React.Component {
         animation = requestAnimationFrame(rerender);
       })();
     };
-    generate();
+    // generate();
 
 setInterval(() => {
   console.log(ball.position)
