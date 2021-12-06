@@ -116,6 +116,7 @@ export default function ContentContainer() {
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
+        toggleUserCoins(res.data.coins)
         if (currentPage !== "Dashboard") { setCurrentPage("Dashboard") }
         // const interval = setInterval(() => {
         //   console.log('This will run every 10 seconds!');
@@ -192,6 +193,14 @@ export default function ContentContainer() {
       setUserLevel(level);
     } else { return }
   }, [userXP])
+  useEffect(()=>{
+    if(myRascal.coins!=userCoins){
+      setUserCoins(myRascal.coins)
+    }
+    if(myRascal.level!=userLevel){
+      setUserLevel(myRascal.level)
+    }
+  },[myRascal])
 
 
 //render correct content for page 

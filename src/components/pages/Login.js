@@ -52,6 +52,7 @@ export default function SignIn(props) {
         myContext.setUserRascal(rascalDat.data)
         myContext.setEquipItems(equipDat.data)
         myContext.setUnlockItems(unlockDat.data)
+        myContext.setCoins(rascalDat.data.coins)
       myContext.setCurrentPage('Dashboard')
     }).catch(err=>{
       alert("Incorrect Credentials")
