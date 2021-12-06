@@ -7,7 +7,23 @@ import Carousel from "react-material-ui-carousel";
 import { Paper } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
+import CloseIcon from '@mui/icons-material/Close';
+import { styled } from '@mui/material/styles';
+import PropTypes from 'prop-types';
+import Button from '@mui/material/Button';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import AppContext from './AppContext'
+
+
+const TutorialDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
 
 
 function Navigation({ userId }) {
@@ -45,12 +61,14 @@ function Navigation({ userId }) {
 
   const settings = {
     autoPlay: false,
-    navButtonsAlwaysVisible: true
+    navButtonsAlwaysVisible: true,
+    swipe: true,
+    fullHeightHover: false
   };
 
   function Item(props) {
     return (
-      <Paper style={{ width: '98%', padding: 5, height: '100%' }}>
+      <Paper style={{ minHeight: '45vh', maxHeight: '45vh' }}>
         <h2>{props.item.name}</h2>
         <p>{props.item.description}</p>
 
@@ -114,16 +132,38 @@ function Navigation({ userId }) {
       </Menu>
 
 
-      <Dialog onClose={handleClickClose} open={open} sx={{ width: 'fit-content' }}>
-        <DialogTitle>Welcome to Pocket Rascal!</DialogTitle>
-        <div>
-          <Carousel {...settings}>
+      <TutorialDialog onClose={handleClickClose} open={open} aria-labelledby="customized-dialog-title" >
+        <DialogTitle id="customized-dialog-title" style={{ fontSize: 'larger', textAlign: 'center', fontFamily: "'Nanum Pen Script',sans-serif" }}>
+          Welcome to Pocket Rascal!
+        </DialogTitle>
+        <div id='tutorial-content'>
+          <Carousel
+            {...settings} style={{ alignItems: 'center' }}
+            navButtonsProps={{
+              style: {
+                backgroundColor: 'transparent',
+                color: 'black'
+              }
+            }}
+            navButtonsWrapperProps={{
+              style: {
+                bottom: '0',
+                top: 'unset'
+              }
+            }}
+          >
             {items.map((item, i) => (
               <Item key={i} item={item} />
             ))}
           </Carousel>
         </div>
-      </Dialog>
+        <div id='tutorial-btns' style={{display: 'flex', justifyContent:'flex-end', padding: 5 }}>
+          <Button autoFocus onClick={handleClickClose} id="done">
+            Done
+          </Button>
+
+        </div>
+      </TutorialDialog>
     </>
   );
 }

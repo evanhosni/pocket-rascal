@@ -765,15 +765,20 @@ class Scene extends React.Component {
 
 
     function setUpWashRascal() {
-      Matter.Events.on(engine, 'collisionActive', function (event) {
+      var totalCollisions = 0;
+      Matter.Events.on(engine, 'collisionEnd', function (event) {
         event.pairs
           .filter((pair) => {
             return detectSoapCollision(pair);
           })
           .forEach((pair) => {
             console.log(pair)
+            totalCollisions++
+            console.log(totalCollisions)
+            if (totalCollisions === 20) {
+              Matter.World.remove(world,pair.bodyB)
+            }
           })
-
       })
     }
 

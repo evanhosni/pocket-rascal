@@ -47,7 +47,7 @@ export default function ContentContainer() {
     hunger: 50,
     love: 50,
     care: 50,
-    coins: 500
+    coins: 1000
   })
   const toggleRascal = (value) => {
     setMyRascal(value)
@@ -181,7 +181,6 @@ export default function ContentContainer() {
     let level = myRascal.level;
     let xp = myRascal.xp;
     let xpToLevelUp = myRascal.xpToLevelUp;
-    console.log('hi working')
 
     if (xp > xpToLevelUp) {
       level++;

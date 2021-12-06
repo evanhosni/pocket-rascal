@@ -159,7 +159,7 @@ export default function VerticalLinearStepper(props) {
 
 
   return (
-    <Box sx={{ maxWidth: 400 }} id="creation-panel"className={classes.root}>
+    <Box sx={{ maxWidth: 400 }} id="creation-panel"className={classes.root} style={{background:'transparent'}}>
       <Stepper activeStep={activeStep} orientation="vertical">
         {steps.map((step, index) => (
           <Step key={step.label}>
