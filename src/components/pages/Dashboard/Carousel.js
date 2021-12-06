@@ -41,6 +41,45 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
     }
     function equipBodyPart(name, type) {
         console.log('egg')
+
+        // let rascalCopy = {...myContext.userRascal}
+        // if(type=="body"){
+        //     if(rascalCopy.body==name){
+        //         rascalCopy.body="empty"
+        //     }else{
+        //         rascalCopy.body=name
+        //     }
+            
+        // }else if(type=="eyes"){
+        //     if(rascalCopy.eyes==name){
+        //         rascalCopy.eyes="empty"
+        //     }else{
+        //         rascalCopy.eyes=name
+        //     }
+
+        // }else if(type=="nose"){
+        //     if(rascalCopy.nose==name){
+        //         rascalCopy.nose="empty"
+        //     }else{
+        //         rascalCopy.nose=name
+        //     }
+            
+        // }else if(type=="mouth"){
+        //     if(rascalCopy.mouth==name){
+        //         rascalCopy.mouth="empty"
+        //     }else{
+        //         rascalCopy.mouth=name
+        //     }
+            
+        // }else if(type=="color"){
+        //     if(rascalCopy.color==name){
+        //         rascalCopy.color="white"
+        //     }else{
+        //         rascalCopy.color=name
+        //     }
+            
+        // }
+        // myContext.setUserRascal({...rascalCopy})
         // Uncommenting this out results in an error. Cant seem to figure it out.  ONLY FOR BODY AND NOSE ///////////
 
 

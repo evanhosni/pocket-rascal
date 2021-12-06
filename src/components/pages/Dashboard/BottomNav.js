@@ -236,14 +236,14 @@ export default function BottomNav({ openFail, setOpenFail }) {
 
   return (
     <div>
-      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItemsWindow}>
-        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" >
+      <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300}  animationOutDuration={200} isVisible={equippedItemsWindow}>
+        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} key='equipped-items-list' id="equipped-items" >
           {equippedItemsCopy.map((item, index) => {
             let imgSrc = item.name || "empty"
             return (
-              <div>
-                <Button style={equippedItemBtn} key={index} itemIndex={index} onClick={removeEquip}>
-                  <img itemIndex={index} src={`./assets/${imgSrc}.png`} />
+              <div key={index}>
+                <Button style={equippedItemBtn} itemindex={index} onClick={removeEquip}>
+                  <img itemindex={index} src={`./assets/${imgSrc}.png`} />
                 </Button>
               </div>
             )
