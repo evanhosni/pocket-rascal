@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 
 
-export default function VerticalLinearStepper(props) {
+export default function VerticalLinearStepper() {
 
   const myContext = useContext(AppContext);
 
@@ -39,6 +39,8 @@ export default function VerticalLinearStepper(props) {
   const [newRascalName,setNewRascalName] = useState('');
   const [newRascalColor,setNewRascalColor]= useState('');
   const [newRascalBody,setNewRascalBody]= useState('');
+  const [newRascalEyes,setNewRascalEyes]= useState('');
+  const [newRascalMouth,setNewRascalMouth]= useState('');
   
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -52,30 +54,36 @@ export default function VerticalLinearStepper(props) {
     setActiveStep(0);
   };
   const handleFinish = () =>{
-    props.setMyRascal({
+    myContext.setUserRascal({
       name:newRascalName,
       color:newRascalColor,
       body:newRascalBody,
+      eyes:newRascalEyes,
+      mouth:newRascalMouth,
       happiness:50,
       hunger:50,
       level:1,
       coins:50
     })
-    props.setUnlockedItems([{name:newRascalBody,type:'body'}])
-    API.createRascal(props.userState.id,{
+    myContext.setUnlockItems([{name:newRascalBody,type:'body'},{name:newRascalMouth, type:"mouth"},{name:newRascalEyes,type:"eyes"}])
+    API.createRascal(myContext.user.id,{
       name:newRascalName,
       color:newRascalColor,
       body:newRascalBody,
+      eyes:newRascalEyes,
+      mouth:newRascalMouth,
       happiness:50,
       hunger:50,
       level:1,
       coins:50
     }).then(promise=>{
       console.log(promise)
-      props.setMyRascal({
+      myContext.setUserRascal({
         name:newRascalName,
         color:newRascalColor,
         body:newRascalBody,
+        eyes:newRascalEyes,
+        mouth:newRascalMouth,
         happiness:50,
         hunger:50,
         level:1,
@@ -83,7 +91,8 @@ export default function VerticalLinearStepper(props) {
         UserId:promise.data.UserId,
         id:promise.data.id
       })
-      API.addUnlockedItem(promise.data.id,{name:newRascalBody,type:"body"}).then(promises=>{
+      
+      API.addUnlockedItem(promise.data.id,[{name:newRascalBody,type:'body'},{name:newRascalMouth, type:"mouth"},{name:newRascalEyes,type:"eyes"}]).then(promises=>{
 
         myContext.setCurrentPage("Dashboard")
       }).catch(err=>{
@@ -112,7 +121,7 @@ export default function VerticalLinearStepper(props) {
           noValidate
           autoComplete="off"
           value={newRascalName}
-          onChange={(e)=>{setNewRascalName(e.target.value); props.setMyRascal({body:newRascalBody,color:newRascalColor,name:e.target.value})}}
+          onChange={(e)=>{setNewRascalName(e.target.value)}}
         >
           <TextField className={classes.root} id="standard-basic" label="Enter name here" variant="standard" />
         </Box>
@@ -122,9 +131,47 @@ export default function VerticalLinearStepper(props) {
       description:
         <FormControl component="fieldset">
           <FormLabel component="legend">Choose your Rascal's body:</FormLabel>
-          <RadioGroup onChange={(e)=>{setNewRascalBody(e.target.value); props.setMyRascal({name:newRascalName,color:newRascalColor,body:e.target.value})}}row aria-label="gender" name="row-radio-buttons-group">
+          <RadioGroup onChange={(e)=>{setNewRascalBody(e.target.value)}}row aria-label="body" name="row-radio-buttons-group">
             <FormControlLabel value="body_fuzzy" control={<Radio />} data-id="body-type" label="Fuzzy" />
             <FormControlLabel value="body_curly" control={<Radio />} label="Curly" data-id="body-type" />
+            {/* <FormControlLabel value="other" control={<Radio />} label="Body3" />
+            <FormControlLabel
+              value="disabled"
+              disabled
+              control={<Radio />}
+              label="other"
+            /> */}
+          </RadioGroup>
+        </FormControl>
+    },
+    {
+      label: 'Select eyes for your pocket Rascal:',
+      description:
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Choose your Rascal's eyes:</FormLabel>
+          <RadioGroup onChange={(e)=>{setNewRascalEyes(e.target.value)}}row aria-label="eyes" name="row-radio-buttons-group">
+            <FormControlLabel value="eyes_cute" control={<Radio />} data-id="eyes-type" label="Cute" />
+            <FormControlLabel value="eyes_tired" control={<Radio />} label="Tired" data-id="eyes-type" />
+            <FormControlLabel value="eyes_glasses" control={<Radio />} label="Glasses" data-id="eyes-type" />
+            {/* <FormControlLabel value="other" control={<Radio />} label="Body3" />
+            <FormControlLabel
+              value="disabled"
+              disabled
+              control={<Radio />}
+              label="other"
+            /> */}
+          </RadioGroup>
+        </FormControl>
+    },
+    {
+      label: 'Select eyes for your pocket Rascal:',
+      description:
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Choose your Rascal's mouth:</FormLabel>
+          <RadioGroup onChange={(e)=>{setNewRascalMouth(e.target.value)}}row aria-label="mouth" name="row-radio-buttons-group">
+            <FormControlLabel value="mouth_simple" control={<Radio />} data-id="mouth-type" label="Simple" />
+            {/* <FormControlLabel value="mouth_tired" control={<Radio />} label="Tired" data-id="mouth-type" />
+            <FormControlLabel value="mouth_glasses" control={<Radio />} label="Glasses" data-id="mouth-type" /> */}
             {/* <FormControlLabel value="other" control={<Radio />} label="Body3" />
             <FormControlLabel
               value="disabled"
@@ -146,7 +193,7 @@ export default function VerticalLinearStepper(props) {
               id="demo-simple-select"
               value={newRascalColor}
               label="Color"
-              onChange={(e)=>{setNewRascalColor(e.target.value); props.setMyRascal({body:newRascalBody,name:newRascalName,color:e.target.value})}}
+              onChange={(e)=>{setNewRascalColor(e.target.value)}}
             >
               <MenuItem value={'blue'}>Blue</MenuItem>
               <MenuItem value={'green'}>Green</MenuItem>

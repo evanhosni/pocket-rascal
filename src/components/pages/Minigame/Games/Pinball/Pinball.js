@@ -698,7 +698,7 @@ class Pinball extends React.Component {
         animation = requestAnimationFrame(rerender);
       })();
     };
-    generate();
+    // generate();
 
 
 

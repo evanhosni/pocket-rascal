@@ -66,17 +66,17 @@ export default function ContentContainer() {
   }
 
   //user level - based on xp points from interacting/minigames
-  const [userLevel, setUserLevel] = useState(myRascal.level);
+  const [userLevel, setUserLevel] = useState(0);
   //user level is only set in content container - doesn't need to be set anywhere
 
   //xp impacts level -- increases from interactions/minigames
-  const [userXP, setUserXP] = useState(myRascal.xp)
+  const [userXP, setUserXP] = useState(0)
   const toggleUserXP = (value) => {
     setUserXP(value)
   }
 
   //coins to unlock items/buy interactions -- increase via minigames
-  const [userCoins, setUserCoins] = useState(myRascal.coins);
+  const [userCoins, setUserCoins] = useState(0);
   const toggleUserCoins = (value) => {
     setUserCoins(value)
   }
@@ -116,6 +116,7 @@ export default function ContentContainer() {
         setMyRascal(rascalDat.data)
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
+        toggleUserCoins(res.data.coins)
         if (currentPage !== "Dashboard") { setCurrentPage("Dashboard") }
         // const interval = setInterval(() => {
         //   console.log('This will run every 10 seconds!');
@@ -183,14 +184,22 @@ export default function ContentContainer() {
     let xpToLevelUp = myRascal.xpToLevelUp;
 
     if (xp > xpToLevelUp) {
-      level++;
+      ++level;
       console.log(level)
       xpToLevelUp = xpToLevelUp + (50 * level)
-      myRascal.level = level;
-      myRascal.xpToLevelUp = xpToLevelUp;
-      setUserLevel(myRascal.level);
+      setMyRascal({...myRascal,level:level,xpToLevelUp:xpToLevelUp})
+      
+      setUserLevel(level);
     } else { return }
   }, [userXP])
+  useEffect(()=>{
+    if(myRascal.coins!=userCoins){
+      setUserCoins(myRascal.coins)
+    }
+    if(myRascal.level!=userLevel){
+      setUserLevel(myRascal.level)
+    }
+  },[myRascal])
 
 
 //render correct content for page 

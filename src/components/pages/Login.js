@@ -42,10 +42,7 @@ export default function SignIn(props) {
       password: data.get('password')
     }
     API.login(user).then(async (res)=>{
-      myContext.setUser({
-        email:res.data.user.email,
-        id:res.data.user.id
-      })
+      myContext.setUser(res.data.user.email,res.data.user.id)
       myContext.setUserToken(res.data.token)
       localStorage.setItem("token",res.data.token)
       const rascalDat = await API.loadRascal(res.data.user.id)
@@ -55,6 +52,7 @@ export default function SignIn(props) {
         myContext.setUserRascal(rascalDat.data)
         myContext.setEquipItems(equipDat.data)
         myContext.setUnlockItems(unlockDat.data)
+        myContext.setCoins(rascalDat.data.coins)
       myContext.setCurrentPage('Dashboard')
     }).catch(err=>{
       alert("Incorrect Credentials")
