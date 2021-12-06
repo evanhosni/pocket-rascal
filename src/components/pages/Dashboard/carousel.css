@@ -1,0 +1,33 @@
+.carousel-track {
+    min-height: 54px;
+}
+
+/* .onlytwo {
+    margin-left: 34px;
+} */
+
+.carousel-item {
+    text-align: center;
+}
+
+.carousel-item button {
+    padding: 0;
+    cursor: pointer;
+    background-color: white;
+    border: solid black 3px;
+    border-radius: 50%;
+    max-width: 50px;
+    max-height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+}
+
+.carousel-arrow {
+    filter: grayscale(1);
+    margin-top: 0
+}
+
+.equipped {
+    background-color: green;
+    /* color: rgb(0, 86, 136) */
+}
