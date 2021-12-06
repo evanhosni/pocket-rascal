@@ -108,7 +108,7 @@ class Scene extends React.Component {
     var item6
     var item7
     var item8
-    var selectedBody = myContext.userRascal.body || "empty";
+    var selectedBody = myContext.userRascal.body + '_' + myContext.userRascal.color || "empty";
 
     var selectedEyes = myContext.userRascal.eyes || "empty";
 
@@ -504,7 +504,7 @@ class Scene extends React.Component {
     }
 
     const changeSelections = () => {
-      selectedBody = myContext.userRascal.body || "empty";
+      selectedBody = myContext.userRascal.body + '_' + myContext.userRascal.color || "empty";
 
       selectedEyes = myContext.userRascal.eyes || "empty";
 
@@ -617,7 +617,7 @@ class Scene extends React.Component {
               cancelAnimationFrame(animation);
               generate()
             } else {
-              selectedBody = isolate
+              selectedBody = isolate + '_' + myContext.userRascal.color
               cancelAnimationFrame(animation);
               generate()
             }
@@ -666,9 +666,10 @@ class Scene extends React.Component {
         }
       })
     }
+    let tempColor = "white"
     if (creationPanel) {
       creationPanel.addEventListener("click", (e) => {
-
+        var colorCheck = e.target.getAttribute('name')
         var value = e.target.getAttribute('value')
         let regNose = /nose/;
         let regBody = /body/;
@@ -678,9 +679,16 @@ class Scene extends React.Component {
         let resultNose = regNose.exec(value)
         let resultEyes = regEyes.exec(value)
         let resultMouth = regMouth.exec(value)
-
+        if(colorCheck=='color-radio'){
+          tempColor=value
+          let bodyArray = selectedBody.split('_')
+          selectedBody = bodyArray[0] + '_' + bodyArray[1]+ '_' + tempColor;
+          cancelAnimationFrame(animation);
+          generate()
+        }
+        
         if (resultBody) {
-          selectedBody = value
+          selectedBody = value + '_' + tempColor
           cancelAnimationFrame(animation);
           generate()
         }
