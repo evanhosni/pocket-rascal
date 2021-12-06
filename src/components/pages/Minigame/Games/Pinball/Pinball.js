@@ -45,7 +45,6 @@ class Pinball extends React.Component {
           width: 2000,
           height: 2000,
           wireframes: false,
-          // background: "url(https://i.imgur.com/LWwkqvS.png)"
         }
       });
       Render.run(render);
@@ -99,9 +98,6 @@ class Pinball extends React.Component {
         },
         render: {
           sprite: {
-            // texture: `./assets/${ballBody}.png`,
-            // xScale: 0.25 / 3.5,
-            // yScale: 0.25 / 3.5
             texture: "https://imgur.com/6Nmywmw.png",
             xScale: 1 / 3.5,
             yScale: 1 / 3.5
@@ -588,117 +584,6 @@ class Pinball extends React.Component {
     createPaddles();
     createEvents();
 
-
-
-    var selectedBody = myContext.userRascal.body || "empty";
-
-    var selectedEyes = myContext.userRascal.eyes || "empty";
-
-    var selectedMouth = myContext.userRascal.mouth || "empty";
-
-    var selectedNose = myContext.userRascal.nose || "empty";
-
-    var animation;
-    const canvas = document.querySelector("canvas");
-    const ctx = canvas.getContext("2d");
-    // canvas.width = 5000;
-    // canvas.height = 5000;
-
-    const generate = async () => {
-      cancelAnimationFrame(animation);
-      const bodyImage = await new Promise((resolve, reject) => {
-        const bodyImage = new Image();
-        bodyImage.onload = () => resolve(bodyImage);
-        bodyImage.onerror = reject;
-        bodyImage.src = `./assets/${selectedBody}.png`;
-      });
-      const eyesImage = await new Promise((resolve, reject) => {
-        const eyesImage = new Image();
-        eyesImage.onload = () => resolve(eyesImage);
-        eyesImage.onerror = reject;
-        eyesImage.src = `./assets/${selectedEyes}.png`;
-      });
-      const mouthImage = await new Promise((resolve, reject) => {
-        const mouthImage = new Image();
-        mouthImage.onload = () => resolve(mouthImage);
-        mouthImage.onerror = reject;
-        mouthImage.src = `./assets/${selectedMouth}.png`;
-      });
-      const noseImage = await new Promise((resolve, reject) => {
-        const noseImage = new Image();
-        noseImage.onload = () => resolve(noseImage);
-        noseImage.onerror = reject;
-        noseImage.src = `./assets/${selectedNose}.png`;
-      });
-
-      const w = 500;
-      const h = 500;
-      let frameNumber = 0;
-
-      (function rerender() {
-        const bodyOffset = (~~frameNumber * w) % bodyImage.width;
-        const eyesOffset = (~~frameNumber * w) % eyesImage.width;
-        const mouthOffset = (~~frameNumber * w) % mouthImage.width;
-        const noseOffset = (~~frameNumber * w) % noseImage.width;
-        const { x, y } = ball.position;
-        ctx.drawImage(
-          bodyImage, // image
-          bodyOffset, // sx
-          0, // sy
-          w, // sWidth
-          h, // sHeight
-          x - w / 2, // dx
-          y - h / 2, // dy
-          50, // dWidth
-          50 // dHeight
-        );
-        ctx.drawImage(
-          eyesImage, // image
-          eyesOffset, // sx
-          0, // sy
-          w, // sWidth
-          h, // sHeight
-          x - w / 2, // dx
-          y - h / 2, // dy
-          50, // dWidth
-          50 // dHeight
-        );
-        ctx.drawImage(
-          mouthImage, // image
-          mouthOffset, // sx
-          0, // sy
-          w, // sWidth
-          h, // sHeight
-          x - w / 2, // dx
-          y - h / 2, // dy
-          50, // dWidth
-          50 // dHeight
-        );
-        ctx.drawImage(
-          noseImage, // image
-          noseOffset, // sx
-          0, // sy
-          w, // sWidth
-          h, // sHeight
-          x - w / 2, // dx
-          y - h / 2, // dy
-          50, // dWidth
-          50 // dHeight
-        );
-        frameNumber += 0.1;
-        // Matter.Engine.update(engine);
-        animation = requestAnimationFrame(rerender);
-      })();
-    };
-    // generate();
-
-
-
-    // setInterval(() => {
-    //   // console.log(ball.position)
-    // }, 2000);
-
-
   }
 
 
@@ -712,7 +597,7 @@ class Pinball extends React.Component {
     }
     return (
       <div>
-        <div class="score current-score">
+        <div className="score current-score">
           {`score ${this.state.score}`}
           <span></span>
         </div>
@@ -720,9 +605,9 @@ class Pinball extends React.Component {
 
         {mobileBtns && <div>
           <button style={{ position: "absolute", bottom: 70, left: 50 }}
-            class="trigger left-trigger" id='left-trig'>tap!</button>
+            className="trigger left-trigger" id='left-trig'>tap!</button>
           <button style={{ position: "absolute", bottom: 70, right: 80 }}
-            class="trigger right-trigger" id='right-trig'>tap!</button>
+            className="trigger right-trigger" id='right-trig'>tap!</button>
         </div>}
 
         {

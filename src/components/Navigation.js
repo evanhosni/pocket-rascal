@@ -107,7 +107,10 @@ function Navigation({ userId }) {
 
   function Item(props) {
     return (
-      <Paper style={{ minHeight: '45vh', maxHeight: '45vh' }}>
+      <Paper style={{ minHeight: '45vh', maxHeight: 'fit-content' }}>
+        <div style={{ maxWidth: '45vh', maxHeight: '25vh' }}>
+          <img src={`./assets/${props.item.source}.png`} alt='' style={{ width:'100%', height:'100%' }} />
+        </div>
         <h2>{props.item.name}</h2>
         <p>{props.item.description}</p>
 
@@ -122,15 +125,17 @@ function Navigation({ userId }) {
     },
     {
       name: "Customize",
-      description: "The options are endless! Give your Rascal a lil party hat. Or don't - you can make him lame, too. Dress up your Rascal by clicking the pencil at the bottom of the page. This will bring up all of your available items. If you change your mind on an equipped item, click it's image at the top of the screen to remove it."
+      source: 'tutorial-customize',
+      description: "The options are endless! Give your Rascal a lil party hat. Or don't - you can make him lame, too. Dress up your Rascal by clicking the pencil at the bottom of the page. If you change your mind on an equipped item, click it's image at the top of the screen to remove it."
     },
     {
       name: "Minigames",
+      source: 'tutorial-minigames',
       description: "Gain some pocket change by playing games. You can use pocket change to buy new items, crumbs, or soap to keep your pocket friend looking fresh and feeling happy."
     },
     {
       name: "Care",
-      description: "Speaking of happiness - your new Rascal is a moody lil guy. Keep an eye on his status bar to make sure his mood stays in the green! Feeding him, washing him, switching up his look, and playing games will help to keep his boredom down and his happiness high. If you aren't sure what's got your friend in the red, click the smiley for some hints."
+      description: "Speaking of happiness - your new Rascal is a moody lil guy. Keep an eye on his status bar to make sure his mood stays in the green! Feeding him crumbs, washing him, switching up his look, and playing games will help to keep his boredom down and his happiness high. If you aren't sure what's got your friend in the red, click the smiley for some hints."
     }
   ];
 
@@ -160,7 +165,7 @@ function Navigation({ userId }) {
       </IconButton>
       <Menu
 
-        style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
+        style={{ fontFamily: "'Nanum Pen Script', sans-serif" }}
         id="menu-appbar"
         anchorEl={anchorEl}
         anchorOrigin={{
@@ -175,26 +180,26 @@ function Navigation({ userId }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
-        onClick={handleNameOpen} color='inherit'>{`Hi, ${myContext.userRascal.name}`}</MenuItem>
-        <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
-        onClick={handleClickOpen} color='inherit'>Tutorial</MenuItem>
-        <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
-        onClick={() => myContext.setCurrentPage('CreateRascal')} color='inherit'>Create</MenuItem>
-        {!myContext.user.id && <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
-        onClick={() => myContext.setCurrentPage('Login')} color="inherit">Login</MenuItem>}
-        {!myContext.user.id && <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
-        onClick={() => myContext.setCurrentPage('SignUp')} color="inherit">Sign Up</MenuItem>}
-        {myContext.user.id && <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
-        onClick={() => myContext.logOut()} color="inherit">Logout</MenuItem>}
+        <MenuItem style={{ fontFamily: "'Nanum Pen Script', sans-serif" }}
+          onClick={handleNameOpen} color='inherit'>{`Hi, ${myContext.userRascal.name}`}</MenuItem>
+        <MenuItem style={{ fontFamily: "'Nanum Pen Script', sans-serif" }}
+          onClick={handleClickOpen} color='inherit'>Tutorial</MenuItem>
+        <MenuItem style={{ fontFamily: "'Nanum Pen Script', sans-serif" }}
+          onClick={() => myContext.setCurrentPage('CreateRascal')} color='inherit'>Create</MenuItem>
+        {!myContext.user.id && <MenuItem style={{ fontFamily: "'Nanum Pen Script', sans-serif" }}
+          onClick={() => myContext.setCurrentPage('Login')} color="inherit">Login</MenuItem>}
+        {!myContext.user.id && <MenuItem style={{ fontFamily: "'Nanum Pen Script', sans-serif" }}
+          onClick={() => myContext.setCurrentPage('SignUp')} color="inherit">Sign Up</MenuItem>}
+        {myContext.user.id && <MenuItem style={{ fontFamily: "'Nanum Pen Script', sans-serif" }}
+          onClick={() => myContext.logOut()} color="inherit">Logout</MenuItem>}
       </Menu>
 
 
-      <TutorialDialog onClose={handleClickClose} open={open} aria-labelledby="customized-dialog-title" >
+      <TutorialDialog onClose={handleClickClose} open={open} aria-labelledby="customized-dialog-title">
         <DialogTitle id="customized-dialog-title" style={{ fontSize: 'larger', textAlign: 'center', fontFamily: "'Nanum Pen Script',sans-serif" }}>
           Welcome to Pocket Rascal!
         </DialogTitle>
-        <div id='tutorial-content'>
+        <div id='tutorial-content' style={{overflow:'scroll'}}>
           <Carousel
             {...settings} style={{ alignItems: 'center' }}
             navButtonsProps={{
@@ -215,7 +220,7 @@ function Navigation({ userId }) {
             ))}
           </Carousel>
         </div>
-        <div id='tutorial-btns' style={{display: 'flex', justifyContent:'flex-end', padding: 5 }}>
+        <div id='tutorial-btns' style={{ display: 'flex', justifyContent: 'flex-end', padding: 5 }}>
           <Button autoFocus onClick={handleClickClose} id="done">
             Done
           </Button>
@@ -223,34 +228,34 @@ function Navigation({ userId }) {
         </div>
       </TutorialDialog>
       <div>
-     
-      <NameChangeDialog
-        onClose={handleNameClose}
-        aria-labelledby="customized-dialog-title"
-        open={openName}
-      >
-        <NameChangeDialogTitle style={{backgroundColor: "lightblue"}} id="customized-dialog-title" onClose={handleNameClose}>
-          Are you sure you want to rename your Rascal?
-        </NameChangeDialogTitle>
-        <DialogContent style={{backgroundColor: "lightblue"}} dividers>
-          <Typography gutterBottom>
-          Your lil buddy is already so attached to their name...
-          </Typography>
-          
-          <Typography gutterBottom>
-            If you're positive, go ahead and click to continue -- but it'll cost you!
-          </Typography>
-        </DialogContent>
-        <DialogActions style={{backgroundColor: "lightblue"}}>
-          <Button autoFocus onClick={handleNameClose}>
-            Nevermind
-          </Button>
-          <Button autoFocus onClick={handleNameClose}>
-            Change Name
-          </Button>
-        </DialogActions>
-      </NameChangeDialog>
-    </div>
+
+        <NameChangeDialog
+          onClose={handleNameClose}
+          aria-labelledby="customized-dialog-title"
+          open={openName}
+        >
+          <NameChangeDialogTitle style={{ backgroundColor: "lightblue" }} id="customized-dialog-title" onClose={handleNameClose}>
+            Are you sure you want to rename your Rascal?
+          </NameChangeDialogTitle>
+          <DialogContent style={{ backgroundColor: "lightblue" }} dividers>
+            <Typography gutterBottom>
+              Your lil buddy is already so attached to their name...
+            </Typography>
+
+            <Typography gutterBottom>
+              If you're positive, go ahead and click to continue -- but it'll cost you!
+            </Typography>
+          </DialogContent>
+          <DialogActions style={{ backgroundColor: "lightblue" }}>
+            <Button autoFocus onClick={handleNameClose}>
+              Nevermind
+            </Button>
+            <Button autoFocus onClick={handleNameClose}>
+              Change Name
+            </Button>
+          </DialogActions>
+        </NameChangeDialog>
+      </div>
     </>
   );
 }
