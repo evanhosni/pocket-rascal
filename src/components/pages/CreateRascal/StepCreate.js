@@ -58,8 +58,8 @@ export default function VerticalLinearStepper() {
       name:newRascalName,
       color:newRascalColor,
       body:newRascalBody,
-      eyes:"eyes_cute",
-      mouth:"mouth_simple",
+      eyes:newRascalEyes,
+      mouth:newRascalMouth,
       happiness:50,
       hunger:50,
       level:1,
@@ -149,7 +149,7 @@ export default function VerticalLinearStepper() {
       description:
         <FormControl component="fieldset">
           <FormLabel component="legend">Choose your Rascal's eyes:</FormLabel>
-          <RadioGroup onChange={(e)=>{setNewRascalBody(e.target.value)}}row aria-label="eyes" name="row-radio-buttons-group">
+          <RadioGroup onChange={(e)=>{setNewRascalEyes(e.target.value)}}row aria-label="eyes" name="row-radio-buttons-group">
             <FormControlLabel value="eyes_cute" control={<Radio />} data-id="eyes-type" label="Cute" />
             <FormControlLabel value="eyes_tired" control={<Radio />} label="Tired" data-id="eyes-type" />
             <FormControlLabel value="eyes_glasses" control={<Radio />} label="Glasses" data-id="eyes-type" />
