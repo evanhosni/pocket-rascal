@@ -19,7 +19,13 @@ class Scene extends React.Component {
     const myContext = this.context;
 
     // const myContext = useContext(AppContext);
-    const ongoingRascal = {}
+    const ongoingRascal = {
+      color:myContext.userRascal.color,
+      nose:myContext.userRascal.nose,
+      body:myContext.userRascal.body,
+      mouth:myContext.userRascal.mouth,
+      eyes:myContext.userRascal.eyes,
+    }
 
     var Engine = Matter.Engine,
       Render = Matter.Render,
@@ -119,6 +125,7 @@ class Scene extends React.Component {
 
     var itemArray = [...myContext.equipItems
     ];
+    console.log(itemArray)
     //////////////////////////////////////////////////////////////////////////////////////
 
     var animation;
@@ -479,6 +486,7 @@ class Scene extends React.Component {
         Composite.add(world, [item8, itemConstraint8]);
       }
     }
+    addItems()
 
 
 
@@ -555,8 +563,8 @@ class Scene extends React.Component {
             }
           }
           if (resultBody && !colorCheck) {
-            let bodyArray = selectedBody.split('_')
-            let bodyDefault = bodyArray[0] + '_' + bodyArray[1]
+            
+            let bodyDefault = ongoingRascal.body
             if (isolate == bodyDefault) {
               selectedBody = "empty"
               cancelAnimationFrame(animation);
@@ -564,10 +572,10 @@ class Scene extends React.Component {
               ongoingRascal.body='empty'
               myContext.setRascalBodySave({...ongoingRascal})
             } else {
-              selectedBody = isolate + '_' + myContext.userRascal.color
+              selectedBody = isolate + '_' + ongoingRascal.color
               cancelAnimationFrame(animation);
               generate()
-              ongoingRascal.body=bodyDefault
+              ongoingRascal.body=isolate
               myContext.setRascalBodySave({...ongoingRascal})
             }
           }
