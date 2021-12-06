@@ -17,7 +17,7 @@ export default function MiniTopBar({ userId }) {
 
             </div>
             <div style={{ width: 55, textAlign: 'right', marginRight: '1%' }}>
-                <Navigation userId={userId} />
+                <Navigation />
             </div>
 
         </div>
