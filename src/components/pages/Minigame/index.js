@@ -7,7 +7,7 @@ export default function MiniPlayground({userId}) {
 
   return (
     <div style={{display:'flex',flexDirection:'column',alignItems:'center'}}>
-        <MiniTopBar userId={userId} />
+        <MiniTopBar />
         <MiniSelection />
         <MiniNav />
     </div>

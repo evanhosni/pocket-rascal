@@ -3,17 +3,13 @@ import { Animated } from "react-animated-css";
 import Carousel from './Carousel';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
-import EditIcon from '@mui/icons-material/Edit';
-import FastfoodIcon from '@mui/icons-material/Fastfood';
-import ShowerIcon from '@mui/icons-material/Shower';
-import StoreIcon from '@mui/icons-material/Store';
 import PropTypes from "prop-types";
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import StoreColors from "./Store/Color";
 import StoreBodies from './Store/Body';
 import StoreEyes from './Store/Eyes';
 import StoreNose from './Store/Nose';
@@ -172,6 +168,9 @@ export default function BottomNav({ openFail, setOpenFail }) {
   //conditional rendering for store items
   const [storeContent, setStoreContent] = useState('Bodies')
   const renderStoreContent = () => {
+    if(storeContent === 'Color') {
+      return <StoreColors />
+    }
     if (storeContent === 'Bodies') {
       return <StoreBodies />
     }

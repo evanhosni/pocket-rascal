@@ -9,7 +9,8 @@ class Pinball extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      collisions: 0
+      score: 0,
+      gameOver: false
     };
   }
 
@@ -28,7 +29,7 @@ class Pinball extends React.Component {
       MouseConstraint = Matter.MouseConstraint,
       Constraint = Matter.Constraint;
 
-      Matter.use(MatterAttractors);
+    Matter.use(MatterAttractors);
 
     function setupEngine() {
       var engine = Engine.create();
@@ -70,13 +71,13 @@ class Pinball extends React.Component {
         Mouse.setScale(mouse, { x: 0, y: 1 })
         Mouse.setOffset(mouse, { x: 1215, y: 0 })
       } else {//TODO: fix this
-        Mouse.setScale(mouse, { x: 0, y: 0.5*((window.innerHeight) / window.innerWidth) })
+        Mouse.setScale(mouse, { x: 0, y: 0.5 * ((window.innerHeight) / window.innerWidth) })
         Mouse.setOffset(mouse, { x: 1215, y: 1000 - (500 * (window.innerHeight / window.innerWidth)) })
       }
       return mouseConstraint;
     }
     function resize() {
-      World.remove(world,mouseConstraint)
+      World.remove(world, mouseConstraint)
       createMouse()
     }
     window.addEventListener('resize', resize)
@@ -88,7 +89,7 @@ class Pinball extends React.Component {
     isLeftPaddleUp = false;
     isRightPaddleUp = false;
 
-    // var ballBody = 'minibody'
+    var ballBody = 'minibody'
     function createBall(x, y) {
       ball = Bodies.circle(x, y, 10, {
         mass: 5,
@@ -99,6 +100,8 @@ class Pinball extends React.Component {
         render: {
           sprite: {
             // texture: `./assets/${ballBody}.png`,
+            // xScale: 0.25 / 3.5,
+            // yScale: 0.25 / 3.5
             texture: "https://imgur.com/6Nmywmw.png",
             xScale: 1 / 3.5,
             yScale: 1 / 3.5
@@ -174,6 +177,7 @@ class Pinball extends React.Component {
       PINBALL: '#dee2e6'
     };
     const GRAVITY = 0.1;
+    engine.gravity.y = GRAVITY
     world.gravity.y = GRAVITY
     const WIREFRAMES = false;
     const BUMPER_BOUNCE = 1.5;
@@ -206,7 +210,7 @@ class Pinball extends React.Component {
         isStatic: true,
         render: {
           fillStyle: COLOR.OUTER,
-  
+
           // add stroke and line width to fill in slight gaps between fragments
           strokeStyle: COLOR.OUTER,
           lineWidth: 1
@@ -222,17 +226,17 @@ class Pinball extends React.Component {
           fillStyle: COLOR.BUMPER
         }
       });
-  
+
       // for some reason, restitution is reset unless it's set after body creation
       bumper.restitution = BUMPER_BOUNCE;
-  
+
       return bumper;
     }
 
     function stopper(x, y, side, position) {
       // determine which paddle composite to interact with
       let attracteeLabel = (side === 'left') ? 'paddleLeftComp' : 'paddleRightComp';
-  
+
       return Matter.Bodies.circle(x, y, 40, {
         isStatic: true,
         render: {
@@ -244,7 +248,7 @@ class Pinball extends React.Component {
         plugin: {
           attractors: [
             // stopper is always a, other body is b
-            function(a, b) {
+            function (a, b) {
               if (b.label === attracteeLabel) {
                 let isPaddleUp = (side === 'left') ? isLeftPaddleUp : isRightPaddleUp;
                 let isPullingUp = (position === 'up' && isPaddleUp);
@@ -262,8 +266,9 @@ class Pinball extends React.Component {
       });
     }
 
+
     function reset(x, width) {
-      return Matter.Bodies.rectangle(x, 781, width, 2, {
+      return Matter.Bodies.rectangle(x, 1380, width, 2, {
         label: 'reset',
         isStatic: true,
         render: {
@@ -279,7 +284,7 @@ class Pinball extends React.Component {
         boundary(1000, 1430, 500, 100),
         boundary(720, 1000, 100, 800),
         boundary(1280, 1000, 100, 800),
-  
+
         // dome
         // path(989, 686, PATHS.DOME),//TODO: get dome working
         path(780, 700, PATHS.DOME_LEFT1),
@@ -294,47 +299,47 @@ class Pinball extends React.Component {
         path(1210, 660, PATHS.DOME_RIGHT5),
         path(780, 650, PATHS.DOME_LEFT6),
         path(1220, 650, PATHS.DOME_RIGHT6),
-  
+
         // pegs (left, mid, right)
         wall(890, 740, 20, 40, COLOR.INNER),
         wall(975, 740, 20, 40, COLOR.INNER),
         wall(1060, 740, 20, 40, COLOR.INNER),
-  
+
         // top bumpers (left, mid, right)
         bumper(855, 850),
         bumper(975, 850),
         bumper(1095, 850),
-  
+
         // bottom bumpers (left, right)
         bumper(915, 940),
         bumper(1035, 940),
-  
+
         // shooter lane wall
         wall(1190, 1120, 20, 560, COLOR.OUTER),
-  
+
         // drops (left, right)
         path(775, 960, PATHS.DROP_LEFT),
         path(1175, 960, PATHS.DROP_RIGHT),
-  
+
         // slingshots (left, right)
         wall(870, 1110, 20, 120, COLOR.INNER),
         wall(1080, 1110, 20, 120, COLOR.INNER),
-  
+
         // out lane walls (left, right)
         wall(810, 1129, 20, 160, COLOR.INNER),
         wall(1140, 1129, 20, 160, COLOR.INNER),
-  
+
         // flipper walls (left, right);
         wall(843, 1224, 20, 98, COLOR.INNER, -0.96),
         wall(1107, 1224, 20, 98, COLOR.INNER, 0.96),
-  
+
         // aprons (left, right)
         path(829, 1340, PATHS.APRON_LEFT),
         path(1121, 1340, PATHS.APRON_RIGHT),
-  
+
         // reset zones (center, right)
-        // reset(975, 650),
-        // reset(1215, 630)
+        reset(975, 50),
+        reset(1215, 30)
       ]);
     }
 
@@ -365,10 +370,10 @@ class Pinball extends React.Component {
         },
       })
       Matter.World.add(world, [leftUpStopper, leftDownStopper, leftStopperWall, rightUpStopper, rightDownStopper, rightStopperWall]);
-  
+
       // this group lets paddle pieces overlap each other
       let paddleGroup = Matter.Body.nextGroup(true);
-  
+
       // Left paddle mechanism
       let paddleLeft = {};
       paddleLeft.paddle = Matter.Bodies.trapezoid(920, 1260, 20, 80, 0.33, {
@@ -406,10 +411,10 @@ class Pinball extends React.Component {
         length: 0,
         stiffness: 0
       });
-      
+
       Matter.World.add(world, [paddleLeft.comp, paddleLeft.hinge, paddleLeft.con]);
       Matter.Body.rotate(paddleLeft.comp, 0.57, { x: 142, y: 660 });
-  
+
       // right paddle mechanism
       let paddleRight = {};
       paddleRight.paddle = Matter.Bodies.trapezoid(1030, 1260, 20, 80, 0.33, {
@@ -451,22 +456,68 @@ class Pinball extends React.Component {
       Matter.Body.rotate(paddleRight.comp, -0.57, { x: 308, y: 660 });
     }
 
-    function createEvents() {
+    const pingBumper = (bumper) => {
+
+      this.setState({ score: this.state.score + 1 })
+
+      // flash color
+      bumper.render.fillStyle = COLOR.BUMPER_LIT;
+      setTimeout(function () {
+        bumper.render.fillStyle = COLOR.BUMPER;
+      }, 100);
+    }
+
+    const endGame = () => {
+      this.setState({ gameOver: true })
+      console.log(this.state.gameOver)
+    }
+
+
+    const createEvents = () => {
+      var rounds = 0;
       // events for when the pinball hits stuff
-      Matter.Events.on(engine, 'collisionStart', function(event) {
+      Matter.Events.on(engine, 'collisionStart', function (event) {
         let pairs = event.pairs;
-        pairs.forEach(function(pair) {
-          if (pair.bodyB.label === 'pinball') {
-            switch (pair.bodyA.label) {
+        pairs.forEach(function (pair) {
+          if (pair.bodyA.label === 'ball') {
+            switch (pair.bodyB.label) {
               case 'reset':
-                createBall();
+                rounds = (rounds + 1)
+                console.log(rounds)
+                if (rounds < 4) {
+                  World.remove(world, pair.bodyA);
+                  createSlingshot(1215, 1200);
+                } else { endGame() }
+                console.log(pair)
                 break;
               case 'bumper':
-                // pingBumper(pair.bodyA); //TODO:  create function here to add coins
+                pingBumper(pair.bodyB);
+                console.log(pair)
                 break;
             }
           }
         });
+        pairs.forEach(function (pair) {
+          if (pair.bodyB.label === 'ball') {
+            switch (pair.bodyA.label) {
+              case 'reset':
+                rounds = (rounds + 1)
+                console.log(rounds)
+                if (rounds < 4) {
+                  World.remove(world, pair.bodyB);
+                  createSlingshot(1215, 1200);
+                } else { endGame() }
+                console.log(pair)
+
+                break;
+              case 'bumper':
+                pingBumper(pair.bodyA);
+                console.log(pair)
+                break;
+            }
+          }
+        });
+
       });
       // Matter.Events.on(engine, 'beforeUpdate', function(event) {
       //   // bumpers can quickly multiply velocity, so keep that in check
@@ -474,13 +525,13 @@ class Pinball extends React.Component {
       //     x: Math.max(Math.min(pinball.velocity.x, MAX_VELOCITY), -MAX_VELOCITY),
       //     y: Math.max(Math.min(pinball.velocity.y, MAX_VELOCITY), -MAX_VELOCITY),
       //   });
-  
+
       //   // cheap way to keep ball from going back down the shooter lane
       //   if (pinball.position.x > 450 && pinball.velocity.y > 0) {
       //     Matter.Body.setVelocity(pinball, { x: 0, y: -10 });
       //   }
       // });
-  
+
       // // mouse drag (god mode for grabbing pinball)
       // Matter.World.add(world, Matter.MouseConstraint.create(engine, {
       //   mouse: Matter.Mouse.create(render.canvas),
@@ -491,9 +542,9 @@ class Pinball extends React.Component {
       //     }
       //   }
       // }));
-  
+
       // keyboard paddle events
-      window.addEventListener('keydown', function(e) {
+      window.addEventListener('keydown', function (e) {
         if (e.which === 37) { // left arrow key
           isLeftPaddleUp = true;
           console.log('left')
@@ -502,7 +553,7 @@ class Pinball extends React.Component {
           console.log('right')
         }
       });
-      window.addEventListener('keyup', function(e) {
+      window.addEventListener('keyup', function (e) {
         if (e.which === 37) { // left arrow key
           isLeftPaddleUp = false;
         } else if (e.which === 39) { // right arrow key
@@ -511,7 +562,28 @@ class Pinball extends React.Component {
       });
     }
 
-    createSlingshot(1215,1200)
+    //paddle events for tap btns
+    const leftTrig = document.getElementById("left-trig")
+    if (leftTrig) {
+      leftTrig.addEventListener('touchstart', () => {
+        isLeftPaddleUp = true;
+      })
+      leftTrig.addEventListener('touchend', () => {
+        isLeftPaddleUp = false;
+      })
+    }
+
+    const rightTrig = document.getElementById('right-trig')
+    if (rightTrig) {
+      rightTrig.addEventListener('touchstart', () => {
+        isRightPaddleUp = true;
+      })
+      rightTrig.addEventListener('touchend', () => {
+        isRightPaddleUp = false;
+      })
+    }
+
+    createSlingshot(1215, 1200)
     createStaticBodies();
     createPaddles();
     createEvents();
@@ -528,7 +600,6 @@ class Pinball extends React.Component {
 
     var animation;
     const canvas = document.querySelector("canvas");
-    // canvas.setAttribute('id', 'rascalCanvas')
     const ctx = canvas.getContext("2d");
     // canvas.width = 5000;
     // canvas.height = 5000;
@@ -578,8 +649,8 @@ class Pinball extends React.Component {
           h, // sHeight
           x - w / 2, // dx
           y - h / 2, // dy
-          w, // dWidth
-          h // dHeight
+          50, // dWidth
+          50 // dHeight
         );
         ctx.drawImage(
           eyesImage, // image
@@ -589,8 +660,8 @@ class Pinball extends React.Component {
           h, // sHeight
           x - w / 2, // dx
           y - h / 2, // dy
-          w, // dWidth
-          h // dHeight
+          50, // dWidth
+          50 // dHeight
         );
         ctx.drawImage(
           mouthImage, // image
@@ -600,8 +671,8 @@ class Pinball extends React.Component {
           h, // sHeight
           x - w / 2, // dx
           y - h / 2, // dy
-          w, // dWidth
-          h // dHeight
+          50, // dWidth
+          50 // dHeight
         );
         ctx.drawImage(
           noseImage, // image
@@ -611,8 +682,8 @@ class Pinball extends React.Component {
           h, // sHeight
           x - w / 2, // dx
           y - h / 2, // dy
-          w, // dWidth
-          h // dHeight
+          50, // dWidth
+          50 // dHeight
         );
         frameNumber += 0.1;
         // Matter.Engine.update(engine);
@@ -621,29 +692,71 @@ class Pinball extends React.Component {
     };
     // generate();
 
-setInterval(() => {
-  console.log(ball.position)
-}, 2000);
 
+
+    // setInterval(() => {
+    //   // console.log(ball.position)
+    // }, 2000);
 
 
   }
 
+
+
   render() {
+    const myContext = this.context;
+    let width = window.innerWidth
+    var mobileBtns = false;
+    if (width < 768){
+      mobileBtns = true
+    }
     return (
-      <div ref="pinball" id='pinball-container' />
-    //   <>
-    //   <div ref="pinball" id="pinball-container">
-    //   <div class="score current-score">
-    //     score<span></span>
-    //   </div>
-    //   <div class="score high-score">
-    //     high score<span></span>
-    //   </div>
-    //   <button class="trigger left-trigger">tap!</button>
-    //   <button class="trigger right-trigger">tap!</button>
-    //   </div>;
-    // </>
+      <div>
+        <div class="score current-score">
+          {`score ${this.state.score}`}
+          <span></span>
+        </div>
+        <div ref="pinball" id='pinball-container' />
+
+        {mobileBtns && <div>
+          <button style={{ position: "absolute", bottom: 70, left: 50 }}
+            class="trigger left-trigger" id='left-trig'>tap!</button>
+          <button style={{ position: "absolute", bottom: 70, right: 80 }}
+            class="trigger right-trigger" id='right-trig'>tap!</button>
+        </div>}
+
+        {
+          this.state.gameOver && <div
+            className="pinball-splash"
+          >
+            <div>Game Over!</div>
+            <button
+            >
+              Play Again
+            </button>
+            <button
+              onClick={() => {
+                myContext.setCurrentPage('Minigame');
+                myContext.userRascal.coins = (myContext.userRascal.coins + this.state.score)
+                myContext.setCoins(myContext.userRascal.coins)
+                myContext.setEarnedCoins(myContext.earnings + this.state.score)
+                myContext.userRascal.xp = (myContext.userRascal.xp + this.state.score)
+                myContext.setXP(myContext.userRascal.xp)
+              }}>
+              Play Another Game</button>
+            <button
+              onClick={() => {
+                myContext.setCurrentPage('Dashboard');
+                myContext.userRascal.coins = (myContext.userRascal.coins + this.state.score)
+                myContext.setCoins(myContext.userRascal.coins)
+                myContext.userRascal.xp = (myContext.userRascal.xp + this.state.score)
+                myContext.setXP(myContext.userRascal.xp)
+              }}>
+              Exit
+            </button>
+          </div>
+        }
+      </div>
     )
   }
 }
