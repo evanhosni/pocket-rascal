@@ -237,7 +237,7 @@ export default function BottomNav({ openFail, setOpenFail }) {
   return (
     <div>
       <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={equippedItemsWindow}>
-        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" data-update={myContext.equipItems.length}>
+        <Box sx={{ width: '98%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }} id="equipped-items" >
           {equippedItemsCopy.map((item, index) => {
             let imgSrc = item.name || "empty"
             return (
