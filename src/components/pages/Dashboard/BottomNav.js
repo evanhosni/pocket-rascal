@@ -232,6 +232,7 @@ export default function BottomNav({ openFail, setOpenFail }) {
     </React.Fragment>
   );
 
+  console.log(myContext.equipItems)
 
   return (
     <div>
@@ -265,31 +266,31 @@ export default function BottomNav({ openFail, setOpenFail }) {
             </div>
             <div>
               <Button style={customBtn} onClick={() => toggleCarousel('body')} >
-                <img src="./assets/body_fuzzy.png" style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} />
+                <img src={`./assets/${myContext.userRascal.body}.png`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} />
               </Button>
               <div style={customLabel}>BODY</div>
             </div>
             <div>
               <Button style={customBtn} onClick={() => toggleCarousel('eyes')} >
-                <img src="./assets/eyes_tired.png" style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }} />
+                <img src={`./assets/${myContext.userRascal.eyes}.png`} style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }} />
               </Button>
               <div style={customLabel}>EYES</div>
             </div>
             <div>
               <Button style={customBtn} onClick={() => toggleCarousel('nose')} >
-                <img src="./assets/nose_disguise.png" style={{ objectFit: 'cover', height: '90px', objectPosition: '50% -2px' }} />
+                <img src={`./assets/${myContext.userRascal.nose}.png`} style={{ objectFit: 'cover', height: '90px', objectPosition: '50% -2px' }} />
               </Button>
               <div style={customLabel}>NOSE</div>
             </div>
             <div>
               <Button style={customBtn} onClick={() => toggleCarousel('mouth')} >
-                <img src="./assets/null.png" style={{ height: '100%' }} />
+                <img src={`./assets/${myContext.userRascal.mouth}.png`} style={{ height: '100%' }} />
               </Button>
               <div style={customLabel}>MOUTH</div>
             </div>
             <div>
               <Button style={customBtn} onClick={() => toggleCarousel('items')} >
-                <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>3<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
+                <div style={{ display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold' }}>{myContext.equipItems.length}<span style={{ fontSize: 'xxx-large' }}>/</span>8</div>
               </Button>
               <div style={customLabel}>ADD-ONS</div>
             </div>

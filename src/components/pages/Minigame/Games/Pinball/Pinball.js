@@ -92,7 +92,7 @@ class Pinball extends React.Component {
     var ballBody = 'minibody'
     function createBall(x, y) {
       ball = Bodies.circle(x, y, 10, {
-        mass: 5,
+        mass: 1,
         label: "ball",
         collisionFilter: {
           group: stopperGroup
@@ -180,7 +180,7 @@ class Pinball extends React.Component {
     engine.gravity.y = GRAVITY
     world.gravity.y = GRAVITY
     const WIREFRAMES = false;
-    const BUMPER_BOUNCE = 1.5;
+    const BUMPER_BOUNCE = 1;
     const PADDLE_PULL = 0.002;
     const MAX_VELOCITY = 50;
 
@@ -280,10 +280,10 @@ class Pinball extends React.Component {
     function createStaticBodies() {
       Matter.World.add(world, [
         // table boundaries (top, bottom, left, right)
-        boundary(1000, 570, 500, 100),
-        boundary(1000, 1430, 500, 100),
-        boundary(720, 1000, 100, 800),
-        boundary(1280, 1000, 100, 800),
+        boundary(1000, 120, 5000, 1000),
+        boundary(1000, 1880, 5000, 1000),
+        boundary(270, 1000, 1000, 800),
+        boundary(1730, 1000, 1000, 800),
 
         // dome
         // path(989, 686, PATHS.DOME),//TODO: get dome working
