@@ -11,8 +11,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import Button from '@mui/material/Button';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import Typography from '@mui/material/Typography';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import AppContext from './AppContext'
 
 
@@ -24,6 +25,44 @@ const TutorialDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
+
+const NameChangeDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
+
+const NameChangeDialogTitle = (props) => {
+  const { children, onClose, ...other } = props;
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  );
+};
+
+NameChangeDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+};
 
 
 function Navigation({ userId }) {
@@ -96,6 +135,17 @@ function Navigation({ userId }) {
   ];
 
 
+  //name change dialog
+
+  const [openName, setOpenName] = React.useState(false);
+
+  const handleNameOpen = () => {
+    setOpenName(true);
+  };
+  const handleNameClose = () => {
+    setOpenName(false);
+  };
+
   return (
     <>
       <IconButton
@@ -109,6 +159,8 @@ function Navigation({ userId }) {
         <MoreVertIcon sx={{ color: 'white' }} />
       </IconButton>
       <Menu
+
+        style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
         id="menu-appbar"
         anchorEl={anchorEl}
         anchorOrigin={{
@@ -123,12 +175,18 @@ function Navigation({ userId }) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => myContext.setCurrentPage('CreateRascal')} color='inherit'>Create</MenuItem>
-        <MenuItem onClick={handleClickOpen} color='inherit'>Tutorial</MenuItem>
-        <MenuItem onClick={() => myContext.setCurrentPage('Dashboard')} color='inherit'>Dash</MenuItem>
-        {!myContext.user.id && <MenuItem onClick={() => myContext.setCurrentPage('Login')} color="inherit">Login</MenuItem>}
-        {!myContext.user.id && <MenuItem onClick={() => myContext.setCurrentPage('SignUp')} color="inherit">Sign Up</MenuItem>}
-        {myContext.user.id && <MenuItem onClick={() => myContext.logOut()} color="inherit">Logout</MenuItem>}
+        <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
+        onClick={handleNameOpen} color='inherit'>{`Hi, ${myContext.userRascal.name}`}</MenuItem>
+        <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
+        onClick={handleClickOpen} color='inherit'>Tutorial</MenuItem>
+        <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
+        onClick={() => myContext.setCurrentPage('CreateRascal')} color='inherit'>Create</MenuItem>
+        {!myContext.user.id && <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
+        onClick={() => myContext.setCurrentPage('Login')} color="inherit">Login</MenuItem>}
+        {!myContext.user.id && <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
+        onClick={() => myContext.setCurrentPage('SignUp')} color="inherit">Sign Up</MenuItem>}
+        {myContext.user.id && <MenuItem style={{fontFamily: "'Nanum Pen Script', sans-serif"}}
+        onClick={() => myContext.logOut()} color="inherit">Logout</MenuItem>}
       </Menu>
 
 
@@ -164,6 +222,35 @@ function Navigation({ userId }) {
 
         </div>
       </TutorialDialog>
+      <div>
+     
+      <NameChangeDialog
+        onClose={handleNameClose}
+        aria-labelledby="customized-dialog-title"
+        open={openName}
+      >
+        <NameChangeDialogTitle style={{backgroundColor: "lightblue"}} id="customized-dialog-title" onClose={handleNameClose}>
+          Are you sure you want to rename your Rascal?
+        </NameChangeDialogTitle>
+        <DialogContent style={{backgroundColor: "lightblue"}} dividers>
+          <Typography gutterBottom>
+          Your lil buddy is already so attached to their name...
+          </Typography>
+          
+          <Typography gutterBottom>
+            If you're positive, go ahead and click to continue -- but it'll cost you!
+          </Typography>
+        </DialogContent>
+        <DialogActions style={{backgroundColor: "lightblue"}}>
+          <Button autoFocus onClick={handleNameClose}>
+            Nevermind
+          </Button>
+          <Button autoFocus onClick={handleNameClose}>
+            Change Name
+          </Button>
+        </DialogActions>
+      </NameChangeDialog>
+    </div>
     </>
   );
 }

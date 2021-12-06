@@ -739,7 +739,6 @@ class Pinball extends React.Component {
                 myContext.setCurrentPage('Minigame');
                 myContext.userRascal.coins = (myContext.userRascal.coins + this.state.score)
                 myContext.setCoins(myContext.userRascal.coins)
-                myContext.setEarnedCoins(myContext.earnings + this.state.score)
                 myContext.userRascal.xp = (myContext.userRascal.xp + this.state.score)
                 myContext.setXP(myContext.userRascal.xp)
               }}>

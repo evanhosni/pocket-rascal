@@ -270,15 +270,27 @@ class Scene extends React.Component {
       }
     }
 
-    function changeSelections() {
-      selectedBody = "body_curly";
+    const changeSelections = () => {
+      selectedBody = myContext.userRascal.body + '_' + myContext.userRascal.color || "empty";
+
+      selectedEyes = myContext.userRascal.eyes || "empty";
+
+      selectedMouth = myContext.userRascal.mouth || "empty";
+
+      selectedNose = myContext.userRascal.nose || "empty";
+
+      itemArray = [...myContext.equipItems
+        // { name: "top_hat", size: 2.2 },
+        // { name: "arm_glove", size: 3.4 },
+        // { name: "arm_glove", size: 3.4 },
+        // { name: "party_hat", size: 1.7 },
+        // { name: "cherry", size: 2.5 },
+        // { name: "arm_default", size: 2.8 },
+        // { name: "arm_default", size: 2.8 },
+        // {name: 'waffle_cone', size: 1.7}
+      ];
       cancelAnimationFrame(animation);
       generate();
-    }
-
-    if (this.state.rerender === 'true') {
-      changeSelections()
-      console.log('ur function is working')
     }
 
     var devModeActive;
@@ -302,16 +314,4 @@ class Scene extends React.Component {
       }
     }
   }
-
-  handleStatusChange()
-
-  render() {
-    return (
-      <div>
-        <div ref="scene" id="canvas_container" />
-        <button onClick={()=> this.setState({rerender:true})}>hi</button>
-
-      </div>
-    )}
 }
-export default Scene;

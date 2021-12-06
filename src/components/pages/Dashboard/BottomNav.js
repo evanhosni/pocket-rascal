@@ -17,7 +17,6 @@ import StoreMouth from './Store/Mouth';
 import StoreItem from './Store/Items'
 import SavingsIcon from '@mui/icons-material/Savings';
 import './Store/store.css'
-import { render } from "@testing-library/react";
 import Snackbar from '@mui/material/Snackbar';
 import AppContext from "./../../AppContext";
 

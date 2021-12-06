@@ -23,7 +23,7 @@ export default function ContentContainer() {
     email: "",
     id: 0
   })
-  const toggleUserState = (email,id) => {
+  const toggleUserState = (email, id) => {
     setUserState({
       email: email,
       id: id
@@ -169,18 +169,16 @@ export default function ContentContainer() {
     setCoins: toggleUserCoins,
     level: userLevel,
     xp: userXP,
-    setXP:toggleUserXP,
+    setXP: toggleUserXP,
     logOut: logOut,
-    earnings: earnedCoins,
-    setEarnings: toggleEarnedCoins,
     rascalBodySave:rascalBodySave,
     setRascalBodySave:setRascalBodySave
   }
 
-///////////////////////////////////////end context save
+  ///////////////////////////////////////end context save
 
 
-//use effect for rascal level - runs anytime XP is updated
+  //use effect for rascal level - runs anytime XP is updated
   useEffect(() => {
     let level = myRascal.level;
     let xp = myRascal.xp;
@@ -190,8 +188,8 @@ export default function ContentContainer() {
       ++level;
       console.log(level)
       xpToLevelUp = xpToLevelUp + (50 * level)
-      setMyRascal({...myRascal,level:level,xpToLevelUp:xpToLevelUp})
-      
+      setMyRascal({ ...myRascal, level: level, xpToLevelUp: xpToLevelUp })
+
       setUserLevel(level);
     } else { return }
   }, [userXP])
@@ -202,7 +200,7 @@ export default function ContentContainer() {
     if(myRascal.coins!=userCoins){
       setUserCoins(myRascal.coins)
     }
-    if(myRascal.level!=userLevel){
+    if (myRascal.level != userLevel) {
       setUserLevel(myRascal.level)
     }
     API.updateRascal(userState.id,myRascal)
@@ -210,7 +208,7 @@ export default function ContentContainer() {
   },[myRascal])
 
 
-//render correct content for page 
+  //render correct content for page 
   const renderPage = () => {
     if (currentPage === 'SignUp') {
       return <SignUp />;
