@@ -593,6 +593,10 @@ class Scene extends React.Component {
         let regMouth = /mouth/;
         var source = e.target.getAttribute('src')
         var itemSource = e.target.getAttribute('item-size')
+        var colorCheck = e.target.getAttribute('data-id')
+        var colorValue = e.target.getAttribute('value')
+        console.log(colorCheck)
+        console.log(colorValue)
         if (source) {
           var isolate = source.split('/')[2].split('.')[0]
 
@@ -600,6 +604,12 @@ class Scene extends React.Component {
           let resultBody = regBody.exec(isolate)
           let resultEyes = regEyes.exec(isolate)
           let resultMouth = regMouth.exec(isolate)
+          if(colorCheck=='color'){
+            let bodyArray = selectedBody.split('_')
+            selectedBody = bodyArray[0] + '_' + bodyArray[1]+ '_' + colorValue;
+            cancelAnimationFrame(animation);
+            generate()
+          }
           if (resultNose) {
             if (isolate == selectedNose) {
               selectedNose = "empty"
@@ -611,8 +621,10 @@ class Scene extends React.Component {
               generate()
             }
           }
-          if (resultBody) {
-            if (isolate == selectedBody) {
+          if (resultBody && !colorCheck) {
+            let bodyArray = selectedBody.split('_')
+            let bodyDefault = bodyArray[0] + '_' + bodyArray[1]
+            if (isolate == bodyDefault) {
               selectedBody = "empty"
               cancelAnimationFrame(animation);
               generate()
