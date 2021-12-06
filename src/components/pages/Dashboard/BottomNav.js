@@ -9,6 +9,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import StoreColors from "./Store/Color";
 import StoreBodies from './Store/Body';
 import StoreEyes from './Store/Eyes';
 import StoreNose from './Store/Nose';
@@ -167,6 +168,9 @@ export default function BottomNav({ openFail, setOpenFail }) {
   //conditional rendering for store items
   const [storeContent, setStoreContent] = useState('Bodies')
   const renderStoreContent = () => {
+    if(storeContent === 'Color') {
+      return <StoreColors />
+    }
     if (storeContent === 'Bodies') {
       return <StoreBodies />
     }
