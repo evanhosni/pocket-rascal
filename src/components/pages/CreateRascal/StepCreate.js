@@ -65,7 +65,7 @@ export default function VerticalLinearStepper() {
       level:1,
       coins:50
     })
-    myContext.setUnlockItems([{name:newRascalBody,type:'body'},{name:newRascalMouth, type:"mouth"},{name:newRascalEyes,type:"eyes"}])
+    myContext.setUnlockItems([{name:newRascalBody,type:'body'},{name:newRascalMouth, type:"mouth"},{name:newRascalEyes,type:"eyes"},{name:newRascalColor,type:'color'}])
     API.createRascal(myContext.user.id,{
       name:newRascalName,
       color:newRascalColor,
@@ -92,7 +92,7 @@ export default function VerticalLinearStepper() {
         id:promise.data.id
       })
       
-      API.addUnlockedItem(promise.data.id,[{name:newRascalBody,type:'body'},{name:newRascalMouth, type:"mouth"},{name:newRascalEyes,type:"eyes"}]).then(promises=>{
+      API.addUnlockedItem(promise.data.id,[{name:newRascalBody,type:'body'},{name:newRascalMouth, type:"mouth"},{name:newRascalEyes,type:"eyes"},{name:newRascalColor,type:'color'}]).then(promises=>{
 
         myContext.setCurrentPage("Dashboard")
       }).catch(err=>{
@@ -164,7 +164,7 @@ export default function VerticalLinearStepper() {
         </FormControl>
     },
     {
-      label: 'Select eyes for your pocket Rascal:',
+      label: 'Select a mouth for your pocket Rascal:',
       description:
         <FormControl component="fieldset">
           <FormLabel component="legend">Choose your Rascal's mouth:</FormLabel>
@@ -185,22 +185,25 @@ export default function VerticalLinearStepper() {
     {
       label: 'Choose a color for your new friend:',
       description:
-        <Box sx={{ minWidth: 120 }}>
-          <FormControl fullWidth>
-            <InputLabel className={classes.root} id="demo-simple-select-label">Color</InputLabel>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={newRascalColor}
-              label="Color"
-              onChange={(e)=>{setNewRascalColor(e.target.value)}}
-            >
-              <MenuItem value={'blue'}>Blue</MenuItem>
-              <MenuItem value={'green'}>Green</MenuItem>
-              <MenuItem value={'red'}>Red</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Choose your Rascal's color:</FormLabel>
+          <RadioGroup onChange={(e)=>{setNewRascalColor(e.target.value)}}row aria-label="color" name="color-radio">
+            <FormControlLabel value="white" control={<Radio />} data-id="color" label="White" />
+            <FormControlLabel value="blue" control={<Radio />} label="Blue" data-id="color" />
+            <FormControlLabel value="red" control={<Radio />} label="Red" data-id="color" />
+            <FormControlLabel value="green" control={<Radio />} label="Green" data-id="color" />
+            <FormControlLabel value="orange" control={<Radio />} label="Orange" data-id="color" />
+            <FormControlLabel value="purple" control={<Radio />} label="Purple" data-id="color" />
+            {/* <FormControlLabel value="other" control={<Radio />} label="Body3" />
+            <FormControlLabel
+              value="disabled"
+              disabled
+              control={<Radio />}
+              label="other"
+            /> */}
+          </RadioGroup>
+        </FormControl>
+        
     },
   ];
 

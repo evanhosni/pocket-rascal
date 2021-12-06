@@ -5,13 +5,13 @@ import Button from '@mui/material/Button';
 import "./carousel.css"
 import AppContext from "./../../AppContext";
 
-export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEquippedItems, equippedItems,myRascal,setMyRascal}) {
+export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, setEquippedItems, equippedItems, myRascal, setMyRascal }) {
 
     const myContext = useContext(AppContext);
 
-    useEffect(()=>{
-        
-    },[myContext.equipItems])
+    useEffect(() => {
+
+    }, [myContext.equipItems])
 
 
     const settings = {
@@ -27,17 +27,100 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
     const mouthArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'mouth')
     const itemsArray = [...myContext.unlockItems].filter(thingy => thingy.type === 'item')
     var newEquippedArray = [...myContext.equipItems]
-    
-    function equipItem(e){
+
+    function equipItem(e) {
         let source = e.target.getAttribute("src")
         var isolate = source.split('/')[2].split('.')[0]
-        let findItem = itemsArray.filter(item=>item.name===isolate)
+        let findItem = itemsArray.filter(item => item.name === isolate)
         console.log(findItem)
         newEquippedArray.push(findItem[0])
-        if(newEquippedArray.length>8){newEquippedArray.length=8}
+        if (newEquippedArray.length > 8) { newEquippedArray.length = 8 }
         myContext.setEquipItems(newEquippedArray)
-        
+
         findItem = []
+    }
+    function equipBodyPart(name, type) {
+        console.log('egg')
+
+        // let rascalCopy = {...myContext.userRascal}
+        // if(type=="body"){
+        //     if(rascalCopy.body==name){
+        //         rascalCopy.body="empty"
+        //     }else{
+        //         rascalCopy.body=name
+        //     }
+            
+        // }else if(type=="eyes"){
+        //     if(rascalCopy.eyes==name){
+        //         rascalCopy.eyes="empty"
+        //     }else{
+        //         rascalCopy.eyes=name
+        //     }
+
+        // }else if(type=="nose"){
+        //     if(rascalCopy.nose==name){
+        //         rascalCopy.nose="empty"
+        //     }else{
+        //         rascalCopy.nose=name
+        //     }
+            
+        // }else if(type=="mouth"){
+        //     if(rascalCopy.mouth==name){
+        //         rascalCopy.mouth="empty"
+        //     }else{
+        //         rascalCopy.mouth=name
+        //     }
+            
+        // }else if(type=="color"){
+        //     if(rascalCopy.color==name){
+        //         rascalCopy.color="white"
+        //     }else{
+        //         rascalCopy.color=name
+        //     }
+            
+        // }
+        // myContext.setUserRascal({...rascalCopy})
+        // Uncommenting this out results in an error. Cant seem to figure it out.  ONLY FOR BODY AND NOSE ///////////
+
+
+        // if (type == "eyes") {
+        //     if (myContext.userRascal.eyes == name) {
+        //         myContext.setUserRascal({ ...myContext.userRacal, eyes: 'empty' })
+        //     } else {
+        //         myContext.setUserRascal({ ...myContext.userRacal, eyes: name })
+        //     }
+        // }
+        
+        // else if(type=="mouth"){
+        //     if (myContext.userRascal.mouth == name) {
+        //                 myContext.setUserRascal({ ...myContext.userRacal, mouth: 'empty' })
+        //             } else {
+        //                 myContext.setUserRascal({ ...myContext.userRacal, mouth: name })
+        //             }
+
+        // }
+        // else if(type=="body"){
+        //     if (myContext.userRascal.body == name) {
+        //                 myContext.setUserRascal({ ...myContext.userRacal, body: 'empty' })
+        //             } else {
+        //                 myContext.setUserRascal({ ...myContext.userRacal, body: name })
+        //             }
+        // }
+        // else if(type=="color"){
+        //     if (myContext.userRascal.color == name) {
+        //         myContext.setUserRascal({ ...myContext.userRacal, color: 'empty' })
+        //     } else {
+        //         myContext.setUserRascal({ ...myContext.userRacal, color: name })
+        //     }
+        // }
+        // else if(type="nose"){
+        //     if (myContext.userRascal.nose == name) {
+        //         myContext.setUserRascal({ ...myContext.userRacal, nose: 'empty' })
+        //     } else {
+        //         myContext.setUserRascal({ ...myContext.userRacal, nose: name })
+        //     }
+        // }
+       
     }
 
     const color = () => {
@@ -50,17 +133,17 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
                 </div>
             )
         }
-        return  colorArray.map((object, i) =>
-        <div obj={object} key={i}>
-            <div>
-                <Button >
-                    <img src={`./assets/${object.name}.png`} style={{height: '100%'}}/>
-                </Button>
-            </div>
-        </div> )
+        return colorArray.map((object, i) =>
+            <div obj={object} key={i}>
+                <div>
+                    <Button >
+                        <img src={`./assets/body_fuzzy_${object.name}.png`} onClick={equipBodyPart(object.name, object.type)} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} data-id="color" value={object.name} />
+                    </Button>
+                </div>
+            </div>)
     }
 
-    const body =() => {
+    const body = () => {
         if (bodyArray.length === 0) {
             return (
                 <div>
@@ -70,17 +153,17 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
                 </div>
             )
         }
-        return  bodyArray.map((object, i) =>
-        <div obj={object} key={i}>
-            <div>
-                <Button >
-                    <img src={`./assets/${object.name}.png`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }}/>
-                </Button>
-            </div>
-        </div>)
+        return bodyArray.map((object, i) =>
+            <div obj={object} key={i}>
+                <div>
+                    <Button >
+                        <img src={`./assets/${object.name}.png`} onClick={equipBodyPart(object.name, object.type)} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} />
+                    </Button>
+                </div>
+            </div>)
     }
 
-    const eyes =() => {
+    const eyes = () => {
         if (eyesArray.length === 0) {
             return (
                 <div>
@@ -90,17 +173,17 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
                 </div>
             )
         }
-        return  eyesArray.map((object, i) =>
-        <div obj={object} key={i}>
-            <div>
-                <Button >
-                    <img src={`./assets/${object.name}.png`} style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }}/>
-                </Button>
-            </div>
-        </div>)
+        return eyesArray.map((object, i) =>
+            <div obj={object} key={i}>
+                <div>
+                    <Button >
+                        <img src={`./assets/${object.name}.png`} onClick={equipBodyPart(object.name, object.type)} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }} />
+                    </Button>
+                </div>
+            </div>)
     }
 
-    const nose =() => {
+    const nose = () => {
         if (noseArray.length === 0) {
             return (
                 <div>
@@ -110,17 +193,17 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
                 </div>
             )
         }
-        return  noseArray.map((object, i) =>
-        <div obj={object} key={i}>
-            <div>
-                <Button >
-                    <img src={`./assets/${object.name}.png`} style={{ objectFit: 'cover', height: '90px', objectPosition: '50% -2px' }}/>
-                </Button>
-            </div>
-        </div>)
+        return noseArray.map((object, i) =>
+            <div obj={object} key={i}>
+                <div>
+                    <Button >
+                        <img src={`./assets/${object.name}.png`} onClick={equipBodyPart(object.name, object.type)} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '90px', objectPosition: '50% -2px' }} />
+                    </Button>
+                </div>
+            </div>)
     }
 
-    const mouth =() => {
+    const mouth = () => {
         if (mouthArray.length === 0) {
             return (
                 <div>
@@ -130,16 +213,16 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
                 </div>
             )
         }
-        return  mouthArray.map((object, i) =>
-        <div obj={object} key={i}>
+        return mouthArray.map((object, i) =>
+            <div obj={object} key={i}>
                 <Button >
-                    <img src={`./assets/${object.name}.png`} style={{ objectFit: 'cover', height: '120px', objectPosition: '50% -8px' }}/>
+                    <img src={`./assets/${object.name}.png`} onClick={equipBodyPart(object.name, object.type)} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '120px', objectPosition: '50% -8px' }} />
                 </Button>
-        </div>)
+            </div>)
     }
 
-    const items =() => {
-        
+    const items = () => {
+
         if (itemsArray.length === 0) {
             return (
                 <div>
@@ -152,21 +235,21 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
         return itemsArray.map((object, i) =>
             <div>
                 <Button >
-                    <img src={`./assets/${object.name}.png`} onClick={equipItem} item-size={`${object.size}`}style={{height: '100%'}}/>
+                    <img src={`./assets/${object.name}.png`} onClick={equipItem} item-size={`${object.size}`} style={{ height: '100%' }} />
                 </Button>
             </div>
         )
     }
 
     var tempArray = () => {
-        return(
+        return (
             prevEvent === 'color' ? (colorArray)
-            : prevEvent === 'body' ? (bodyArray)
-            : prevEvent === 'eyes' ? (eyesArray)
-            : prevEvent === 'nose' ? (noseArray)
-            : prevEvent === 'mouth' ? (mouthArray)
-            : prevEvent === 'items' ? (itemsArray)
-            :[]
+                : prevEvent === 'body' ? (bodyArray)
+                    : prevEvent === 'eyes' ? (eyesArray)
+                        : prevEvent === 'nose' ? (noseArray)
+                            : prevEvent === 'mouth' ? (mouthArray)
+                                : prevEvent === 'items' ? (itemsArray)
+                                    : []
         )
     }
 
@@ -186,19 +269,19 @@ export default function Carousel({prevEvent,unlockedItems,setUnlockedItems,setEq
     //         </div>
     // )
     // } else {
-        return(
-            <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}} id="custom-slider">
-                <Slider { ...settings } prevEvent={prevEvent}>
-                    {prevEvent === 'color' ? (color())
+    return (
+        <div style={{ width: '70%', maxWidth: '400px', margin: 'auto' }} id="custom-slider">
+            <Slider {...settings} prevEvent={prevEvent}>
+                {prevEvent === 'color' ? (color())
                     : prevEvent === 'body' ? (body())
-                    : prevEvent === 'eyes' ? (eyes())
-                    : prevEvent === 'nose' ? (nose())
-                    : prevEvent === 'mouth' ? (mouth())
-                    : prevEvent === 'items' ? (items())
-                    :(<div/>)}
-                </Slider>
+                        : prevEvent === 'eyes' ? (eyes())
+                            : prevEvent === 'nose' ? (nose())
+                                : prevEvent === 'mouth' ? (mouth())
+                                    : prevEvent === 'items' ? (items())
+                                        : (<div />)}
+            </Slider>
         </div>
-        )
+    )
     // }
 }
 
