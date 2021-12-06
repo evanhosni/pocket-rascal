@@ -30,17 +30,17 @@
     /* border: 3px solid #ffffff; */
   }
 
-  /* body {
-    background-image: radial-gradient(rgba(84, 143, 151, 0.9) 20%, transparent 25%),
-        radial-gradient(rgba(207, 189, 82, 0.452) 20%, transparent 25%);
-    background-color: rgba(173, 221, 230, 0.719);
+  body {
+    background-image: radial-gradient(rgba(255, 254, 180, 0.9) 20%, transparent 25%),
+        radial-gradient(rgba(255, 228, 228, 0.452) 20%, transparent 25%);
+    background-color: rgba(250, 253, 255, 0.719);
     background-position: 0 0, 50px 50px;
     background-size: 100px 100px;
     /* animation-name: anim;
     animation-duration: 4s;
     animation-iteration-count: infinite;
     animation-timing-function: linear; */
-  /* }  */
+ }  
 
   /* @keyframes anim {
     0% {

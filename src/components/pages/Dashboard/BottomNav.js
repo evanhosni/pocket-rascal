@@ -292,8 +292,8 @@ export default function BottomNav({ openFail, setOpenFail }) {
           </Box>
         </Animated>
 
-        <div style={{ backgroundImage: 'linear-gradient(rgb(0, 69, 124), rgb(0, 100, 166))', borderTop: 'solid rgb(0, 35, 90) 5px', paddingBottom: '10px', paddingTop: '10px', zIndex: 3 }}>
-          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap' }}>
+        <div style={{ backgroundColor: 'lightblue', borderTop: 'solid black 5px', paddingBottom: '10px', paddingTop: '10px', zIndex: 3 }}>
+          <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap'}}>
             <Button aria-label="Food" id='FeedRascal'>
               <img src="./assets/cookie.png" alt="cookie" style={bottomNavBtn} />
             </Button>
