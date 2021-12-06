@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import Slider from 'infinite-react-carousel';
 import Button from '@mui/material/Button';
 import "./carousel.css"
@@ -49,7 +49,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button>
-                        <img src="./assets/null.png" style={{ height: '100%' }} />
+                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
@@ -58,7 +58,7 @@ export default function Carousel({ prevEvent }) {
             <div obj={object} key={i}>
                 <div>
                     <Button >
-                        <img src={`./assets/body_fuzzy_${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} data-id="color" value={object.name} />
+                        <img src={`./assets/body_fuzzy_${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} data-id="color" value={object.name} alt='' />
                     </Button>
                 </div>
             </div>)
@@ -69,7 +69,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button >
-                        <img src="./assets/null.png" style={{ height: '100%' }} />
+                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
@@ -89,7 +89,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button >
-                        <img src="./assets/null.png" style={{ height: '100%' }} />
+                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
@@ -98,7 +98,7 @@ export default function Carousel({ prevEvent }) {
             <div obj={object} key={i}>
                 <div>
                     <Button >
-                        <img src={`./assets/${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }} />
+                        <img src={`./assets/${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }} alt='' />
                     </Button>
                 </div>
             </div>)
@@ -109,7 +109,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button >
-                        <img src="./assets/null.png" style={{ height: '100%' }} />
+                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
@@ -118,7 +118,7 @@ export default function Carousel({ prevEvent }) {
             <div obj={object} key={i}>
                 <div>
                     <Button >
-                        <img src={`./assets/${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '90px', objectPosition: '50% -2px' }} />
+                        <img src={`./assets/${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '90px', objectPosition: '50% -2px' }} alt='' />
                     </Button>
                 </div>
             </div>)
@@ -129,7 +129,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button >
-                        <img src="./assets/null.png" style={{ height: '100%' }} />
+                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
@@ -137,7 +137,7 @@ export default function Carousel({ prevEvent }) {
         return mouthArray.map((object, i) =>
             <div obj={object} key={i}>
                 <Button >
-                    <img src={`./assets/${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '120px', objectPosition: '50% -8px' }} />
+                    <img src={`./assets/${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '120px', objectPosition: '50% -8px' }} alt='' />
                 </Button>
             </div>)
     }
@@ -148,7 +148,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button >
-                        <img src="./assets/null.png" style={{ height: '100%' }} />
+                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
@@ -156,7 +156,7 @@ export default function Carousel({ prevEvent }) {
         return itemsArray.map((object, i) =>
             <div>
                 <Button >
-                    <img src={`./assets/${object.name}.png`} onClick={equipItem} item-size={`${object.size}`} style={{ height: '100%' }} />
+                    <img src={`./assets/${object.name}.png`} onClick={equipItem} item-size={`${object.size}`} style={{ height: '100%' }} alt='' />
                 </Button>
             </div>
         )
@@ -174,22 +174,6 @@ export default function Carousel({ prevEvent }) {
         )
     }
 
-
-    // if (tempArray().length ===  2) { //TODO: center when only two items
-    //     return(
-    //         <div style={{width: '70%', maxWidth: '400px', margin: 'auto'}}>
-    //             <Slider { ...settings } prevEvent={prevEvent} className="onlytwo">
-    //                 {prevEvent == 'color' ? (color())
-    //                 : prevEvent == 'body' ? (body())
-    //                 : prevEvent == 'eyes' ? (eyes())
-    //                 : prevEvent == 'nose' ? (nose())
-    //                 : prevEvent == 'mouth' ? (mouth())
-    //                 : prevEvent == 'items' ? (items())
-    //                 :(<div/>)}
-    //             </Slider>
-    //         </div>
-    // )
-    // } else {
     return (
         <div style={{ width: '70%', maxWidth: '400px', margin: 'auto' }} id="custom-slider">
             <Slider {...settings} prevEvent={prevEvent}>
@@ -207,31 +191,4 @@ export default function Carousel({ prevEvent }) {
 }
 
 
-// }
 
-
-{/* <div style={customDiv}>
-                <Button style={customBtn} >
-                <img src="./assets/body_fuzzy.png" className="body" style={{objectFit: 'cover', height: '33.6px', objectPosition:'-1% center'}}/>
-                </Button>
-            </div>
-            <div style={customDiv}>
-                <Button style={customBtn} >
-                <img src="./assets/eyes_tired.png" className="eyes" style={{objectFit: 'cover', height: '80px', objectPosition:'0.69% 6.4px'}}/>
-                </Button>
-            </div>
-            <div style={customDiv}>
-                <Button style={customBtn} >
-                <img src="./assets/nose_disguise.png" className="nose" style={{objectFit: 'cover', height: '72px', objectPosition:'45% -1.6px'}}/>
-                </Button>
-            </div>
-            <div style={customDiv}>
-                <Button style={customBtn} >
-                <img src="./assets/null.png" style={{height: '100%'}}/>
-                </Button>
-            </div>
-            <div style={customDiv}>
-                <Button style={customBtn} >
-                <div style={{display: 'flex', alignItems: 'center', color: 'black', fontSize: 'xx-large', fontWeight: 'bold'}}>3<span style={{fontSize:'xxx-large'}}>/</span>8</div>
-                </Button>
-            </div> */}

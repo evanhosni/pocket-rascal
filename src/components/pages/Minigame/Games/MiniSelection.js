@@ -6,11 +6,11 @@ import Pinball from './Pinball/Pinball'
 export default function MiniSelection() {
     var minigames = [
         // <Slingshot />,
-        // <SnakeMini 
-        // color1="#248ec2"
-        // color2="#1d355e"
-        // backgroundColor="#ebebeb"
-        // />,
+        <SnakeMini 
+        color1="#15aabf"
+        color2="#fab005"
+        backgroundColor="#495057"
+        />,
         <Pinball/>
     ];
 

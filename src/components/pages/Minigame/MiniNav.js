@@ -49,17 +49,19 @@ export default function MiniNav() {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">
+                <DialogTitle id="alert-dialog-title" style={{fontFamily: "'Nanum Pen Script', sans-serif"}}>
                     {"Exit Game?"}
                 </DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
+                    <DialogContentText id="alert-dialog-description" style={{fontFamily: "'Nanum Pen Script', sans-serif"}} >
                         Are you sure you want to return to the homepage? Your game progress will be lost forever!
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Continue Game</Button>
-                    <Button onClick={()=>myContext.setCurrentPage('Dashboard')} autoFocus>
+                    <Button 
+                    onClick={handleClose} style={{fontFamily: "'Nanum Pen Script', sans-serif", color: 'black'}}>Continue Game</Button>
+                    <Button 
+                    onClick={()=>myContext.setCurrentPage('Dashboard')} autoFocus style={{fontFamily: "'Nanum Pen Script', sans-serif", color: 'black'}}>
                         Exit
                     </Button>
                 </DialogActions>

@@ -295,7 +295,7 @@ const SnakeMini = (props) => {
                     style={{ width: dim, margin: 'auto' }}
                 >
                     <div>
-                        <button
+                        <button 
                             onClick={() => turn('up', 'down')}
                         >&#8593;</button>
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Scene from './pages/Dashboard/Scene';
@@ -82,22 +82,9 @@ export default function ContentContainer() {
     setUserCoins(value)
   }
 
-  //coins earned during current minigame sesh -- persistent if you keep playing games, added to user coins once you leave the minigame page -- not actually connected to the rascal at all 
-  const [earnedCoins, setEarnedCoins] = useState(2)
-  const toggleEarnedCoins = (value) => {
-    setEarnedCoins(value)
-  }
-
 
   //////////////////////////////////////////////////////////////// end set state variables 
 
-  function updateRascalStats(key, val) {
-    console.log("called")
-    setMyRascal({
-      ...myRascal,
-      [key]: val
-    })
-  }
 
   // useeffect on page load to check token in local storage for authenticity, then updating current user, rascal, items
   useEffect(() => {
@@ -118,21 +105,13 @@ export default function ContentContainer() {
         setEquippedItems(equipDat.data)
         setUnlockedItems(unlockDat.data)
         toggleUserCoins(rascalDat.data.coins)
-        if (currentPage !== "Dashboard") { setCurrentPage("Dashboard") }
-        // const interval = setInterval(() => {
-        //   console.log('This will run every 10 seconds!');
-        //   console.log(myRascal)
-        //   setMyRascal({...myRascal,happiness:myRascal.happiness-2})
-        // }, 10000);
-        // return () => clearInterval(interval);
-        // rascalUpdate()
+        if (currentPage !== "Dashboard"){ setCurrentPage("Dashboard") }
 
 
       }).catch(err => {
         logOut()
       })
     }
-
   }, [])
 
 
@@ -197,10 +176,10 @@ export default function ContentContainer() {
     setMyRascal({...myRascal,...rascalBodySave})
   },[rascalBodySave])
   useEffect(()=>{
-    if(myRascal.coins!=userCoins){
+    if(myRascal.coins!==userCoins){
       setUserCoins(myRascal.coins)
     }
-    if (myRascal.level != userLevel) {
+    if (myRascal.level !== userLevel) {
       setUserLevel(myRascal.level)
     }
     API.updateRascal(userState.id,myRascal)
@@ -221,8 +200,6 @@ export default function ContentContainer() {
         <div>
           <CreateRascal />
           <Scene />
-
-
         </div>
       )
     }

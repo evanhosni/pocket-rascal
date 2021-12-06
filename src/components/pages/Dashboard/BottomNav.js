@@ -243,7 +243,7 @@ export default function BottomNav({ openFail, setOpenFail }) {
             return (
               <div key={index}>
                 <Button style={equippedItemBtn} itemindex={index} onClick={removeEquip}>
-                  <img itemindex={index} src={`./assets/${imgSrc}.png`} />
+                  <img itemindex={index} src={`./assets/${imgSrc}.png`} alt='' />
                 </Button>
               </div>
             )
@@ -266,25 +266,25 @@ export default function BottomNav({ openFail, setOpenFail }) {
             </div>
             <div>
               <Button style={customBtn} onClick={() => toggleCarousel('body')} >
-                <img src={`./assets/${myContext.userRascal.body}.png`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} />
+                <img src={`./assets/${myContext.userRascal.body}.png`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} alt='' />
               </Button>
               <div style={customLabel}>BODY</div>
             </div>
             <div>
               <Button style={customBtn} onClick={() => toggleCarousel('eyes')} >
-                <img src={`./assets/${myContext.userRascal.eyes}.png`} style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }} />
+                <img src={`./assets/${myContext.userRascal.eyes}.png`} style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }} alt='' />
               </Button>
               <div style={customLabel}>EYES</div>
             </div>
             <div>
               <Button style={customBtn} onClick={() => toggleCarousel('nose')} >
-                <img src={`./assets/${myContext.userRascal.nose}.png`} style={{ objectFit: 'cover', height: '90px', objectPosition: '50% -2px' }} />
+                <img src={`./assets/${myContext.userRascal.nose}.png`} style={{ objectFit: 'cover', height: '90px', objectPosition: '50% -2px' }} alt='' />
               </Button>
               <div style={customLabel}>NOSE</div>
             </div>
             <div>
               <Button style={customBtn} onClick={() => toggleCarousel('mouth')} >
-                <img src={`./assets/${myContext.userRascal.mouth}.png`} style={{ height: '100%' }} />
+                <img src={`./assets/${myContext.userRascal.mouth}.png`} style={{ height: '100%' }} alt='' />
               </Button>
               <div style={customLabel}>MOUTH</div>
             </div>

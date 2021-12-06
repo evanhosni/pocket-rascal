@@ -2,7 +2,6 @@ import React,{useState, useEffect, useContext } from 'react';
 import StatusBar from './StatusBars'
 import BottomNav from './BottomNav';
 import Scene from './Scene'
-import API from '../../../utils/API'
 import AppContext from "./../../AppContext";
 import "./style.css"
 
@@ -19,7 +18,6 @@ export default function Dashboard({ myRascal,setMyRascal }) {
       // setMyRascal(myRascal=>({...myRascal, happiness:(myRascal.happiness*.99)}));
       setMyRascal(myRascal=>{
         newRascal = {...myRascal, happiness:(myRascal.happiness*.98)}
-        // console.log(newRascal)
         return newRascal
       });
     

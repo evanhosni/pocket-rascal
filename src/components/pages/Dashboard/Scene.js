@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
 import Matter, { World } from "matter-js";
 import "./style.css"
@@ -503,7 +503,7 @@ class Scene extends React.Component {
           var isolate = source.split('/')[2].split('.')[0]
 
           world.bodies.every((item, index) => {
-            if (item.name == isolate) {
+            if (item.name === isolate) {
               Matter.World.remove(world, world.bodies[index])
               return false
             } else {
@@ -512,7 +512,7 @@ class Scene extends React.Component {
 
           });
           itemArray.forEach((item, index) => {
-            if (item.name == isolate) {
+            if (item.name === isolate) {
               itemArray.splice(index, 1)
               return
             }
@@ -539,7 +539,7 @@ class Scene extends React.Component {
           let resultBody = regBody.exec(isolate)
           let resultEyes = regEyes.exec(isolate)
           let resultMouth = regMouth.exec(isolate)
-          if(colorCheck=='color'){
+          if(colorCheck==='color'){
             let bodyArray = selectedBody.split('_')
             selectedBody = bodyArray[0] + '_' + bodyArray[1]+ '_' + colorValue;
             cancelAnimationFrame(animation);
@@ -548,7 +548,7 @@ class Scene extends React.Component {
             myContext.setRascalBodySave({...ongoingRascal})
           }
           if (resultNose) {
-            if (isolate == selectedNose) {
+            if (isolate === selectedNose) {
               selectedNose = "empty"
               cancelAnimationFrame(animation);
               generate()
@@ -565,7 +565,7 @@ class Scene extends React.Component {
           if (resultBody && !colorCheck) {
             
             let bodyDefault = ongoingRascal.body
-            if (isolate == bodyDefault) {
+            if (isolate === bodyDefault) {
               selectedBody = "empty"
               cancelAnimationFrame(animation);
               generate()
@@ -580,7 +580,7 @@ class Scene extends React.Component {
             }
           }
           if (resultEyes) {
-            if (isolate == selectedEyes) {
+            if (isolate === selectedEyes) {
               selectedEyes = "empty"
               cancelAnimationFrame(animation);
               generate()
@@ -595,7 +595,7 @@ class Scene extends React.Component {
             }
           }
           if (resultMouth) {
-            if (isolate == selectedMouth) {
+            if (isolate === selectedMouth) {
               selectedMouth = "empty"
               cancelAnimationFrame(animation);
               generate()
@@ -644,7 +644,7 @@ class Scene extends React.Component {
         let resultNose = regNose.exec(value)
         let resultEyes = regEyes.exec(value)
         let resultMouth = regMouth.exec(value)
-        if(colorCheck=='color-radio'){
+        if(colorCheck==='color-radio'){
           tempColor=value
           let bodyArray = selectedBody.split('_')
           selectedBody = bodyArray[0] + '_' + bodyArray[1]+ '_' + tempColor;
