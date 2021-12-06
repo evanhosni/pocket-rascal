@@ -99,12 +99,12 @@ class Pinball extends React.Component {
         },
         render: {
           sprite: {
-            texture: `./assets/${ballBody}.png`,
-            xScale: 0.25 / 3.5,
-            yScale: 0.25 / 3.5
-            // texture: "https://imgur.com/6Nmywmw.png",
-            // xScale: 1 / 3.5,
-            // yScale: 1 / 3.5
+            // texture: `./assets/${ballBody}.png`,
+            // xScale: 0.25 / 3.5,
+            // yScale: 0.25 / 3.5
+            texture: "https://imgur.com/6Nmywmw.png",
+            xScale: 1 / 3.5,
+            yScale: 1 / 3.5
           }
         }
       });
@@ -560,14 +560,6 @@ class Pinball extends React.Component {
           isRightPaddleUp = false;
         }
       });
-    }
-
-    function afterClickLeft() {
-      isLeftPaddleUp = false;
-    }
-
-    function afterClickRight() {
-      isRightPaddleUp = false;
     }
 
     //paddle events for tap btns
