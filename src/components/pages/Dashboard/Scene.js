@@ -118,14 +118,6 @@ class Scene extends React.Component {
     var selectedNose = myContext.userRascal.nose || "empty";
 
     var itemArray = [...myContext.equipItems
-      // { name: "top_hat", size: 2.2 },
-      // { name: "arm_glove", size: 3.4 },
-      // { name: "arm_glove", size: 3.4 },
-      // { name: "party_hat", size: 1.7 },
-      // { name: "cherry", size: 2.5 },
-      // { name: "arm_default", size: 2.8 },
-      // { name: "arm_default", size: 2.8 },
-      // {name: 'waffle_cone', size: 1.7}
     ];
     //////////////////////////////////////////////////////////////////////////////////////
 
@@ -490,64 +482,6 @@ class Scene extends React.Component {
 
 
 
-    // addItems();
-    // itemArray=[]
-
-    function checkCoor() {
-      var bodies = Composite.allBodies(world);
-      var constraints = Composite.allConstraints(world);
-      for (var i = 0; i < bodies.length; i++) {
-        console.log(bodies[i].name, bodies[i].position, bodies[i].angle);
-      }
-      for (var i = 0; i < constraints.length; i++) {
-        console.log(constraints[i].name, constraints[i].pointB);
-      }
-    }
-
-    const changeSelections = () => {
-      selectedBody = myContext.userRascal.body + '_' + myContext.userRascal.color || "empty";
-
-      selectedEyes = myContext.userRascal.eyes || "empty";
-
-      selectedMouth = myContext.userRascal.mouth || "empty";
-
-      selectedNose = myContext.userRascal.nose || "empty";
-
-      itemArray = [...myContext.equipItems
-        // { name: "top_hat", size: 2.2 },
-        // { name: "arm_glove", size: 3.4 },
-        // { name: "arm_glove", size: 3.4 },
-        // { name: "party_hat", size: 1.7 },
-        // { name: "cherry", size: 2.5 },
-        // { name: "arm_default", size: 2.8 },
-        // { name: "arm_default", size: 2.8 },
-        // {name: 'waffle_cone', size: 1.7}
-      ];
-      cancelAnimationFrame(animation);
-      generate();
-    }
-
-    var devModeActive;
-    function devMode() {
-      var checkBox = document.getElementById("devMode");
-      if (checkBox.checked == true) {
-        devModeActive = true
-        cancelAnimationFrame(animation)
-        rascal.render.visible = true
-        for (let i = 0; i < equippedItems.length; i++) {
-          equippedItems[i].render.sprite = 0
-        }
-      } else {
-        devModeActive = false
-        cancelAnimationFrame(animation)
-        rascal.render.visible = false
-        for (let i = 0; i < equippedItems.length; i++) {
-          equippedItems[i].render.sprite = { xScale: 1, yScale: 1, xOffset: 0.5, yOffset: 0.5, texture: `./assets/${equippedItems[i].name}.png` }
-        }
-        generate()
-      }
-    }
-
     const equippedItemsPanel = document.querySelector('#equipped-items')
     const customPanel = document.querySelector('#custom-slider')
     const creationPanel = document.querySelector('#creation-panel')
@@ -575,14 +509,6 @@ class Scene extends React.Component {
               return
             }
           })
-          // if(isolate=="nose_disguise" || "nose_cute"){
-          //   console.log(world)
-          //   selectedNose=isolate
-          //   // selectedBody="body_curly"
-          //   cancelAnimationFrame(animation);
-          //   generate()
-          // }
-
         }
       })
     }

@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import Slider from 'infinite-react-carousel';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import "./carousel.css"
 import AppContext from "./../../AppContext";
 
-export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, setEquippedItems, equippedItems, myRascal, setMyRascal }) {
+export default function Carousel({ prevEvent }) {
 
     const myContext = useContext(AppContext);
 
@@ -39,89 +38,7 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
 
         findItem = []
     }
-    function equipBodyPart(name, type) {
-        console.log('egg')
-
-        // let rascalCopy = {...myContext.userRascal}
-        // if(type=="body"){
-        //     if(rascalCopy.body==name){
-        //         rascalCopy.body="empty"
-        //     }else{
-        //         rascalCopy.body=name
-        //     }
-            
-        // }else if(type=="eyes"){
-        //     if(rascalCopy.eyes==name){
-        //         rascalCopy.eyes="empty"
-        //     }else{
-        //         rascalCopy.eyes=name
-        //     }
-
-        // }else if(type=="nose"){
-        //     if(rascalCopy.nose==name){
-        //         rascalCopy.nose="empty"
-        //     }else{
-        //         rascalCopy.nose=name
-        //     }
-            
-        // }else if(type=="mouth"){
-        //     if(rascalCopy.mouth==name){
-        //         rascalCopy.mouth="empty"
-        //     }else{
-        //         rascalCopy.mouth=name
-        //     }
-            
-        // }else if(type=="color"){
-        //     if(rascalCopy.color==name){
-        //         rascalCopy.color="white"
-        //     }else{
-        //         rascalCopy.color=name
-        //     }
-            
-        // }
-        // myContext.setUserRascal({...rascalCopy})
-        // Uncommenting this out results in an error. Cant seem to figure it out.  ONLY FOR BODY AND NOSE ///////////
-
-
-        // if (type == "eyes") {
-        //     if (myContext.userRascal.eyes == name) {
-        //         myContext.setUserRascal({ ...myContext.userRacal, eyes: 'empty' })
-        //     } else {
-        //         myContext.setUserRascal({ ...myContext.userRacal, eyes: name })
-        //     }
-        // }
-        
-        // else if(type=="mouth"){
-        //     if (myContext.userRascal.mouth == name) {
-        //                 myContext.setUserRascal({ ...myContext.userRacal, mouth: 'empty' })
-        //             } else {
-        //                 myContext.setUserRascal({ ...myContext.userRacal, mouth: name })
-        //             }
-
-        // }
-        // else if(type=="body"){
-        //     if (myContext.userRascal.body == name) {
-        //                 myContext.setUserRascal({ ...myContext.userRacal, body: 'empty' })
-        //             } else {
-        //                 myContext.setUserRascal({ ...myContext.userRacal, body: name })
-        //             }
-        // }
-        // else if(type=="color"){
-        //     if (myContext.userRascal.color == name) {
-        //         myContext.setUserRascal({ ...myContext.userRacal, color: 'empty' })
-        //     } else {
-        //         myContext.setUserRascal({ ...myContext.userRacal, color: name })
-        //     }
-        // }
-        // else if(type="nose"){
-        //     if (myContext.userRascal.nose == name) {
-        //         myContext.setUserRascal({ ...myContext.userRacal, nose: 'empty' })
-        //     } else {
-        //         myContext.setUserRascal({ ...myContext.userRacal, nose: name })
-        //     }
-        // }
-       
-    }
+   
 
     const color = () => {
         if (colorArray.length === 0) {
@@ -137,7 +54,7 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
             <div obj={object} key={i}>
                 <div>
                     <Button >
-                        <img src={`./assets/${myContext.userRascal.body}_${object.name}.png`} onClick={equipBodyPart(object.name, object.type)} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} data-id="color" value={object.name} />
+                        <img src={`./assets/body_fuzzy_${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} data-id="color" value={object.name} />
                     </Button>
                 </div>
             </div>)
@@ -157,7 +74,7 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
             <div obj={object} key={i}>
                 <div>
                     <Button >
-                        <img src={`./assets/${object.name}.png`} onClick={equipBodyPart(object.name, object.type)} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} />
+                        <img src={`./assets/body_fuzzy.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '42px', objectPosition: '-1% center' }} />
                     </Button>
                 </div>
             </div>)
@@ -177,7 +94,7 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
             <div obj={object} key={i}>
                 <div>
                     <Button >
-                        <img src={`./assets/${object.name}.png`} onClick={equipBodyPart(object.name, object.type)} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }} />
+                        <img src={`./assets/${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '100px', objectPosition: '0.69% 8px' }} />
                     </Button>
                 </div>
             </div>)
@@ -197,7 +114,7 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
             <div obj={object} key={i}>
                 <div>
                     <Button >
-                        <img src={`./assets/${object.name}.png`} onClick={equipBodyPart(object.name, object.type)} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '90px', objectPosition: '50% -2px' }} />
+                        <img src={`./assets/${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '90px', objectPosition: '50% -2px' }} />
                     </Button>
                 </div>
             </div>)
@@ -216,7 +133,7 @@ export default function Carousel({ prevEvent, unlockedItems, setUnlockedItems, s
         return mouthArray.map((object, i) =>
             <div obj={object} key={i}>
                 <Button >
-                    <img src={`./assets/${object.name}.png`} onClick={equipBodyPart(object.name, object.type)} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '120px', objectPosition: '50% -8px' }} />
+                    <img src={`./assets/${object.name}.png`} id={`equip${object.name}`} style={{ objectFit: 'cover', height: '120px', objectPosition: '50% -8px' }} />
                 </Button>
             </div>)
     }

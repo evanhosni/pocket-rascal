@@ -266,7 +266,6 @@ const SnakeMini = (props) => {
                                 myContext.setCurrentPage('Minigame');
                                 myContext.userRascal.coins = (myContext.userRascal.coins + points)
                                 myContext.setCoins(myContext.userRascal.coins)
-                                myContext.setEarnedCoins(myContext.earnings + points)
                                 myContext.userRascal.xp = (myContext.userRascal.xp + points)
                                 myContext.setXP(myContext.userRascal.xp)
                             }}>

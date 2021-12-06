@@ -171,8 +171,6 @@ export default function ContentContainer() {
     xp: userXP,
     setXP: toggleUserXP,
     logOut: logOut,
-    earnings: earnedCoins,
-    setEarnings: toggleEarnedCoins,
     rascalBodySave:rascalBodySave,
     setRascalBodySave:setRascalBodySave
   }

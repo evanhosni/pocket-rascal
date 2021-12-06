@@ -12,11 +12,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import { styled } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
 import { makeStyles } from '@mui/styles';
 import API from "../../../utils/API"
 import AppContext from "./../../AppContext";
@@ -126,46 +122,10 @@ function BpRadio(props) {
 //what are you doing, StepCreate?
 
 
-const BootstrapButton = styled(Button)({
-  boxShadow: 'none',
-  color: 'black',
-  textTransform: 'none',
-  fontSize: 16,
-  padding: '6px 12px',
-  lineHeight: 1.5,
-  backgroundColor: 'transparent',
-  fontFamily: [
-    '-apple-system',
-    'BlinkMacSystemFont',
-    '"Segoe UI"',
-    'Roboto',
-    '"Helvetica Neue"',
-    'Arial',
-    'sans-serif',
-    '"Apple Color Emoji"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-  ].join(','),
-  '&:hover': {
-    backgroundColor: 'transparent',
-    borderBottom: 'purple solid 1px',
-    boxShadow: 'none',
-    borderRadius: '0'
-  },
-  '&:active': {
-    boxShadow: 'none',
-    borderColor: '#005cbf',
-  },
-  '&:focus': {
-    boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
-  },
-});
-
 const Btn = {
   color: "white",
   fontFamily: "'Nanum Pen Script', sans-serif",
   fontSize: "x-large",
-  /* font-weight: bolder; */
   backgroundColor: "rgb(187, 0, 0)",
   minHeight: "30px",
   maxHeight: "30px",
@@ -191,9 +151,6 @@ export default function VerticalLinearStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
   const handleFinish = () => {
     myContext.setUserRascal({
       name: newRascalName,
@@ -296,37 +253,20 @@ export default function VerticalLinearStepper() {
     {
       label: 'Pick a color for your lint:',
       description:
-        // <Box sx={{ minWidth: 120 }}>
-        //   <FormControl fullWidth classes={{ root: classes.select }}>
-        //     <InputLabel className={classes.root} id="demo-simple-select-label">Color</InputLabel>
-        //     <Select
-        //       classes={{ select: classes.select, input: classes.menuItem }}
-        //       labelId="demo-simple-select-label"
-        //       id="demo-simple-select"
-        //       value={newRascalColor}
-        //       label="Color"
-        //       onChange={(e) => { setNewRascalColor(e.target.value) }}>
-        //       <MenuItem classes={{ root: classes.menuItem }} value={'blue'}>Blue</MenuItem>
-        //       <MenuItem classes={{ root: classes.menuItem }} value={'green'}>Green</MenuItem>
-        //       <MenuItem classes={{ root: classes.menuItem }} value={'red'}>Red</MenuItem>
-        //     </Select>
-        //   </FormControl>
-        // </Box>
         <FormControl component="fieldset">
           <RadioGroup onChange={(e)=>{setNewRascalColor(e.target.value)}}row aria-label="color" name="color-radio">
-            <FormControlLabel value="white" control={<Radio />} data-id="color" label="White" />
-            <FormControlLabel value="blue" control={<Radio />} label="Blue" data-id="color" />
-            <FormControlLabel value="red" control={<Radio />} label="Red" data-id="color" />
-            <FormControlLabel value="green" control={<Radio />} label="Green" data-id="color" />
-            <FormControlLabel value="orange" control={<Radio />} label="Orange" data-id="color" />
-            <FormControlLabel value="purple" control={<Radio />} label="Purple" data-id="color" />
-            {/* <FormControlLabel value="other" control={<Radio />} label="Body3" />
-            <FormControlLabel
-              value="disabled"
-              disabled
-              control={<Radio />}
-              label="other"
-            /> */}
+            <FormControlLabel 
+            classes={{ label: classes.typography }} value="white" control={<BpRadio />} data-id="color" label="White" />
+            <FormControlLabel 
+            classes={{ label: classes.typography }} value="blue" control={<BpRadio />} label="Blue" data-id="color" />
+            <FormControlLabel 
+            classes={{ label: classes.typography }} value="red" control={<BpRadio />} label="Red" data-id="color" />
+            <FormControlLabel 
+            classes={{ label: classes.typography }} value="green" control={<BpRadio />} label="Green" data-id="color" />
+            <FormControlLabel 
+            classes={{ label: classes.typography }} value="orange" control={<BpRadio />} label="Orange" data-id="color" />
+            <FormControlLabel 
+            classes={{ label: classes.typography }} value="purple" control={<BpRadio />} label="Purple" data-id="color" />
           </RadioGroup>
         </FormControl>
         

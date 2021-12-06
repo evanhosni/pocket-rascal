@@ -1,5 +1,4 @@
 import React,{useState, useEffect, useContext } from 'react';
-
 import StatusBar from './StatusBars'
 import BottomNav from './BottomNav';
 import Scene from './Scene'
