@@ -14,6 +14,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { styled } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import Carousel from "react-material-ui-carousel";
 import API from "../../../utils/API"
 import AppContext from "./../../AppContext";
 import './stepstyle.css'
@@ -118,6 +121,15 @@ function BpRadio(props) {
   );
 }
 
+
+const TutorialDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
 
 //what are you doing, StepCreate?
 
@@ -295,6 +307,62 @@ export default function VerticalLinearStepper() {
   if(canvas){
   canvas.setAttribute('style', 'top: -180%')
   }
+
+
+  //tutorial module 
+
+  const [open, setOpen] = useState(true);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClickClose = () => {
+    setOpen(false);
+  };
+
+  //tutorial carousel
+
+  const settings = {
+    autoPlay: false,
+    navButtonsAlwaysVisible: true,
+    swipe: true,
+    fullHeightHover: false,
+  };
+
+  function Item(props) {
+    return (
+      <Paper className='tutorial-items'>
+        <div>
+          <img src={`./assets/${props.item.source}.png`} alt='' />
+        </div>
+        <h2>{props.item.name}</h2>
+        <p>{props.item.description}</p>
+
+      </Paper>
+    );
+  }
+
+  const items = [
+    {
+      name: "Thanks for joining us!",
+      source:'rascal-ex3',
+      description: "Here's a quick lil tutorial on how to make sure your new lil lint friend thrives"
+    },
+    {
+      name: "Customize",
+      source: 'tutorial-customize',
+      description: "The options are endless! Give your Rascal a lil party hat. Or don't - you can make him lame, too. Dress up your Rascal by clicking the pencil at the bottom of the page. If you change your mind on an equipped item, click it's image at the top of the screen to remove it."
+    },
+    {
+      name: "Minigames",
+      source: 'tutorial-minigames',
+      description: "Your Rascal can get bored just hanging around all day -- play minigames to keep him entertained and gain coins along the way. You can use the pocket change you earn to buy new items, crumbs, or soap to keep your pocket friend looking fresh and feeling happy."
+    },
+    {
+      name: "Care",
+      description: "Speaking of happiness - your new Rascal is a moody lil guy. Keep an eye on his status bar to make sure his mood stays in the green! Feeding him crumbs, washing him, switching up his look, and playing games will help to keep his boredom down and his happiness high. If you aren't sure what's got your friend in the red, click the smiley for some hints."
+    }
+  ];
  
 
 
@@ -362,6 +430,52 @@ export default function VerticalLinearStepper() {
         newRascalName && <h1 style={{fontSize:'48px'}}>{`Hi, I'm ${newRascalName}`}</h1> }
 
       </div>
+
+      <TutorialDialog onClose={handleClickClose} open={open} aria-labelledby="tutorial-title" >
+        <DialogTitle id="tutorial-title" style={{ fontSize: 'larger', textAlign: 'center', fontFamily: "'Nanum Pen Script',sans-serif" }}>
+          Welcome to Pocket Rascal!
+        </DialogTitle>
+        <div id='tutorial-content'>
+          <Carousel 
+          id='tutorial-carousel'
+            {...settings}
+            navButtonsProps={{
+              style: {
+                backgroundColor: 'transparent',
+                color: 'black'
+              }
+            }}
+            navButtonsWrapperProps={{
+              style: {
+                bottom: '0',
+                top: 'unset'
+              }
+            }}
+            indicatorIconButtonProps={{
+              style: {
+                  padding: '10px',
+                  bottom:0
+              }
+          }}
+          indicatorContainerProps={{
+            style: {
+                marginBottom:0,
+            }
+    
+        }}
+          >
+            {items.map((item, i) => (
+              <Item key={i} item={item} />
+            ))}
+          </Carousel>
+        </div>
+        <div id='tutorial-btns' style={{ display: 'flex', justifyContent: 'flex-end', padding:1, marginBottom:1 }}>
+          <Button autoFocus onClick={handleClickClose} id="done">
+            GET STARTED
+          </Button>
+
+        </div>
+      </TutorialDialog>
     </>
   );
 }

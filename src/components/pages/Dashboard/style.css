@@ -42,6 +42,48 @@
     animation-timing-function: linear; */
  }  
 
+ #tutorial-content {
+  min-height: 55vh;
+  max-height: 75vh;
+  min-width: 40vw;
+  /* max-width: fit-content; */
+  overflow-y: scroll;
+  margin-right:0;
+  margin-left:0;
+  background-color: transparent;
+  text-align: center;
+ }
+
+ #tutorial-carousel {
+   max-width:fit-content;
+   min-width:35vw;
+   height:100%;
+   /* margin-right:auto;
+  margin-left:auto; */
+  background-color: transparent;
+  text-align: center;
+  
+ }
+ 
+
+ .tutorial-items {
+   min-height: 55vh;
+   min-width: 35vw;
+   height:100%;
+   max-width:fit-content;
+   margin-right:auto;
+  margin-left:auto;
+  text-align: center;
+  background-color: transparent;
+  overflow-y: scroll;
+ }
+
+ .tutorial-items div img {
+   max-height:250px;
+   max-width: 250px;
+ }
+
+
   /* @keyframes anim {
     0% {
       background-image: radial-gradient(rgba(84, 143, 151, 0.9) 20%, transparent 25%),
