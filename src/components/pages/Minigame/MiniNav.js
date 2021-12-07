@@ -38,9 +38,9 @@ export default function MiniNav() {
                         <HomeIcon sx={{ color: 'white' }} />
                     </Button>
                     <Button variant="outlined" sx={{ color: 'white' }} startIcon={<SavingsIcon />}>
-                        {`${myContext.coins}¢`}
+                        {`${myContext.userRascal.coins}¢`}
                     </Button>
-                    <Chip sx={{ color: 'white', background: 'transparent' }} label={`LVL ${myContext.level}`} />
+                    <Chip sx={{ color: 'white', background: 'transparent' }} label={`LVL ${myContext.userRascal.level}`} />
                 </Box>
             </div>
             <Dialog

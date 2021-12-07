@@ -253,9 +253,9 @@ export default function BottomNav({ openFail, setOpenFail }) {
       </Animated>
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
-        {carousel && <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
+        <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
           <Carousel prevEvent={prevEvent} />
-        </Animated>}
+        </Animated>
 
         {customMenu && <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
           <Box sx={{ width: '100%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
@@ -339,7 +339,7 @@ export default function BottomNav({ openFail, setOpenFail }) {
             </div>
             <div id="bottom-tab">
               <div startIcon={<SavingsIcon />} className="coins">
-                {`${myContext.coins}`}<span>¢</span>
+                {`${myContext.userRascal.coins}`}<span>¢</span>
               </div>
               <Button autoFocus onClick={handleClose} id="done">
                 Done
