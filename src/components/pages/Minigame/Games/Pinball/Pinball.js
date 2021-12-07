@@ -192,8 +192,6 @@ class Pinball extends React.Component {
       });
 
       boundary.restitution = 0.8;
-
-
       return boundary;
     }
 
@@ -489,6 +487,7 @@ class Pinball extends React.Component {
       var rounds = 0;
       // events for when the pinball hits stuff
       Matter.Events.on(engine, 'collisionStart', function (event) {
+        console.log(stopperGroup)
         let pairs = event.pairs;
         pairs.forEach(function (pair) {
           if (pair.bodyA.label === 'ball') {

@@ -253,11 +253,11 @@ export default function BottomNav({ openFail, setOpenFail }) {
       </Animated>
 
       <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%' }}>
-        <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
+        {carousel && <Animated animationIn="fadeIn" animationOut="fadeOut" animationInDuration={300} animationOutDuration={200} isVisible={carousel}>
           <Carousel prevEvent={prevEvent} />
-        </Animated>
+        </Animated>}
 
-        <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
+        {customMenu && <Animated animationIn="bounceInUp" animationOut="bounceOutDown" animationInDuration={500} animationOutDuration={500} isVisible={customMenu}>
           <Box sx={{ width: '100%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', paddingTop: '10px' }}>
             <div>
               <Button style={customBtn} onClick={() => toggleCarousel('color')} >
@@ -295,7 +295,7 @@ export default function BottomNav({ openFail, setOpenFail }) {
               <div style={customLabel}>ADD-ONS</div>
             </div>
           </Box>
-        </Animated>
+        </Animated>}
 
         <div style={{ backgroundColor: 'lightblue', borderTop: 'solid black 5px', paddingBottom: '10px', paddingTop: '10px', zIndex: 3 }}>
           <Box sx={{ width: '90%', maxWidth: 800, mx: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap'}}>
