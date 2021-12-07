@@ -41,6 +41,9 @@ class Scene extends React.Component {
       gravity: { scale: 0 },
       enableSleeping: true
     });
+
+    Matter.Runner.run(engine);
+    
     var world = engine.world;
 
     var render = Render.create({

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -72,17 +72,20 @@ export default function SignUp(props) {
 
   };
 
+  const[email,setEmail] = useState('')
+  const[password,setPassword] = useState('')
+
   return (
     <ThemeProvider theme={theme}>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} >
         <Container style={{ marginRight: 'auto', marginLeft: 'auto', display: 'flex', justifyContent: 'center' }}
-          component='side' maxWidth='sm' sx={{mt:0}}>
+          component='side' maxWidth='sm' sx={{ mt: 0 }}>
           <img src='./assets/rascal-ex1.png' alt='' />
           <img src='./assets/rascal-ex2.png' alt='' />
           <img src='./assets/rascal-ex3.png' alt='' />
         </Container>
-        <Container maxWidth='xs' sx={{height:'100px',textAlign:'center'}} >
-          <img src='./assets/title.png' style={{height: '80px'}} alt='' />
+        <Container maxWidth='xs' sx={{ height: '100px', textAlign: 'center' }} >
+          <img src='./assets/title.png' style={{ height: '80px' }} alt='' />
         </Container>
         <Container
           component="main" maxWidth="xs" >
@@ -109,6 +112,8 @@ export default function SignUp(props) {
                     required
                     fullWidth
                     id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     label="Email Address"
                     name="email"
                     autoComplete="email"
@@ -124,15 +129,19 @@ export default function SignUp(props) {
                     label="Password"
                     type="password"
                     id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     autoComplete="new-password"
                   />
                 </Grid>
               </Grid>
               <Button
-                style={{color: 'white',
-                fontFamily: "'Nanum Pen Script', sans-serif",
-                fontSize: 'x-large',
-                backgroundColor: '#00717f'}}
+                style={{
+                  color: 'white',
+                  fontFamily: "'Nanum Pen Script', sans-serif",
+                  fontSize: 'x-large',
+                  backgroundColor: '#00717f'
+                }}
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -142,7 +151,7 @@ export default function SignUp(props) {
               </Button>
               <Grid container justifyContent="flex-end">
                 <Grid item>
-                  <Button style={{fontFamily: "'Nanum Pen Script', sans-serif"}} onClick={() => myContext.setCurrentPage('Login')} variant="body2">
+                  <Button style={{ fontFamily: "'Nanum Pen Script', sans-serif" }} onClick={() => myContext.setCurrentPage('Login')} variant="body2">
                     Already have an account? Sign in
                   </Button>
                 </Grid>

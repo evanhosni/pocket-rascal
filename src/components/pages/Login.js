@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -50,6 +50,9 @@ export default function SignIn(props) {
 
   const myContext = useContext(AppContext);
 
+  const[email,setEmail] = useState('')
+  const[password,setPassword] = useState('')
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -62,12 +65,12 @@ export default function SignIn(props) {
       myContext.setUserToken(res.data.token)
       localStorage.setItem("token", res.data.token)
       const rascalDat = await API.loadRascal(res.data.user.id)
-        console.log(rascalDat)
-        const equipDat = await API.loadEquippedItems(rascalDat.data.id)
-        const unlockDat = await API.loadUnlockedItems(rascalDat.data.id)
-        myContext.setUserRascal(rascalDat.data)
-        myContext.setEquipItems(equipDat.data)
-        myContext.setUnlockItems(unlockDat.data)
+      console.log(rascalDat)
+      const equipDat = await API.loadEquippedItems(rascalDat.data.id)
+      const unlockDat = await API.loadUnlockedItems(rascalDat.data.id)
+      myContext.setUserRascal(rascalDat.data)
+      myContext.setEquipItems(equipDat.data)
+      myContext.setUnlockItems(unlockDat.data)
       myContext.setCurrentPage('Dashboard')
     }).catch(err => {
       alert("Incorrect Credentials")
@@ -79,13 +82,13 @@ export default function SignIn(props) {
     <ThemeProvider theme={theme}>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }} >
         <Container style={{ marginRight: 'auto', marginLeft: 'auto', display: 'flex', justifyContent: 'center' }}
-          component='side' maxWidth='sm' sx={{mt:0}}>
+          component='side' maxWidth='sm' sx={{ mt: 0 }}>
           <img src='./assets/rascal-ex1.png' alt='' />
           <img src='./assets/rascal-ex2.png' alt='' />
           <img src='./assets/rascal-ex3.png' alt='' />
         </Container>
-        <Container maxWidth='xs' sx={{height:'100px',textAlign:'center'}} >
-          <img src='./assets/title.png' style={{height: '80px'}} alt='' />
+        <Container maxWidth='xs' sx={{ height: '100px', textAlign: 'center' }} >
+          <img src='./assets/title.png' style={{ height: '80px' }} alt='' />
         </Container>
         <Container
           component="main" maxWidth="xs" >
@@ -114,6 +117,8 @@ export default function SignIn(props) {
                 id="email"
                 label="Email Address"
                 name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
                 autoFocus
               />
@@ -127,6 +132,8 @@ export default function SignIn(props) {
                 name="password"
                 label="Password"
                 type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 id="password"
                 autoComplete="current-password"
               />
