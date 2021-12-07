@@ -807,7 +807,7 @@ class Scene extends React.Component {
         for (let i = 0; i < 50; i++) {
           delay(200*i).then(() => createFood())
         }
-        // setUpFeedRascal();
+        setUpFeedRascal();
       // } else {
       //   this.props.setOpenFail(true)
       }
@@ -821,7 +821,7 @@ class Scene extends React.Component {
             return
           }
         }
-        // feedRascal();
+        feedRascal();
       })
     }
     
@@ -839,15 +839,16 @@ class Scene extends React.Component {
       })
       Matter.World.add(engine.world, soap)
 
-      var soapSource = "soapbar";
-
-      // cancelAnimationFrame(animation);
       const soapImage = await new Promise((resolve, reject) => {
         const soapImage = new Image();
         soapImage.onload = () => resolve(soapImage);
         soapImage.onerror = reject;
-        soapImage.src = `./assets/${soapSource}.png`;
+        soapImage.src = `./assets/soapbar.png`;
       });
+
+      const w = 200;
+      const h = 200;
+      let frameNumberSoap = 0;
 
       const w = 200;
       const h = 200;
