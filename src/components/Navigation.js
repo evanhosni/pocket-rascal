@@ -29,6 +29,7 @@ const TutorialDialog = styled(Dialog)(({ theme }) => ({
 const NameChangeDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
+    
   },
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
@@ -47,6 +48,7 @@ const NameChangeDialogTitle = (props) => {
           onClick={onClose}
           sx={{
             position: 'absolute',
+            fontFamily: "'Nanum Pen Script', sans-serif",
             right: 8,
             top: 8,
             color: (theme) => theme.palette.grey[500],
@@ -102,14 +104,14 @@ function Navigation({ userId }) {
     autoPlay: false,
     navButtonsAlwaysVisible: true,
     swipe: true,
-    fullHeightHover: false
+    fullHeightHover: false,
   };
 
   function Item(props) {
     return (
-      <Paper style={{ minHeight: '45vh', maxHeight: 'fit-content' }}>
-        <div style={{ maxWidth: '45vh', maxHeight: '25vh' }}>
-          <img src={`./assets/${props.item.source}.png`} alt='' style={{ width:'100%', height:'100%' }} />
+      <Paper className='tutorial-items'>
+        <div>
+          <img src={`./assets/${props.item.source}.png`} alt='' />
         </div>
         <h2>{props.item.name}</h2>
         <p>{props.item.description}</p>
@@ -120,7 +122,8 @@ function Navigation({ userId }) {
 
   const items = [
     {
-      name: "Thanks for joining us!",
+      name: "Here's a quick recap!",
+      source:'rascal-ex3',
       description: "Here's a quick lil tutorial on how to make sure your lil lint friend thrives"
     },
     {
@@ -131,11 +134,11 @@ function Navigation({ userId }) {
     {
       name: "Minigames",
       source: 'tutorial-minigames',
-      description: "Gain some pocket change by playing games. You can use pocket change to buy new items, crumbs, or soap to keep your pocket friend looking fresh and feeling happy."
+      description: "Your Rascal can get bored just hanging around all day -- play minigames to keep him entertained and gain coins along the way. You can use the pocket change you earn to buy new items, crumbs, or soap to keep your pocket friend looking fresh and feeling happy."
     },
     {
       name: "Care",
-      description: "Speaking of happiness - your new Rascal is a moody lil guy. Keep an eye on his status bar to make sure his mood stays in the green! Feeding him crumbs, washing him, switching up his look, and playing games will help to keep his boredom down and his happiness high. If you aren't sure what's got your friend in the red, click the smiley for some hints."
+      description: "Speaking of happiness - your Rascal is a moody lil guy. Keep an eye on his status bar to make sure his mood stays in the green! Feeding him crumbs, washing him, switching up his look, and playing games will help to keep his boredom down and his happiness high. If you aren't sure what's got your friend in the red, click the smiley for some hints."
     }
   ];
 
@@ -161,7 +164,7 @@ function Navigation({ userId }) {
         onClick={handleMenu}
       // sx={{ ml: 1 }}
       >
-        <MoreVertIcon sx={{ color: 'white' }} />
+        <MoreVertIcon sx={{ color: 'black' }} />
       </IconButton>
       <Menu
 
@@ -184,8 +187,6 @@ function Navigation({ userId }) {
           onClick={handleNameOpen} color='inherit'>{`Hi, ${myContext.userRascal.name}`}</MenuItem>
         <MenuItem style={{ fontFamily: "'Nanum Pen Script', sans-serif" }}
           onClick={handleClickOpen} color='inherit'>Tutorial</MenuItem>
-        <MenuItem style={{ fontFamily: "'Nanum Pen Script', sans-serif" }}
-          onClick={() => myContext.setCurrentPage('CreateRascal')} color='inherit'>Create</MenuItem>
         {!myContext.user.id && <MenuItem style={{ fontFamily: "'Nanum Pen Script', sans-serif" }}
           onClick={() => myContext.setCurrentPage('Login')} color="inherit">Login</MenuItem>}
         {!myContext.user.id && <MenuItem style={{ fontFamily: "'Nanum Pen Script', sans-serif" }}
@@ -195,13 +196,14 @@ function Navigation({ userId }) {
       </Menu>
 
 
-      <TutorialDialog onClose={handleClickClose} open={open} aria-labelledby="customized-dialog-title">
-        <DialogTitle id="customized-dialog-title" style={{ fontSize: 'larger', textAlign: 'center', fontFamily: "'Nanum Pen Script',sans-serif" }}>
+      <TutorialDialog onClose={handleClickClose} open={open} aria-labelledby="tutorial-title" >
+        <DialogTitle id="tutorial-title" style={{ fontSize: 'larger', textAlign: 'center', fontFamily: "'Nanum Pen Script',sans-serif" }}>
           Welcome to Pocket Rascal!
         </DialogTitle>
-        <div id='tutorial-content' style={{overflow:'scroll'}}>
-          <Carousel
-            {...settings} style={{ alignItems: 'center' }}
+        <div id='tutorial-content'>
+          <Carousel 
+          id='tutorial-carousel'
+            {...settings}
             navButtonsProps={{
               style: {
                 backgroundColor: 'transparent',
@@ -214,13 +216,25 @@ function Navigation({ userId }) {
                 top: 'unset'
               }
             }}
+            indicatorIconButtonProps={{
+              style: {
+                  padding: '10px',
+                  bottom:0
+              }
+          }}
+          indicatorContainerProps={{
+            style: {
+                marginBottom:0,
+            }
+    
+        }}
           >
             {items.map((item, i) => (
               <Item key={i} item={item} />
             ))}
           </Carousel>
         </div>
-        <div id='tutorial-btns' style={{ display: 'flex', justifyContent: 'flex-end', padding: 5 }}>
+        <div id='tutorial-btns' style={{ display: 'flex', justifyContent: 'flex-end', padding:1, marginBottom:1 }}>
           <Button autoFocus onClick={handleClickClose} id="done">
             Done
           </Button>
@@ -234,23 +248,23 @@ function Navigation({ userId }) {
           aria-labelledby="customized-dialog-title"
           open={openName}
         >
-          <NameChangeDialogTitle style={{ backgroundColor: "lightblue" }} id="customized-dialog-title" onClose={handleNameClose}>
+          <NameChangeDialogTitle style={{ backgroundColor: "rgba(250, 253, 255, 0.719)", fontFamily: "'Nanum Pen Script', sans-serif" }} id="customized-dialog-title" onClose={handleNameClose}>
             Are you sure you want to rename your Rascal?
           </NameChangeDialogTitle>
-          <DialogContent style={{ backgroundColor: "lightblue" }} dividers>
-            <Typography gutterBottom>
+          <DialogContent style={{ backgroundColor: "rgba(250, 253, 255, 0.719)" }} dividers>
+            <Typography gutterBottom style={{fontFamily: "'Nanum Pen Script', sans-serif"}}>
               Your lil buddy is already so attached to their name...
             </Typography>
 
-            <Typography gutterBottom>
+            <Typography gutterBottom style={{fontFamily: "'Nanum Pen Script', sans-serif"}}>
               If you're positive, go ahead and click to continue -- but it'll cost you!
             </Typography>
           </DialogContent>
-          <DialogActions style={{ backgroundColor: "lightblue" }}>
-            <Button autoFocus onClick={handleNameClose}>
+          <DialogActions style={{ backgroundColor: "rgba(250, 253, 255, 0.719)" }}>
+            <Button autoFocus onClick={handleNameClose} style={{fontFamily: "'Nanum Pen Script', sans-serif", color:'black'}}>
               Nevermind
             </Button>
-            <Button autoFocus onClick={handleNameClose}>
+            <Button autoFocus onClick={handleNameClose} style={{fontFamily: "'Nanum Pen Script', sans-serif", color:'black'}}>
               Change Name
             </Button>
           </DialogActions>
