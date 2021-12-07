@@ -3,7 +3,7 @@ import Navigation from '../../Navigation';
 import AppContext from "./../../AppContext";
 
 
-export default function MiniTopBar({ userId }) {
+export default function MiniTopBar() {
 
     const myContext = useContext(AppContext);
 

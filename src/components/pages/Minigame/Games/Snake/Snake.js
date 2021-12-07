@@ -22,10 +22,9 @@ const SnakeMini = (props) => {
     ]);
 
     const reset = () => {
-        myContext.userRascal.coins = (myContext.userRascal.coins + points)
-        myContext.setCoins(myContext.userRascal.coins)
-        myContext.userRascal.xp = (myContext.userRascal.xp + points)
-        myContext.setXP(myContext.userRascal.xp)
+        myContext.setUserRascal({ ...myContext.userRascal, coins: myContext.userRascal.coins + points,xp: myContext.userRascal.xp + points })
+
+        
         speedRef.current = 100;
         setPoints(0)
         setDirection('right')
@@ -264,19 +263,13 @@ const SnakeMini = (props) => {
                         <button
                             onClick={() => {
                                 myContext.setCurrentPage('Minigame');
-                                myContext.userRascal.coins = (myContext.userRascal.coins + points)
-                                myContext.setCoins(myContext.userRascal.coins)
-                                myContext.userRascal.xp = (myContext.userRascal.xp + points)
-                                myContext.setXP(myContext.userRascal.xp)
+                                myContext.setUserRascal({ ...myContext.userRascal, coins: myContext.userRascal.coins + points, xp: myContext.userRascal.xp + points })
                             }}>
                             Play Another Game</button>
                         <button
                             onClick={() => {
                                 myContext.setCurrentPage('Dashboard');
-                                myContext.userRascal.coins = (myContext.userRascal.coins + points)
-                                myContext.setCoins(myContext.userRascal.coins)
-                                myContext.userRascal.xp = (myContext.userRascal.xp + points)
-                                myContext.setXP(myContext.userRascal.xp)
+                                myContext.setUserRascal({ ...myContext.userRascal, coins: myContext.userRascal.coins + points, xp: myContext.userRascal.xp + points })
                             }}>
                             Exit
                         </button>
@@ -295,7 +288,7 @@ const SnakeMini = (props) => {
                     style={{ width: dim, margin: 'auto' }}
                 >
                     <div>
-                        <button 
+                        <button
                             onClick={() => turn('up', 'down')}
                         >&#8593;</button>
                     </div>
