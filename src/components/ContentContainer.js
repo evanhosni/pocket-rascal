@@ -137,28 +137,30 @@ export default function ContentContainer() {
 
 
   //use effect for rascal level - runs anytime XP is updated
-
+  
   useEffect(()=>{
-    if(rascalBodySave.fed){
+    if(rascalBodySave.food){
       const rascUpdate={...rascalBodySave}
-      delete rascUpdate.fed
       
-      const newHappy=parseFloat(myRascal.happiness)+5
-      const newXp=myRascal.xp + 5
+      let newHappy=parseFloat(myRascal.happiness)+(rascUpdate.food/2)
+      if(parseFloat(newHappy)>100){newHappy=100}
+      const newXp=myRascal.xp + rascUpdate.food
+      delete rascUpdate.food
       setMyRascal({...myRascal,...rascUpdate,happiness:newHappy,xp:newXp})
 
-    }else if(rascalBodySave.washed){
+    }else if(rascalBodySave.suds){
       const rascUpdate={...rascalBodySave}
-      delete rascUpdate.washed
       
-      const newHappy=parseFloat(myRascal.happiness)+5
-      const newXp=myRascal.xp + 5
+      let newHappy=parseFloat(myRascal.happiness)+(rascUpdate.suds/2)
+      if(parseFloat(newHappy)>100){newHappy=100}
+      const newXp=myRascal.xp + rascUpdate.suds
+      delete rascUpdate.suds
       setMyRascal({...myRascal,...rascUpdate,happiness:newHappy,xp:newXp})
 
     }else{
       const rascUpdate={...rascalBodySave}
-      delete rascUpdate.fed
-      delete rascUpdate.washed
+      delete rascUpdate.food
+      delete rascUpdate.suds
       setMyRascal({...myRascal,...rascUpdate})
     }
   },[rascalBodySave])

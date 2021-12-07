@@ -540,6 +540,7 @@ class Scene extends React.Component {
         var colorValue = e.target.getAttribute('value')
         // console.log(colorCheck)
         // console.log(colorValue)
+        
         if (source) {
           var isolate = source.split('/')[2].split('.')[0]
 
@@ -620,6 +621,7 @@ class Scene extends React.Component {
 
 
         }
+        console.log(itemSource)
         if (itemSource) {
 
           if (item1) { Matter.World.remove(world, item1) }
@@ -797,6 +799,7 @@ class Scene extends React.Component {
 
     const feedRascal = () => {
       if (ongoingRascal.coins >= 20) {
+        ongoingRascal.coins = (ongoingRascal.coins - 20);
       //   myContext.coins = (myContext.coins - 20);
         for (let i = 0; i < 50; i++) {
           delay(200*i).then(() => createFood())
