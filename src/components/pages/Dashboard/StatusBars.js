@@ -55,6 +55,20 @@ export default function StatusBars({ }) {
   //level variable
   const chipLabel = ('LVL ' + myContext.userRascal.level)
 
+  function moodCheck() {
+    var mood = myContext.userRascal.happiness
+    if (mood > 80) {
+      return <img src="mood80-100.png" alt="happy"/>
+    } else if (mood > 60) {
+      return <img src="mood60-80.png" alt="content"/>
+    } else if (mood > 40) {
+      return <img src="mood40-60.png" alt="meh"/>
+    } else if (mood > 20) {
+      return <img src="mood20-40.png" alt="sad"/>
+    } else {
+      return <img src="mood0-20.png" alt="sadaf"/>
+    }
+  }
 
 
   return (
@@ -62,6 +76,7 @@ export default function StatusBars({ }) {
       <div style={{ width: '1%', maxWidth: 55, textAlign: 'left' }} />
       <div style={{ width: '100%', maxWidth: 500, display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginLeft: '0.5%' }}>
         <IconButton aria-describedby={id} type="button" onClick={handleClick} size="large">
+          {/* {moodCheck()} */}
           <SentimentSatisfiedAltIcon sx={{ color: 'black' }} fontSize="inherit" />
         </IconButton>
         <Popper id={id} open={open} anchorEl={anchorEl}>{/* TODO: use hover w popover instead, better for mobile */}
@@ -72,7 +87,7 @@ export default function StatusBars({ }) {
         <Box sx={{ flexGrow: 1, border: 5, borderRadius: 5 }}>
           <BorderLinearProgress variant="determinate" value={parseInt(myContext.userRascal.happiness)} />
         </Box>
-        <Chip sx={{ color: 'black', background: 'transparent' }} label={chipLabel} />
+        <Chip sx={{ color: 'black', background: 'transparent', fontWeight:'bolder' }} label={chipLabel} />
       </div>
       <div style={{ width: 55, textAlign: 'right', marginRight: '1%' }}>
         <Navigation />
