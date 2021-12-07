@@ -187,7 +187,6 @@ class Slingshot extends React.Component {
     const collisionCount = () => {
       this.setState({ collisions: this.state.collisions + 1 })
       console.log(this.state.collisions)
-      console.log(myContext.coins)
       // coinCount();
     }
 

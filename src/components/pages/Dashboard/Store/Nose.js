@@ -9,33 +9,33 @@ import "./store.css";
 
 const noseData = [
   {
-    img: 'nose_cute',
-    title: 'Button Nose',
-    price: 50,
-    level: 0
-  },
-  {
-    img: 'nose_disguise',
-    title: 'Nose Disguise',
-    price: 25,
-    level: 0
-  },
-  {
-    img: 'nose_clown',
-    title: 'Clown Nose',
-    price: 25,
-    level: 0
-  },
-  {
     img: 'nose_pinkcarrot',
     title: 'Lil Pink Nose',
     price: 25,
     level: 0
   },
   {
+    img: 'nose_clown',
+    title: 'Clown Nose',
+    price: 50,
+    level: 0
+  },
+  {
+    img: 'nose_cute',
+    title: 'Button Nose',
+    price: 50,
+    level: 0
+  },
+  {
     img: 'nose_strong',
     title: 'Strong Nose',
-    price: 25,
+    price: 100,
+    level: 0
+  },
+  {
+    img: 'nose_disguise',
+    title: 'Nose Disguise',
+    price: 150,
     level: 0
   },
 
@@ -150,8 +150,8 @@ export default function StoreNose(props) {
 
   //update the coin value displayed at the bottom of store window
   const purchaseItem = (item) => {
-    if (myContext.coins >= item.price) {
-      myContext.setUserRascal({...myContext.userRascal, coins:myContext.coins-item.price})
+    if (myContext.userRascal.coins >= item.price) {
+      myContext.setUserRascal({...myContext.userRascal, coins:myContext.userRascal.coins-item.price})
         // myContext.setCoins(myContext.userRascal.coins);
         handleClick();
         saveNewItem(item);

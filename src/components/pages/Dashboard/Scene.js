@@ -25,6 +25,7 @@ class Scene extends React.Component {
       body:myContext.userRascal.body,
       mouth:myContext.userRascal.mouth,
       eyes:myContext.userRascal.eyes,
+      coins:myContext.userRascal.coins
     }
 
     var Engine = Matter.Engine,
@@ -81,6 +82,8 @@ class Scene extends React.Component {
     setMouseScaleAndOffset()
     window.addEventListener('resize', setMouseScaleAndOffset)
 
+    const bubblecrumbgroup  = Matter.Body.nextGroup(true);
+
     var rascal = Bodies.polygon(2500, 2500, 8, 120, {
       name: "rascal",
       label: 'rascal-body',
@@ -90,6 +93,9 @@ class Scene extends React.Component {
       render: {
         visible: false,
         isSleeping: true
+      },
+      collisionFilter: {
+        group: bubblecrumbgroup
       },
     });
 
@@ -125,10 +131,12 @@ class Scene extends React.Component {
 
     var itemArray = [...myContext.equipItems
     ];
-    console.log(itemArray)
+    // console.log(itemArray)
     //////////////////////////////////////////////////////////////////////////////////////
 
     var animation;
+    var animationsoap;
+    var animationfood;
     const canvas = document.querySelector("canvas");
     canvas.setAttribute('id', 'rascalCanvas')
     const ctx = canvas.getContext("2d");
@@ -530,8 +538,9 @@ class Scene extends React.Component {
         var itemSource = e.target.getAttribute('item-size')
         var colorCheck = e.target.getAttribute('data-id')
         var colorValue = e.target.getAttribute('value')
-        console.log(colorCheck)
-        console.log(colorValue)
+        // console.log(colorCheck)
+        // console.log(colorValue)
+        
         if (source) {
           var isolate = source.split('/')[2].split('.')[0]
 
@@ -612,6 +621,7 @@ class Scene extends React.Component {
 
 
         }
+        console.log(itemSource)
         if (itemSource) {
 
           if (item1) { Matter.World.remove(world, item1) }
@@ -677,26 +687,71 @@ class Scene extends React.Component {
     }
 
 
+    function delay(time) {
+      return new Promise(resolve => setTimeout(resolve, time));
+    }
+
+
     //setting up feeding the rascal and the food object disappearing on collision with rascal body
-    const createFood = () => {
-      var food = Matter.Bodies.circle(2100, 2750, 20, {
+
+    var crumbArray = []
+
+    const createFood = async () => {
+
+      // var animationcrumb
+
+      var randomx = (2100 + Math.floor(Math.random()*800))
+      var randomy = (2250 + Math.floor(Math.random()*500))
+
+      while (randomx > (rascal.position.x-250) && randomx < (rascal.position.x+250) && randomy > (rascal.position.y-200) && randomy < (rascal.position.y+200)) {
+        var randomx = (2100 + Math.floor(Math.random()*800))
+        var randomy = (2250 + Math.floor(Math.random()*500))
+      }
+
+      var food = Matter.Bodies.circle(randomx, randomy, 35, {
         label: 'food',
-        friction: 0.8
-      })
-      var food2 = Matter.Bodies.circle(2050, 2600, 20, {
-        label: 'food',
-        friction: 1
-      })
-      var food3 = Matter.Bodies.circle(2300, 2800, 20, {
-        label: 'food',
-        friction: 1
-      })
-      var food4 = Matter.Bodies.circle(2200, 2700, 20, {
-        label: 'food',
-        friction: 1
+        friction: 0.8,
+        animation: 'animation',
+        render: {
+          visible: false
+        }
       })
 
-      Matter.World.add(engine.world, [food, food2, food3, food4])
+      crumbArray.push(food)
+
+      Matter.World.add(engine.world, food)
+
+      var randomFood = Math.ceil(Math.random()*6)
+
+      const foodImage = await new Promise((resolve, reject) => {
+        const foodImage = new Image();
+        foodImage.onload = () => resolve(foodImage);
+        foodImage.onerror = reject;
+        foodImage.src = `./assets/crumb${randomFood}.png`;
+      });
+
+      const w = 100;
+      const h = 100;
+      let frameNumberfood = 0;
+
+
+      (function rerender() {
+        const foodOffset = (~~frameNumberfood * w) % foodImage.width;
+        const { x, y } = food.position;
+        ctx.drawImage(
+          foodImage, // image
+          foodOffset, // sx
+          0, // sy
+          w, // sWidth
+          h, // sHeight
+          x - w / 2, // dx
+          y - h / 2, // dy
+          w, // dWidth
+          h // dHeight
+        );
+        // Matter.Engine.update(engine);
+        food.animation = requestAnimationFrame(rerender);
+      })();
     }
 
     function detectFoodCollision(pair) {
@@ -708,36 +763,50 @@ class Scene extends React.Component {
     function onFoodCollision(pair) {
       if (pair.bodyA.label === "food") {
         Matter.World.remove(world, pair.bodyA);
+        cancelAnimationFrame(pair.bodyA.animation)
       }
       if (pair.bodyB.label === "food") {
         Matter.World.remove(world, pair.bodyB);
+        cancelAnimationFrame(pair.bodyB.animation)
       }
     }
 
     function setUpFeedRascal() {
+      var totalCollisions = 0
       Matter.Events.on(engine, "collisionStart", (event) => {
         event.pairs
-          .filter((pair) => {
-            return detectFoodCollision(pair);
-          })
-          .forEach((pair) => {
-            console.log(pair);
-            onFoodCollision(pair);
-          });
+        .filter((pair) => {
+          return detectFoodCollision(pair);
+        })
+        .forEach((pair) => {
+          onFoodCollision(pair);
+          totalCollisions++
+        });
       });
+      delay(11000).then(() => endFeed(totalCollisions))
+    }
+
+    function endFeed(totalCollisions) {
+      ongoingRascal.food = totalCollisions
+      for (let i = 0; i < crumbArray.length; i++) {
+        Matter.World.remove(world,crumbArray[i])
+        cancelAnimationFrame(crumbArray[i].animation)
+      }
+      crumbArray = []
+      myContext.setRascalBodySave({...ongoingRascal})
+      ongoingRascal.food=0
     }
 
     const feedRascal = () => {
-      if (myContext.coins >= 20) {
-        myContext.coins = (myContext.coins - 20);
-        myContext.userRascal.happiness = (myContext.userRascal.happiness + 5);
-        myContext.userRascal.xp = (myContext.userRascal.xp + 5)
-        myContext.setXP(myContext.userRascal.xp)
-        myContext.setCoins(myContext.coins);
-        createFood();
+      if (ongoingRascal.coins >= 20) {
+        ongoingRascal.coins = (ongoingRascal.coins - 20);
+      //   myContext.coins = (myContext.coins - 20);
+        for (let i = 0; i < 50; i++) {
+          delay(200*i).then(() => createFood())
+        }
         setUpFeedRascal();
-      } else {
-        this.props.setOpenFail(true)
+      // } else {
+      //   this.props.setOpenFail(true)
       }
     }
 
@@ -752,15 +821,113 @@ class Scene extends React.Component {
         feedRascal();
       })
     }
-
+    
+    var soap
+    
     //setting up washing rascal and the soap getting smaller on collision 
-    const createSoap = () => {
-      var soap = Matter.Bodies.rectangle(2200, 2750, 150, 90, {
+    const createSoap = async () => {
+      soap = Matter.Bodies.rectangle(2150, 2500, 185, 115, {
         label: 'soap',
         friction: 1,
-        isSensor: true,
+        // isSensor: true,
+        render: {
+          visible: false,
+        },
       })
       Matter.World.add(engine.world, soap)
+
+      // cancelAnimationFrame(animation);
+      const soapImage = await new Promise((resolve, reject) => {
+        const soapImage = new Image();
+        soapImage.onload = () => resolve(soapImage);
+        soapImage.onerror = reject;
+        soapImage.src = `./assets/soapbar.png`;
+      });
+
+      const w = 200;
+      const h = 200;
+      let frameNumberSoap = 0;
+
+
+      (function rerender() {
+        const soapOffset = (~~frameNumberSoap * w) % soapImage.width;
+        const { x, y } = soap.position;
+        ctx.drawImage(
+          soapImage, // image
+          soapOffset, // sx
+          0, // sy
+          w, // sWidth
+          h, // sHeight
+          x - w / 2, // dx
+          y - h / 2, // dy
+          w, // dWidth
+          h // dHeight
+        );
+        // Matter.Engine.update(engine);
+        animationsoap = requestAnimationFrame(rerender);
+
+      })();
+    }
+
+    const createBubble = async (soappos) => {
+      var bubble = Matter.Bodies.circle(soappos.x, soappos.y, 30, {
+        label: 'bubble',
+        frictionAir: 0.8,
+        render: {
+          visible: false,
+        },
+        collisionFilter: {
+          group: bubblecrumbgroup
+        },
+      })
+      Matter.World.add(engine.world, bubble)
+
+      var animationbubble
+
+      var randomBubble = Math.ceil(Math.random()*3)
+
+      // cancelAnimationFrame(animation);
+      const bubbleImage = await new Promise((resolve, reject) => {
+        const bubbleImage = new Image();
+        bubbleImage.onload = () => resolve(bubbleImage);
+        bubbleImage.onerror = reject;
+        bubbleImage.src = `./assets/bubble${randomBubble}.png`;
+      });
+
+      const w = 100;
+      const h = 100;
+      let frameNumberBubble = 0;
+
+      (function rerender() {
+        const bubbleOffset = (~~frameNumberBubble * w) % bubbleImage.width;
+        const { x, y } = bubble.position;
+        ctx.drawImage(
+          bubbleImage, // image
+          bubbleOffset, // sx
+          0, // sy
+          w, // sWidth
+          h, // sHeight
+          x - w / 2, // dx
+          y - h / 2, // dy
+          w, // dWidth
+          h // dHeight
+        );
+        // Matter.Engine.update(engine);
+        animationbubble = requestAnimationFrame(rerender);
+        delay(1250 + Math.floor(Math.random()*500)).then(()=>cancelAnimationFrame(animationbubble))
+
+      })();
+    }
+
+    function soapsplosion() {
+      for (let i = 0; i < 5; i++) {
+        delay(20*i).then(() => {
+          var x = (soap.position.x - 30 + Math.floor(Math.random()*60))
+          var y = (soap.position.y - 25 + Math.floor(Math.random()*50))
+          var soapprox = {x, y}
+          createBubble(soapprox)
+        })
+      }
     }
 
     function detectSoapCollision(pair) {
@@ -772,29 +939,39 @@ class Scene extends React.Component {
 
     function setUpWashRascal() {
       var totalCollisions = 0;
+      var soapbar
+      // var washFinished = false
       Matter.Events.on(engine, 'collisionEnd', function (event) {
         event.pairs
-          .filter((pair) => {
-            return detectSoapCollision(pair);
-          })
-          .forEach((pair) => {
-            console.log(pair)
-            totalCollisions++
-            console.log(totalCollisions)
-            if (totalCollisions === 20) {
-              Matter.World.remove(world,pair.bodyB)
-            }
-          })
+        .filter((pair) => {
+          return detectSoapCollision(pair);
+        })
+        .forEach((pair) => {
+          totalCollisions++
+          createBubble(soap.position)
+          soapbar = pair.bodyB
+        })
       })
+      delay(7500).then(() => endWash(totalCollisions,soapbar))
+    }
+
+    function endWash(totalCollisions,soapbar) {
+      soapsplosion()
+      Matter.World.remove(world,soapbar)
+      cancelAnimationFrame(animationsoap)
+      ongoingRascal.suds = totalCollisions
+      myContext.setRascalBodySave({...ongoingRascal})
+      ongoingRascal.sud=0
     }
 
     const washRascal = () => {
-      if (myContext.coins >= 10) {
-        myContext.coins = (myContext.coins - 10);
-        myContext.userRascal.happiness = (myContext.userRascal.happiness + 5);
-        myContext.userRascal.xp = (myContext.userRascal.xp + 5)
-        myContext.setXP(myContext.userRascal.xp)
-        myContext.setCoins(myContext.coins);
+      if (ongoingRascal.coins >= 10) {
+        ongoingRascal.coins = (ongoingRascal.coins - 10);
+        ongoingRascal.washed = true
+        
+        myContext.setRascalBodySave({...ongoingRascal})
+        ongoingRascal.washed = false
+  
         createSoap();
         setUpWashRascal();
       } else { this.props.setOpenFail(true) }

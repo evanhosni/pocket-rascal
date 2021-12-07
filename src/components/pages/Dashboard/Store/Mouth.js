@@ -15,12 +15,6 @@ const mouthData = [
     level: 0
   },
   {
-    img: 'mouth_braces',
-    title: 'Brace Face',
-    price: 50,
-    level: 0
-  },
-  {
     img: 'mouth_frown',
     title: 'Sad Mouth',
     price: 50,
@@ -29,19 +23,25 @@ const mouthData = [
   {
     img: 'mouth_grin',
     title: 'Big Ol Grin',
-    price: 50,
+    price: 100,
+    level: 0
+  },
+  {
+    img: 'mouth_braces',
+    title: 'Brace Face',
+    price: 100,
     level: 0
   },
   {
     img: 'mouth_hillbilly',
     title: 'Hillbilly',
-    price: 50,
+    price: 150,
     level: 0
   },
   {
     img: 'mouth_lipstick',
     title: 'Lipstick',
-    price: 50,
+    price: 150,
     level: 0
   },
 ]
@@ -155,8 +155,8 @@ export default function StoreMouth(props) {
 
     //update the coin value displayed at the bottom of store window
     const purchaseItem = (item) => {
-        if (myContext.coins >= item.price) {
-            myContext.setUserRascal({...myContext.userRascal, coins:myContext.coins-item.price})
+      if (myContext.userRascal.coins >= item.price) {
+        myContext.setUserRascal({...myContext.userRascal, coins:myContext.userRascal.coins-item.price})
             // myContext.setCoins(myContext.userRascal.coins);
             handleClick();
             saveNewItem(item);

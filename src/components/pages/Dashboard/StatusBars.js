@@ -31,11 +31,11 @@ export default function StatusBars({ }) {
     height: 25,
     borderRadius: 5,
     [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+      backgroundColor: 'white',
     },
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 5,
-      backgroundColor: theme.palette.mode === 'light' ? '#00cc00' : '#00cc00',
+      backgroundColor: parseInt(myContext.userRascal.happiness)>70 ? "#77D970" : parseInt(myContext.userRascal.happiness)>30 ? "#ECD413": "#C43434"
     },
   }));
 
@@ -53,7 +53,7 @@ export default function StatusBars({ }) {
 
 
   //level variable
-  const chipLabel = ('LVL ' + myContext.level)
+  const chipLabel = ('LVL ' + myContext.userRascal.level)
 
 
 
@@ -62,7 +62,7 @@ export default function StatusBars({ }) {
       <div style={{ width: '1%', maxWidth: 55, textAlign: 'left' }} />
       <div style={{ width: '100%', maxWidth: 500, display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginLeft: '0.5%' }}>
         <IconButton aria-describedby={id} type="button" onClick={handleClick} size="large">
-          <SentimentSatisfiedAltIcon sx={{ color: 'white' }} fontSize="inherit" />
+          <SentimentSatisfiedAltIcon sx={{ color: 'black' }} fontSize="inherit" />
         </IconButton>
         <Popper id={id} open={open} anchorEl={anchorEl}>{/* TODO: use hover w popover instead, better for mobile */}
           <Box sx={{ border: 2, p: 1, bgcolor: 'background.paper', borderRadius: '15px', fontWeight: 'bold', fontSize: '20px' }}>
@@ -72,7 +72,7 @@ export default function StatusBars({ }) {
         <Box sx={{ flexGrow: 1, border: 5, borderRadius: 5 }}>
           <BorderLinearProgress variant="determinate" value={parseInt(myContext.userRascal.happiness)} />
         </Box>
-        <Chip sx={{ color: 'white', background: 'transparent' }} label={chipLabel} />
+        <Chip sx={{ color: 'black', background: 'transparent' }} label={chipLabel} />
       </div>
       <div style={{ width: 55, textAlign: 'right', marginRight: '1%' }}>
         <Navigation />
