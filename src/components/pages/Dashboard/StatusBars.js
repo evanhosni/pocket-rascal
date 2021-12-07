@@ -35,7 +35,7 @@ export default function StatusBars({ }) {
     },
     [`& .${linearProgressClasses.bar}`]: {
       borderRadius: 5,
-      backgroundColor: theme.palette.mode === 'light' ? '#00cc00' : '#00cc00',
+      backgroundColor: parseInt(myContext.userRascal.happiness)>70 ? "green" : parseInt(myContext.userRascal.happiness)>30 ? "yellow": "#BD574E"
     },
   }));
 
@@ -53,7 +53,7 @@ export default function StatusBars({ }) {
 
 
   //level variable
-  const chipLabel = ('LVL ' + myContext.level)
+  const chipLabel = ('LVL ' + myContext.userRascal.level)
 
 
 

@@ -592,7 +592,7 @@ class Pinball extends React.Component {
     const myContext = this.context;
     let width = window.innerWidth
     var mobileBtns = false;
-    if (width < 768){
+    if (width < 768) {
       mobileBtns = true
     }
     return (
@@ -621,20 +621,16 @@ class Pinball extends React.Component {
             </button>
             <button
               onClick={() => {
+                console.log(this.state.score)
                 myContext.setCurrentPage('Minigame');
-                myContext.userRascal.coins = (myContext.userRascal.coins + this.state.score)
-                myContext.setCoins(myContext.userRascal.coins)
-                myContext.userRascal.xp = (myContext.userRascal.xp + this.state.score)
-                myContext.setXP(myContext.userRascal.xp)
+                myContext.setUserRascal({ ...myContext.userRascal, coins: myContext.userRascal.coins + this.state.score })
               }}>
               Play Another Game</button>
             <button
               onClick={() => {
+                console.log(this.state.score)
                 myContext.setCurrentPage('Dashboard');
-                myContext.userRascal.coins = (myContext.userRascal.coins + this.state.score)
-                myContext.setCoins(myContext.userRascal.coins)
-                myContext.userRascal.xp = (myContext.userRascal.xp + this.state.score)
-                myContext.setXP(myContext.userRascal.xp)
+                myContext.setUserRascal({ ...myContext.userRascal, coins: myContext.userRascal.coins + this.state.score,xp: myContext.userRascal.xp + this.state.score  })
               }}>
               Exit
             </button>

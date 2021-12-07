@@ -150,8 +150,8 @@ export default function StoreNose(props) {
 
   //update the coin value displayed at the bottom of store window
   const purchaseItem = (item) => {
-    if (myContext.coins >= item.price) {
-      myContext.setUserRascal({...myContext.userRascal, coins:myContext.coins-item.price})
+    if (myContext.userRascal.coins >= item.price) {
+      myContext.setUserRascal({...myContext.userRascal, coins:myContext.userRascal.coins-item.price})
         // myContext.setCoins(myContext.userRascal.coins);
         handleClick();
         saveNewItem(item);

@@ -25,6 +25,7 @@ class Scene extends React.Component {
       body:myContext.userRascal.body,
       mouth:myContext.userRascal.mouth,
       eyes:myContext.userRascal.eyes,
+      coins:myContext.userRascal.coins
     }
 
     var Engine = Matter.Engine,
@@ -721,19 +722,18 @@ class Scene extends React.Component {
             return detectFoodCollision(pair);
           })
           .forEach((pair) => {
-            console.log(pair);
             onFoodCollision(pair);
           });
       });
     }
 
     const feedRascal = () => {
-      if (myContext.coins >= 20) {
-        myContext.coins = (myContext.coins - 20);
-        myContext.userRascal.happiness = (myContext.userRascal.happiness + 5);
-        myContext.userRascal.xp = (myContext.userRascal.xp + 5)
-        myContext.setXP(myContext.userRascal.xp)
-        myContext.setCoins(myContext.coins);
+      if (ongoingRascal.coins >= 20) {
+        ongoingRascal.coins = (ongoingRascal.coins - 20);
+        ongoingRascal.fed = true
+        myContext.setRascalBodySave({...ongoingRascal})
+        ongoingRascal.fed = false
+        
         createFood();
         setUpFeedRascal();
       } else {
@@ -789,12 +789,13 @@ class Scene extends React.Component {
     }
 
     const washRascal = () => {
-      if (myContext.coins >= 10) {
-        myContext.coins = (myContext.coins - 10);
-        myContext.userRascal.happiness = (myContext.userRascal.happiness + 5);
-        myContext.userRascal.xp = (myContext.userRascal.xp + 5)
-        myContext.setXP(myContext.userRascal.xp)
-        myContext.setCoins(myContext.coins);
+      if (ongoingRascal.coins >= 10) {
+        ongoingRascal.coins = (ongoingRascal.coins - 10);
+        ongoingRascal.washed = true
+        
+        myContext.setRascalBodySave({...ongoingRascal})
+        ongoingRascal.washed = false
+  
         createSoap();
         setUpWashRascal();
       } else { this.props.setOpenFail(true) }
