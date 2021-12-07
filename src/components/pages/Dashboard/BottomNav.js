@@ -339,7 +339,7 @@ export default function BottomNav({ openFail, setOpenFail }) {
             </div>
             <div id="bottom-tab">
               <div startIcon={<SavingsIcon />} className="coins">
-                {`${myContext.coins}`}<span>¢</span>
+                {`${myContext.userRascal.coins}`}<span>¢</span>
               </div>
               <Button autoFocus onClick={handleClose} id="done">
                 Done

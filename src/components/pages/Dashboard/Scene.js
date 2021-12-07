@@ -25,6 +25,7 @@ class Scene extends React.Component {
       body:myContext.userRascal.body,
       mouth:myContext.userRascal.mouth,
       eyes:myContext.userRascal.eyes,
+      coins:myContext.userRascal.coins
     }
 
     var Engine = Matter.Engine,
@@ -539,6 +540,7 @@ class Scene extends React.Component {
         var colorValue = e.target.getAttribute('value')
         // console.log(colorCheck)
         // console.log(colorValue)
+        
         if (source) {
           var isolate = source.split('/')[2].split('.')[0]
 
@@ -619,6 +621,7 @@ class Scene extends React.Component {
 
 
         }
+        console.log(itemSource)
         if (itemSource) {
 
           if (item1) { Matter.World.remove(world, item1) }
@@ -790,22 +793,21 @@ class Scene extends React.Component {
         cancelAnimationFrame(crumbArray[i].animation)
       }
       crumbArray = []
+      myContext.setRascalBodySave({...ongoingRascal})
+      ongoingRascal.food=0
     }
 
     const feedRascal = () => {
-      // if (myContext.coins >= 20) {
+      if (ongoingRascal.coins >= 20) {
+        ongoingRascal.coins = (ongoingRascal.coins - 20);
       //   myContext.coins = (myContext.coins - 20);
-        myContext.userRascal.happiness = (myContext.userRascal.happiness + 5);
-        myContext.userRascal.xp = (myContext.userRascal.xp + 5)
-        myContext.setXP(myContext.userRascal.xp)
-        myContext.setCoins(myContext.coins);
-        for (let i = 0; i < 100; i++) {
-          delay(100*i).then(() => createFood())
+        for (let i = 0; i < 50; i++) {
+          delay(200*i).then(() => createFood())
         }
         setUpFeedRascal();
       // } else {
       //   this.props.setOpenFail(true)
-      // }
+      }
     }
 
     const feedBtn = document.getElementById('FeedRascal')
@@ -958,15 +960,18 @@ class Scene extends React.Component {
       Matter.World.remove(world,soapbar)
       cancelAnimationFrame(animationsoap)
       ongoingRascal.suds = totalCollisions
+      myContext.setRascalBodySave({...ongoingRascal})
+      ongoingRascal.sud=0
     }
 
     const washRascal = () => {
-      if (myContext.coins >= 10) {
-        myContext.coins = (myContext.coins - 10);
-        myContext.userRascal.happiness = (myContext.userRascal.happiness + 5);
-        myContext.userRascal.xp = (myContext.userRascal.xp + 5)
-        myContext.setXP(myContext.userRascal.xp)
-        myContext.setCoins(myContext.coins);
+      if (ongoingRascal.coins >= 10) {
+        ongoingRascal.coins = (ongoingRascal.coins - 10);
+        ongoingRascal.washed = true
+        
+        myContext.setRascalBodySave({...ongoingRascal})
+        ongoingRascal.washed = false
+  
         createSoap();
         setUpWashRascal();
       } else { this.props.setOpenFail(true) }

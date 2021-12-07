@@ -53,7 +53,7 @@ export default function StatusBars({ }) {
 
 
   //level variable
-  const chipLabel = ('LVL ' + myContext.level)
+  const chipLabel = ('LVL ' + myContext.userRascal.level)
 
 
 
