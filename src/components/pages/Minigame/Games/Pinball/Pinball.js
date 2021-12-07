@@ -92,6 +92,7 @@ class Pinball extends React.Component {
     function createBall(x, y) {
       ball = Bodies.circle(x, y, 10, {
         mass: 1,
+        friction:0,
         label: "ball",
         collisionFilter: {
           group: stopperGroup
@@ -104,6 +105,8 @@ class Pinball extends React.Component {
           }
         }
       });
+
+      ball.restitution = BUMPER_BOUNCE;
       // setInterval(function(){ console.log('ball',ball.position); }, 3000);
       return ball;
     }
@@ -174,35 +177,44 @@ class Pinball extends React.Component {
     };
     const GRAVITY = 0.1;
     engine.gravity.y = GRAVITY
-    world.gravity.y = GRAVITY
+    // world.gravity.y = GRAVITY
     const WIREFRAMES = false;
     const BUMPER_BOUNCE = 1;
     const PADDLE_PULL = 0.002;
     const MAX_VELOCITY = 50;
 
     function boundary(x, y, width, height) {
-      return Matter.Bodies.rectangle(x, y, width, height, {
+      let boundary= Matter.Bodies.rectangle(x, y, width, height, {
         isStatic: true,
         render: {
           fillStyle: COLOR.OUTER
         }
       });
+
+      boundary.restitution = 0.8;
+
+
+      return boundary;
     }
 
     function wall(x, y, width, height, color, angle = 0) {
-      return Matter.Bodies.rectangle(x, y, width, height, {
+      let wall = Matter.Bodies.rectangle(x, y, width, height, {
         angle: angle,
         isStatic: true,
         chamfer: { radius: 10 },
         render: {
-          fillStyle: color
+          fillStyle: color,
         },
       });
+
+      wall.restitution = 0.8;
+
+      return wall;
     }
 
     function path(x, y, path) {
       let vertices = Matter.Vertices.fromPath(path);
-      return Matter.Bodies.fromVertices(x, y, vertices, {
+      let paths = Matter.Bodies.fromVertices(x, y, vertices, {
         isStatic: true,
         render: {
           fillStyle: COLOR.OUTER,
@@ -212,6 +224,10 @@ class Pinball extends React.Component {
           lineWidth: 1
         }
       });
+
+      paths.restitution = BUMPER_BOUNCE;
+
+      return paths;
     }
 
     function bumper(x, y) {
