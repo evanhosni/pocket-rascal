@@ -31,6 +31,13 @@ const itemData = [
     size: 1.7
   },
   {
+    img: 'cat_ear',
+    title: 'Cat Ear',
+    price: 75,
+    level: 0,
+    size: 1.4//TODO: double check this
+  },
+  {
     img: 'top_hat',
     title: 'Top Hat',
     price: 100,
@@ -43,6 +50,20 @@ const itemData = [
     price: 100,
     level: 0,
     size: 1.7
+  },
+  {
+    img: 'devil_tail',
+    title: 'Devil Tail',
+    price: 150,
+    level: 0,
+    size: 3.4//TODO: double check this
+  },
+  {
+    img: 'dummy_cap',
+    title: 'Dummy Cap',
+    price: 200,
+    level: 0,
+    size: 2.5//TODO: double check this
   },
   {
     img: 'cherry',
