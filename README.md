@@ -20,20 +20,28 @@
 
   ## Usage 
 
-  ![Login]()
+  ![Login](./public/assets/readme/login.png)
   Login or sign up for an account to access the main home page.
+  <br>
 
-  ![Create]()
+  ![Create](./public/assets/readme/create.png)
+  <br>
   After sign up, the app will automatically direct you to the create page to make your own Rascal. Follow the prompts to generate and name your Rascal. After you're finished, you will be redirected to the home page. 
-
-  ![Home]()
+<br>
+  ![Home](./public/assets/readme/home.png)
   On the home page, your rascal is displayed and you can interact with him in many different ways. Click the icons in the bottom navigation to feed, wash, and customize your Rascal.
+  <br>
 
-  ![Minigames]()
+  ![Minigames](./public/assets/readme/minigame.png)
+  <br>
   Customization and interactions will cost you coins! To gain coins and experience to level up your Rascal, click the game controller icon and play a Minigame.
+  <br>
 
-  ![Mobile]() 
+  ![Mobile](./public/assets/readme/mobile1.png) 
+  ![Mobile](./public/assets/readme/mobile2.png) 
+  <br>
   This application was designed to be used on mobile. Use the mobile version of the site to keep your Pocket Rascal with you all the time! 
+  <br>
 
   ## Contributing 
 
@@ -41,7 +49,7 @@
 
   ## Links 
 
-  [Deployed Site](https://pocket-rascal.herokuapp.com/)
+  [Deployed Site](https://pocket-rascal.herokuapp.com/) <br>
   [Repository](https://github.com/evanhosni/pocket-rascal)
 
   ## Questions 
@@ -49,7 +57,7 @@
   Feel free to reach out via Github with any questions. 
 
   ## Creators
-  Development team: 
-  Alex Beres - [Github](https://github.com/Alextheshire)
-  Lindsay Fitzgerald - [Github](https://github.com/lindsfitz)
-  Evan Hosni - [Github](https://github.com/evanhosni)
+  Development team: <br>
+  Alex Beres - [Github](https://github.com/Alextheshire) <br>
+  Lindsay Fitzgerald - [Github](https://github.com/lindsfitz) <br>
+  Evan Hosni - [Github](https://github.com/evanhosni) <br>
