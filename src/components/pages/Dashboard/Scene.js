@@ -135,7 +135,7 @@ class Scene extends React.Component {
 
     var animation;
     var animationsoap;
-    var animationfood;
+    var animationducky;
     const canvas = document.querySelector("canvas");
     canvas.setAttribute('id', 'rascalCanvas')
     const ctx = canvas.getContext("2d");
@@ -793,8 +793,8 @@ class Scene extends React.Component {
     }
 
     const feedRascal = () => {
-      // if (myContext.coins >= 20) {
-      //   myContext.coins = (myContext.coins - 20);
+      if (myContext.coins >= 20) {
+        myContext.coins = (myContext.coins - 20);
         myContext.userRascal.happiness = (myContext.userRascal.happiness + 5);
         myContext.userRascal.xp = (myContext.userRascal.xp + 5)
         myContext.setXP(myContext.userRascal.xp)
@@ -803,9 +803,9 @@ class Scene extends React.Component {
           delay(100*i).then(() => createFood())
         }
         setUpFeedRascal();
-      // } else {
-      //   this.props.setOpenFail(true)
-      // }
+      } else {
+        this.props.setOpenFail(true)
+      }
     }
 
     const feedBtn = document.getElementById('FeedRascal')
@@ -867,6 +867,51 @@ class Scene extends React.Component {
       })();
     }
 
+    var ducky
+
+    const createDucky = async () => {
+      ducky = Matter.Bodies.circle(2850, 2500, 80, {
+        label: 'ducky',
+        friction: 1,
+        render: {
+          visible: false,
+        },
+      })
+      Matter.World.add(engine.world, ducky)
+
+      // cancelAnimationFrame(animation);
+      const duckyImage = await new Promise((resolve, reject) => {
+        const duckyImage = new Image();
+        duckyImage.onload = () => resolve(duckyImage);
+        duckyImage.onerror = reject;
+        duckyImage.src = `./assets/rubber_duck.png`;
+      });
+
+      const w = 200;
+      const h = 200;
+      let frameNumberDucky = 0;
+
+
+      (function rerender() {
+        const duckyOffset = (~~frameNumberDucky * w) % duckyImage.width;
+        const { x, y } = ducky.position;
+        ctx.drawImage(
+          duckyImage, // image
+          duckyOffset, // sx
+          0, // sy
+          w, // sWidth
+          h, // sHeight
+          x - w / 2, // dx
+          y - h / 2, // dy
+          w, // dWidth
+          h // dHeight
+        );
+        // Matter.Engine.update(engine);
+        animationducky = requestAnimationFrame(rerender);
+
+      })();
+    }
+
     const createBubble = async (soappos) => {
       var bubble = Matter.Bodies.circle(soappos.x, soappos.y, 30, {
         label: 'bubble',
@@ -919,8 +964,8 @@ class Scene extends React.Component {
 
     function soapsplosion() {
       for (let i = 0; i < 5; i++) {
-        delay(20*i).then(() => {
-          var x = (soap.position.x - 30 + Math.floor(Math.random()*60))
+        delay(30*i).then(() => {
+          var x = (soap.position.x - 35 + Math.floor(Math.random()*70))
           var y = (soap.position.y - 25 + Math.floor(Math.random()*50))
           var soapprox = {x, y}
           createBubble(soapprox)
@@ -937,7 +982,6 @@ class Scene extends React.Component {
 
     function setUpWashRascal() {
       var totalCollisions = 0;
-      var soapbar
       // var washFinished = false
       Matter.Events.on(engine, 'collisionEnd', function (event) {
         event.pairs
@@ -947,16 +991,17 @@ class Scene extends React.Component {
         .forEach((pair) => {
           totalCollisions++
           createBubble(soap.position)
-          soapbar = pair.bodyB
         })
       })
-      delay(7500).then(() => endWash(totalCollisions,soapbar))
+      delay(7500).then(() => endWash(totalCollisions,soap))
     }
 
-    function endWash(totalCollisions,soapbar) {
+    function endWash(totalCollisions,soap) {
       soapsplosion()
-      Matter.World.remove(world,soapbar)
+      Matter.World.remove(world,soap)
       cancelAnimationFrame(animationsoap)
+      Matter.World.remove(world,ducky)
+      cancelAnimationFrame(animationducky)
       ongoingRascal.suds = totalCollisions
     }
 
@@ -968,6 +1013,7 @@ class Scene extends React.Component {
         myContext.setXP(myContext.userRascal.xp)
         myContext.setCoins(myContext.coins);
         createSoap();
+        createDucky();
         setUpWashRascal();
       } else { this.props.setOpenFail(true) }
     }
