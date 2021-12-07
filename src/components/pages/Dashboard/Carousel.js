@@ -49,7 +49,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button>
-                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
+                        <img src="./assets/empty.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
@@ -69,7 +69,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button >
-                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
+                        <img src="./assets/empty.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
@@ -89,7 +89,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button >
-                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
+                        <img src="./assets/empty.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
@@ -109,7 +109,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button >
-                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
+                        <img src="./assets/empty.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
@@ -129,7 +129,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button >
-                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
+                        <img src="./assets/empty.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
@@ -148,7 +148,7 @@ export default function Carousel({ prevEvent }) {
             return (
                 <div>
                     <Button >
-                        <img src="./assets/null.png" style={{ height: '100%' }} alt='' />
+                        <img src="./assets/empty.png" style={{ height: '100%' }} alt='' />
                     </Button>
                 </div>
             )
