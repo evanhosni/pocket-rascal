@@ -41,6 +41,9 @@ class Scene extends React.Component {
       gravity: { scale: 0 },
       enableSleeping: true
     });
+
+    Matter.Runner.run(engine);
+    
     var world = engine.world;
 
     var render = Render.create({
@@ -836,13 +839,16 @@ class Scene extends React.Component {
       })
       Matter.World.add(engine.world, soap)
 
-      // cancelAnimationFrame(animation);
       const soapImage = await new Promise((resolve, reject) => {
         const soapImage = new Image();
         soapImage.onload = () => resolve(soapImage);
         soapImage.onerror = reject;
         soapImage.src = `./assets/soapbar.png`;
       });
+
+      const w = 200;
+      const h = 200;
+      let frameNumberSoap = 0;
 
       const w = 200;
       const h = 200;

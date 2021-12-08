@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+# Pocket Rascal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+## Table of Contents
+  - [Description](#description)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Contributing](#contributing)
+  - [License](#license)
+  - [Links](#links)
+  - [Questions](#questions)
+  - [Creators](#creators)
 
-In the project directory, you can run:
 
-### `npm start`
+  ## Installation
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  Create your own pocket rascal [here!](https://pocket-rascal.herokuapp.com/)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  ## Usage 
 
-### `npm test`
+  ![Login](./public/assets/readme/login.png)
+  Login or sign up for an account to access the main home page.
+  <br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  ![Create](./public/assets/readme/create.png)
+  <br>
+  After sign up, the app will automatically direct you to the create page to make your own Rascal. Follow the prompts to generate and name your Rascal. After you're finished, you will be redirected to the home page. 
+<br>
+  ![Home](./public/assets/readme/home.png)
+  On the home page, your rascal is displayed and you can interact with him in many different ways. Click the icons in the bottom navigation to feed, wash, and customize your Rascal.
+  <br>
 
-### `npm run build`
+  ![Minigames](./public/assets/readme/minigame.png)
+  <br>
+  Customization and interactions will cost you coins! To gain coins and experience to level up your Rascal, click the game controller icon and play a Minigame.
+  <br>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  ![Mobile](./public/assets/readme/mobile1.png) 
+  ![Mobile](./public/assets/readme/mobile2.png) 
+  <br>
+  This application was designed to be used on mobile. Use the mobile version of the site to keep your Pocket Rascal with you all the time! 
+  <br>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  ## Contributing 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  We are not currently accepting contributions but would love and welcome any feedback.
 
-### `npm run eject`
+  ## Links 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  [Deployed Site](https://pocket-rascal.herokuapp.com/) <br>
+  [Repository](https://github.com/evanhosni/pocket-rascal)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  ## Questions 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+  Feel free to reach out via Github with any questions. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  ## Creators
+  Development team: <br>
+  Alex Beres - [Github](https://github.com/Alextheshire) <br>
+  Lindsay Fitzgerald - [Github](https://github.com/lindsfitz) <br>
+  Evan Hosni - [Github](https://github.com/evanhosni) <br>
