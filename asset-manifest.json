@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/pocket-rascal/static/css/main.947d0782.chunk.css",
+    "main.js": "/pocket-rascal/static/js/main.b94ee5cd.chunk.js",
+    "main.js.map": "/pocket-rascal/static/js/main.b94ee5cd.chunk.js.map",
+    "runtime-main.js": "/pocket-rascal/static/js/runtime-main.7028b760.js",
+    "runtime-main.js.map": "/pocket-rascal/static/js/runtime-main.7028b760.js.map",
+    "static/css/2.674c27c3.chunk.css": "/pocket-rascal/static/css/2.674c27c3.chunk.css",
+    "static/js/2.d72aee2f.chunk.js": "/pocket-rascal/static/js/2.d72aee2f.chunk.js",
+    "static/js/2.d72aee2f.chunk.js.map": "/pocket-rascal/static/js/2.d72aee2f.chunk.js.map",
+    "index.html": "/pocket-rascal/index.html",
+    "static/css/2.674c27c3.chunk.css.map": "/pocket-rascal/static/css/2.674c27c3.chunk.css.map",
+    "static/css/main.947d0782.chunk.css.map": "/pocket-rascal/static/css/main.947d0782.chunk.css.map",
+    "static/js/2.d72aee2f.chunk.js.LICENSE.txt": "/pocket-rascal/static/js/2.d72aee2f.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7028b760.js",
+    "static/css/2.674c27c3.chunk.css",
+    "static/js/2.d72aee2f.chunk.js",
+    "static/css/main.947d0782.chunk.css",
+    "static/js/main.b94ee5cd.chunk.js"
+  ]
+}
