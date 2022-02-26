@@ -16,7 +16,7 @@
 
   ## Installation
 
-  Create your own pocket rascal [here!](https://pocket-rascal.herokuapp.com/)
+  Create your own pocket rascal [here!](https://evanhosni.github.io/pocket-rascal/)
 
   ## Usage 
 
